@@ -28,12 +28,10 @@
             ]
         }
     ],
-    "agent": {
-        "child_exec": "python",
-        "child_args": [
-            "{PROJECT_DIR}/agent/main.py"
-        ]
-    },
+
+    "name": "少女前线自动化助手",
+    "custom_title": "更新世界的锋芒",
+    "url": "https://github.com/LeonNagant/MaaGF1_Test",
     "task": [
         {
             "name": "8-1N",
