@@ -78,7 +78,8 @@
     "next":["捡垃圾-暂停"]
 },
 "捡垃圾-暂停":{
-    "recognition":"DirectHit",
+    "recognition":"OCR",
+    "expected":"伤害",
     "action":"Click",
     "target":[640,10,0,0],
     "next":["捡垃圾-检测暂停"]
@@ -91,8 +92,9 @@
 },
 "捡垃圾-撤退":{
     "recognition":"OCR",
-    "expected":["全体撤退"],
+    "expected":["重新战斗"],
     "action":"Click",
+    "target":[350,10,0,0],
     "next":["捡垃圾-加速"]
 },
 "捡垃圾-加速":{
