@@ -1,0 +1,6 @@
+{
+    "Default": {
+        "rate_limit": 500,
+        "threshold": 0.6
+    }
+}
