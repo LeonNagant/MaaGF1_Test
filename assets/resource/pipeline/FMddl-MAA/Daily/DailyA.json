@@ -286,7 +286,9 @@
                 ],
                 "template": [
                     "Button/ButtonYesA.png",
-                    "Button/ButtonYesB.png"
+                    "Button/ButtonYesB.png",
+                    "Button/ButtonYesC.png",
+                    "Button/ButtonYesD.png"
                 ]
             }
         },

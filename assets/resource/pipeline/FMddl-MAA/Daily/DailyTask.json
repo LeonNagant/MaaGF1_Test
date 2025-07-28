@@ -14,7 +14,8 @@
         "next": [
             "DailyTaskMenuBtoA",
             "KalinaLove",
-            "Send1Report"
+            "Send1Report",
+            "EquipmentStrengthen"
         ],
         "interrupt": [
             "AssignmentAgain",
@@ -269,7 +270,10 @@
             }
         },
         "action": {
-            "type": "Click"
+            "type": "Key",
+            "param": {
+                "key": 27
+            }
         },
         "next": [
             "KalinaLove_ButtonBack",
@@ -477,7 +481,8 @@
                 "template": [
                     "Button/ButtonYesA.png",
                     "Button/ButtonYesB.png",
-                    "Button/ButtonYesC.png"
+                    "Button/ButtonYesC.png",
+                    "Button/ButtonYesD.png"
                 ]
             }
         },
@@ -497,17 +502,161 @@
         ]
     },
     "Send1Report_SendThenBack": {
+        "action": {
+            "type": "Key",
+            "param": {
+                "key": 27
+            }
+        },
+        "next": [
+            "EquipmentStrengthen",
+            "Send1Report_SendThenBack"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "EquipmentStrengthen": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    512,
+                    130,
+                    767,
+                    445
+                ],
+                "expected": [
+                    "研发"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EquipmentStrengthen",
+            "EquipmentStrengthen_ClickLabel"
+        ]
+    },
+    "EquipmentStrengthen_ClickLabel": {
         "recognition": {
             "type": "OCR",
             "param": {
                 "roi" : [
                     0,
-                    0,
-                    289,
-                    511
+                    85,
+                    292,
+                    634
                 ],
                 "expected": [
-                    "编号"
+                    "装备强化"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EquipmentStrengthen_SelectEquip",
+            "EquipmentStrengthen_ClickLabel"
+        ]
+    },
+    "EquipmentStrengthen_SelectEquip": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    190,
+                    103,
+                    261,
+                    608
+                ],
+                "expected": [
+                    "选择装备",
+                    "SELECT"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EquipmentStrengthen_SelectTheFirst",
+            "EquipmentStrengthen_SelectEquip"
+        ]
+    },
+    "EquipmentStrengthen_SelectTheFirst": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    97,
+                    230,
+                    307
+                ],
+                "expected": [
+                    "暴击",
+                    "回避",
+                    "伤害",
+                    "命中",
+                    "射速",
+                    "穿甲",
+                    "目标",
+                    "弹量",
+                    "冷却",
+                    "换弹"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EquipmentStrengthen_PlusAccessory1",
+            "EquipmentStrengthen_SelectTheFirst"
+        ]
+    },
+    "EquipmentStrengthen_PlusAccessory1": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    1063,
+                    444,
+                    216,
+                    275
+                ],
+                "template": [
+                    "Button/StrengthenPlusA.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EquipmentStrengthen_ButtonYes1"
+        ]
+    },
+    "EquipmentStrengthen_ButtonYes1": {
+        "post_delay": 3000,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    1063,
+                    444,
+                    216,
+                    275
+                ],
+                "template": [
+                    "Button/ButtonYesA.png",
+                    "Button/ButtonYesB.png",
+                    "Button/ButtonYesC.png",
+                    "Button/ButtonYesD.png"
                 ]
             }
         },
@@ -515,21 +664,139 @@
             "type": "Click",
             "param": {
                 "target_offset": [
-                    -13,
-                    111,
-                    -2,
-                    -2
+                    30,
+                    4,
+                    -30,
+                    -4
                 ]
             }
         },
         "next": [
-            "Send1Report_SendThenBack",
-            "EnterHome",
-            "HomeAlready"
-        ],
-        "interrupt": [
-            "AssignmentAgain",
-            "Reward"
+            "EquipmentStrengthen_PlusAccessory2"
+        ]
+    },
+    "EquipmentStrengthen_PlusAccessory2": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    1063,
+                    444,
+                    216,
+                    275
+                ],
+                "template": [
+                    "Button/StrengthenPlusA.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EquipmentStrengthen_ButtonYes2"
+        ]
+    },
+    "EquipmentStrengthen_ButtonYes2": {
+        "post_delay": 3000,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    1063,
+                    444,
+                    216,
+                    275
+                ],
+                "template": [
+                    "Button/ButtonYesA.png",
+                    "Button/ButtonYesB.png",
+                    "Button/ButtonYesC.png",
+                    "Button/ButtonYesD.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    4,
+                    -30,
+                    -4
+                ]
+            }
+        },
+        "next": [
+            "EquipmentStrengthen_PlusAccessory3"
+        ]
+    },
+    "EquipmentStrengthen_PlusAccessory3": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    1063,
+                    444,
+                    216,
+                    275
+                ],
+                "template": [
+                    "Button/StrengthenPlusA.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EquipmentStrengthen_ButtonYes3"
+        ]
+    },
+    "EquipmentStrengthen_ButtonYes3": {
+        "post_delay": 3000,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    1063,
+                    444,
+                    216,
+                    275
+                ],
+                "template": [
+                    "Button/ButtonYesA.png",
+                    "Button/ButtonYesB.png",
+                    "Button/ButtonYesC.png",
+                    "Button/ButtonYesD.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    4,
+                    -30,
+                    -4
+                ]
+            }
+        },
+        "next": [
+            "EquipmentStrengthen_ESC"
+        ]
+    },
+    "EquipmentStrengthen_ESC": {
+        "action": {
+            "type": "Key",
+            "param": {
+                "key": 27
+            }
+        },
+        "next": [
+            "HomeAlready",
+            "EquipmentStrengthen_ESC"
         ]
     }
 }
