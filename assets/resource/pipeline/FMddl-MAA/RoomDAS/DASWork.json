@@ -1,0 +1,108 @@
+{
+    "DAS": {
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "DASFree10":{
+        "doc":"组合任务",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    960,
+                    591,
+                    248,
+                    129
+                ],
+                "template": [
+                    "DAS/DASSpecialAssist.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "post_delay":1000
+    },
+    "DASSpecialAssist":{
+        "doc":"识别免费轰炸",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    960,
+                    591,
+                    248,
+                    129
+                ],
+                "template": [
+                    "DAS/DASSpecialAssist.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1013,
+                    544,
+                    170,
+                    116
+                ]
+            }
+        },
+        "next": [
+            "DASFreeConfirmNo"
+        ],
+        "interrupt": [
+            "DASFreeConfirmYes"
+        ]
+    },
+    "DASFreeConfirmNo":{
+        "doc":"确认是否为免费轰炸，否",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    830,
+                    391,
+                    177,
+                    179
+                ],
+                "template": [
+                    "DAS/DASTicket.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    698,
+                    542,
+                    145,
+                    56
+                ]
+            }
+        }
+    },
+    "DASFreeConfirmYes":{
+        "doc":"确认是否为免费轰炸，是",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    834,
+                    408,
+                    194,
+                    144
+                ],
+                "expected": [
+                    "免费轰炸"
+                ]
+            }
+        }
+    }
+}

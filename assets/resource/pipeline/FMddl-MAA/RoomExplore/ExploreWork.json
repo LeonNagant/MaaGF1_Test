@@ -1,0 +1,297 @@
+{
+    "ExploreSwipe": {
+        "doc": "拉到房间最右侧",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    210,
+                    0,
+                    425,
+                    246
+                ],
+                "expected": [
+                    "前进营地"
+                ]
+            }
+        },
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin" : [
+                    1057,
+                    316,
+                    1,
+                    1
+                ],
+                "end" : [
+                    295,
+                    326,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "ExploreGet",
+            "ExploreConductor",
+            "ExploreFormation",
+            "ExploreStart",
+            "EnterHome"
+        ]
+    },
+    "ExploreGet": {
+        "post_wait_freezes": 1000,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    210,
+                    0,
+                    425,
+                    246
+                ],
+                "expected": [
+                    "前进营地"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    99,
+                    310,
+                    119,
+                    110
+                ]
+            }
+        },
+        "next": [
+            "ExploreReward",
+            "ExploreButtonCancel1",
+            "ExploreConductor",
+            "ExploreFormation",
+            "ExploreStart",
+            "EnterHome"
+        ]
+    },
+    "ExploreReward": {
+        "rate_limit": 200,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    900,
+                    100,
+                    380,
+                    350
+                ],
+                "expected": [
+                    "REW",
+                    "REV",
+                    "ARD"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    231,
+                    102,
+                    218,
+                    109
+                ]
+            }
+        },
+        "next": [
+            "ExploreReward",
+            "ExploreButtonCancel1",
+            "ExploreConductor",
+            "ExploreFormation",
+            "ExploreStart",
+            "EnterHome"
+        ]
+    },
+    "ExploreConductor": {
+        "doc": "打开探索控制台",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    800,
+                    565,
+                    900,
+                    155
+                ],
+                "template": [
+                    "Room/ExploreStartA.png",
+                    "Room/ExploreStartB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    366,
+                    410,
+                    183,
+                    149
+                ]
+            }
+        },
+        "next": [
+            "ExploreFormation",
+            "ExploreFormationButtonYes",
+            "ExploreStart",
+            "EnterHome"
+        ]
+    },
+    "ExploreFormation": {
+        "doc": "自动编队",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    800,
+                    158,
+                    900,
+                    208
+                ],
+                "expected": [
+                    "自",
+                    "动",
+                    "编"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "ExploreStart",
+            "ExploreFormationButtonYes",
+            "EnterHome"
+        ]
+    },
+    "ExploreFormationButtonYes": {
+        "doc": "确认自动编队",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    193,
+                    300,
+                    855,
+                    420
+                ],
+                "template": [
+                    "Button/ButtonYesA.png",
+                    "Button/ButtonYesB.png",
+                    "Button/ButtonYesC.png",
+                    "Button/ButtonYesD.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    4,
+                    -30,
+                    -4
+                ]
+            }
+        },
+        "next": [
+            "ExploreStart",
+            "ExploreFormationButtonYes",
+            "EnterHome"
+        ]
+    },
+    "ExploreStart": {
+        "doc": "立即出发",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    803,
+                    501,
+                    299,
+                    162
+                ],
+                "expected": [
+                    "立即出发",
+                    "START",
+                    "ONCE"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "ExploreStart",
+            "ExploreButtonCancel2",
+            "EnterHome"
+        ]
+    },
+    "ExploreButtonCancel1": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    66,
+                    54,
+                    156,
+                    149
+                ],
+                "template": [
+                    "Room/RoomButtonCancelA.png",
+                    "Room/RoomButtonCancelB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Key",
+            "param": {
+                "key": 27
+            }
+        },
+        "next": [
+            "ExploreConductor",
+            "ExploreFormation",
+            "ExploreStart",
+            "EnterHome"
+        ]
+    },
+    "ExploreButtonCancel2": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    66,
+                    54,
+                    156,
+                    149
+                ],
+                "template": [
+                    "Room/RoomButtonCancelA.png",
+                    "Room/RoomButtonCancelB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Key",
+            "param": {
+                "key": 27
+            }
+        },
+        "next": [
+            "EnterHome"
+        ]
+    }
+}

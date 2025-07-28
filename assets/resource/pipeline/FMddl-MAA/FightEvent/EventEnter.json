@@ -1,0 +1,264 @@
+{
+    "EventSalvage": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    444,
+                    172,
+                    127,
+                    130
+                ]
+            }
+        },
+        "next": [
+            "EventEntrance",
+            "EventDifficulty",
+            "EventSwipetoLeft"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "EventEntrance": {
+        "recognition": {
+        "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    786,
+                    327,
+                    493,
+                    317
+                ],
+            "template": [
+                "EventNow/EventEntrance.png"
+            ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EventEntrance",
+            "EventDifficulty",
+            "EventSwipetoLeft"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "EventDifficulty": {
+        "doc": "普通、困难、噩梦，要打哪个就OCR其余的，并执行Click",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    105,
+                    619,
+                    148,
+                    101
+                ],
+                "expected": [
+                    "普通",
+                    "困难"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EventDifficulty",
+            "EventSwipetoLeft"
+        ]
+    },
+    "EventSwipetoLeft": {
+        "doc": "拉到活动最左侧",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    728,
+                    0,
+                    551,
+                    230
+                ],
+                "expected": [
+                    "章节",
+                    "进度"
+                ]
+            }
+        },
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin" : [
+                    377,
+                    389,
+                    1,
+                    1
+                ],
+                "end" : [
+                    1176,
+                    389,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageStage",
+            "EventFirstStage",
+            "EventSwipetoLeft"
+        ]
+    },
+    "EventFirstStage": {
+        "pre_wait_freezes": 100,
+        "post_wait_freezes": 100,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    220,
+                    1280,
+                    335
+                ],
+                "expected": [
+                    "逃出生天"
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageStage",
+            "EventSwipetoTarget"
+        ]
+    },
+    "EventSwipetoTarget": {
+        "doc": "识别章节进度",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    728,
+                    0,
+                    551,
+                    230
+                ],
+                "expected": [
+                    "章节",
+                    "进度"
+                ]
+            }
+        },
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin" : [
+                    824,
+                    379,
+                    1,
+                    1
+                ],
+                "end" : [
+                    732,
+                    378,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageStage",
+            "EventSwipetoTarget"
+        ]
+    },
+    "EventSalvageStage": {
+        "rate_limit": 300,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [0,320,1280,235],
+                "expected": [
+                    "行星环"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EventSalvageStage",
+            "CheckEventSalvageGirl",
+            "CheckEventSalvageList",
+            "EnterEventSalvage"
+        ]
+    },
+    "CheckEventSalvageList": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    333,
+                    96,
+                    946,
+                    503
+                ],
+                "expected": [
+                    "可能",
+                    "掉落"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "CheckEventSalvageGirl",
+            "CheckEventSalvageList",
+            "EventSalvageStage"
+            
+        ]
+    },
+    "CheckEventSalvageGirl": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [500,100,800,300],
+                "template": [
+                    "EventNow/EventSalvageGirl.png"
+                ]
+            }
+        },
+        "next": [
+            "EnterEventSalvage",
+            "CheckEventSalvageList"
+        ]
+    },
+    "EnterEventSalvage": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    300,
+                    96,
+                    1400,
+                    503
+                ],
+                "expected": [
+                    "认出击"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EventRecycle",
+            "EventSalvagePrepare",
+            "EnterEventSalvage"
+        ]
+    }
+}

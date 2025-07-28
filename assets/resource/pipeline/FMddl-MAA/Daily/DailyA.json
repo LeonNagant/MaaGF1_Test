@@ -1,0 +1,357 @@
+{
+    "DailyA": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    444,
+                    172,
+                    127,
+                    130
+                ]
+            }
+        },
+        "next": [
+            "DailyAClickFight",
+            "DailyASimulation",
+            "DailyASwipe"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "DailyAClickFight": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    561,
+                    195,
+                    591,
+                    453
+                ],
+                "expected": [
+                    "战斗"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyAClickFight",
+            "DailyASimulation",
+            "DailyASwipe"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "DailyASimulation": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    63,
+                    303,
+                    657
+                ],
+                "expected": [
+                    "模拟作战",
+                    "Simulation"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyASwipe",
+            "DailyASimulation"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "DailyASwipe": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    667,
+                    65,
+                    287,
+                    177
+                ],
+                "expected": [
+                "基础动能",
+                "基础势能"
+                ]
+            }
+        },
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin" : [
+                    241,
+                    156,
+                    1,
+                    1
+                ],
+                "end" : [
+                    243,
+                    630,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "DailyASelection"
+        ]
+    },
+    "DailyASelection": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    75,
+                    33,
+                    293,
+                    687
+                ],
+                "expected": [
+                    "资料采样"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyADifficulty"
+        ]
+    },
+    "DailyADifficulty": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    502,
+                    247,
+                    337,
+                    371
+                ],
+                "expected": [
+                    "高级"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyADifficulty",
+            "DailyATimeClickCenter"
+        ]
+    },
+    "DailyATimeClickCenter": {
+        "post_wait_freezes": 500,
+        "recognition": {
+        "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    600,
+                    300,
+                    680,
+                    400
+                ],
+                "template": [
+                    "DailyAB/DailyABasicKineticEnergy.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyADifficulty",
+            "DailyATimeAll",
+            "DailyATimeAuto"
+        ]
+    },
+    "DailyATimeAll": {
+        "recognition": {
+        "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    626,
+                    487,
+                    593,
+                    232
+                ],
+                "template": [
+                    "DailyAB/DailyABTimeMinus.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyABNone",
+            "DailyAStart"
+        ]
+    },
+    "DailyATimeAuto": {
+        "recognition": {
+        "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    626,
+                    487,
+                    593,
+                    232
+                ],
+                "template": [
+                    "DailyAB/DailyABTimePlus.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyATimeEnough",
+            "DailyABNone",
+            "DailyATimeAuto"
+        ]
+    },
+    "DailyATimeEnough": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    772,
+                    330,
+                    178,
+                    75
+                ],
+                "expected": [
+                    "12"
+                ]
+            }
+        },
+        "next": [
+            "DailyAStart"
+        ]
+    },
+    "DailyAStart": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    689,
+                    412,
+                    408,
+                    281
+                ],
+                "expected": [
+                    "智能扫荡"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyAButtonYes",
+            "DailyAStart",
+            "DailyAButtonCancel"
+        ]
+    },
+    "DailyAButtonYes": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    193,
+                    300,
+                    855,
+                    420
+                ],
+                "template": [
+                    "Button/ButtonYesA.png",
+                    "Button/ButtonYesB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    4,
+                    -30,
+                    -4
+                ]
+            }
+        },
+        "next": [
+            "DailyAButtonYes",
+            "DailyAButtonCancel",
+            "EnterHome"
+        ],
+        "interrupt": [
+            "Reward"
+        ]
+    },
+
+    "DailyAButtonCancel":{
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    62,
+                    30,
+                    288,
+                    217
+                ],
+                "template": [
+                    "Room/RoomButtonCancelA.png",
+                    "Room/RoomButtonCancelB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyAButtonCancel",
+            "EnterHome"
+        ]
+    },
+    "DailyABNone": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    232,
+                    71,
+                    915,
+                    585
+                ],
+                "expected": [
+                    "道具不足，不可扫荡"
+                ]
+            }
+        },
+        "next": [
+            "EnterHome"
+        ]
+    }
+}

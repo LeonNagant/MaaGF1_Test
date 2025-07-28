@@ -1,0 +1,114 @@
+{
+    "EventRecycle": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    195,
+                    144,
+                    889,
+                    454
+                ],
+                "expected": [
+                    "人形回收"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    599,
+                    351,
+                    85,
+                    171
+                ]
+            }
+        },
+        "next": [
+            "EventRecycle",
+            "EventRecycleCharacter"
+        ]
+    },
+    "EventRecycleCharacter": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    191,
+                    93,
+                    317,
+                    238
+                ],
+                "expected": [
+                    "角色"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EventRecycleAutoChoose"
+        ]
+    },
+    "EventRecycleAutoChoose": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    900,
+                    500,
+                    600,
+                    220
+                ],
+                "expected": [
+                    "智能",
+                    "确定"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EventRecycleAutoChoose",
+            "EventRecycleYes"
+        ]
+    },
+    "EventRecycleYes": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    900,
+                    500,
+                    600,
+                    220
+                ],
+                "expected": [
+                    "回收"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EventRecycleESC"
+        ]
+    },
+    "EventRecycleESC": {
+        "pre_delay": 2000,
+        "post_delay": 2000,
+        "action": {
+            "type": "Key",
+            "param": {
+                "key": 27
+            }
+        },
+        "next": [
+            "EventSalvage"
+        ]
+    }
+}

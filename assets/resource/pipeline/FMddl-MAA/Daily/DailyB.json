@@ -1,0 +1,369 @@
+{
+    "DailyB": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    444,
+                    172,
+                    127,
+                    130
+                ]
+            }
+        },
+        "next": [
+            "DailyBClickFight",
+            "DailyBSimulation",
+            "DailyBSwipe"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "DailyBClickFight": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    561,
+                    195,
+                    591,
+                    453
+                ],
+                "expected": [
+                    "战斗"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyBClickFight",
+            "DailyBSimulation",
+            "DailyBSwipe"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "DailyBSimulation": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    63,
+                    303,
+                    657
+                ],
+                "expected": [
+                    "模拟作战",
+                    "Simulation"
+            ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyBSwipe",
+            "DailyBSimulation"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "DailyBSwipe": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    667,
+                    65,
+                    287,
+                    177
+                ],
+                "expected": [
+                "基础动能",
+                "基础势能"
+                ]
+            }
+        },
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin" : [
+                    243,
+                    630,
+                    1,
+                    1
+                ],
+                "end" : [
+                    241,
+                    156,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "DailyBSelection"
+        ]
+    },
+    "DailyBSelection": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    75,
+                    33,
+                    293,
+                    687
+                ],
+                "expected": [
+                    "融合演习"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyBDifficulty"
+        ]
+    },
+    "DailyBDifficulty": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    342,
+                    195,
+                    937,
+                    523
+                ],
+                "expected": [
+                    "防卫构思集训"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param":{
+                "target_offset": [
+                    0,
+                    300,
+                    0,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "DailyBDataClick",
+            "DailyBTimeClickCenter"
+        ]
+    },
+    "DailyBDataClick": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    1008,
+                    527,
+                    271,
+                    192
+                ],
+                "expected": [
+                    "出击"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyBDataClick",
+            "DailyBTimeClickCenter"
+        ]
+    },
+    "DailyBTimeClickCenter": {
+        "post_wait_freezes": 500,
+        "recognition": {
+        "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    600,
+                    300,
+                    680,
+                    400
+                ],
+                "template": [
+                    "DailyAB/DailyABasicPotentialEnergy.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyBDifficulty",
+            "DailyBTimeAll",
+            "DailyBTimeAuto"
+        ]
+    },
+    "DailyBTimeAll": {
+        "recognition": {
+        "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    626,
+                    487,
+                    593,
+                    232
+                ],
+                "template": [
+                    "DailyAB/DailyABTimeMinus.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyABNone",
+            "DailyBStart"
+        ]
+    },
+    "DailyBTimeAuto": {
+        "recognition": {
+        "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    626,
+                    487,
+                    593,
+                    232
+                ],
+                "template": [
+                    "DailyAB/DailyABTimePlus.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyBTimeEnough",
+            "DailyABNone",
+            "DailyBTimeAuto"
+        ]
+    },
+    "DailyBTimeEnough": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    772,
+                    330,
+                    178,
+                    75
+                ],
+                "expected": [
+                    "12"
+                ]
+            }
+        },
+        "next": [
+            "DailyBStart"
+        ]
+    },
+    "DailyBStart": {
+        "recognition": {
+        "type": "OCR",
+            "param": {
+                "roi" : [
+                    689,
+                    412,
+                    408,
+                    281
+                ],
+                "expected": [
+                    "智能扫荡"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyBButtonYes",
+            "DailyBStart",
+            "DailyBButtonCancel"
+        ]
+    },
+    "DailyBButtonYes": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    193,
+                    300,
+                    855,
+                    420
+                ],
+                "template": [
+                    "Button/ButtonYesA.png",
+                    "Button/ButtonYesB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    4,
+                    -30,
+                    -4
+                ]
+            }
+        },
+        "next": [
+            "DailyBButtonYes",
+            "DailyBButtonCancel",
+            "EnterHome"
+        ],
+        "interrupt": [
+            "Reward"
+        ]
+    },
+
+    "DailyBButtonCancel":{
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    62,
+                    30,
+                    288,
+                    217
+                ],
+                "template": [
+                    "Room/RoomButtonCancelA.png",
+                    "Room/RoomButtonCancelB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DailyAButtonCancel",
+            "EnterHome"
+        ]
+    }
+}

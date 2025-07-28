@@ -1,0 +1,166 @@
+{
+    "ReturnHome": {
+        "doc": "返回主界面（专供任务开始前使用）",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    30,
+                    10,
+                    461,
+                    158
+                ],
+                "template": [
+                    "Button/ButtonHomeAtoB1.png",
+                    "Button/ButtonHomeAtoB2.png"
+                ],
+                "threshold":0.8
+            }
+        },
+        "action": {
+            "type": "Key",
+            "param": {
+                "key": 27
+            }
+        },
+        "next": [
+            "HomeAlready"
+        ],
+        "interrupt":[
+            "RoomStuck"
+        ]
+    },
+    "EnterHome": {
+        "doc":"按ESC直接返回",
+        "action": {
+            "type": "Key",
+            "param": {
+                "key": 27
+            }
+        },
+        "next": [
+            "AssignmentAgain",
+            "Reward",
+            "GetGirl",
+            "HomeAlready",
+            "EnterHome"
+        ],
+        "interrupt":[
+            "RoomStuck"
+        ]
+    },
+    "RoomStuck": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    155,
+                    18,
+                    216,
+                    158
+                ],
+                "expected": [
+                    "家具",
+                    "FURNITURE"
+                ]
+            }
+        }, 
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "RoomStuckBack",
+            "EnterHome"
+        ]
+    },
+    "RoomStuckBack": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    155,
+                    18,
+                    216,
+                    158
+                ],
+                "template": [
+                    "Room/RoomStuckB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param":{
+                "target" : [
+                    36,
+                    49,
+                    103,
+                    44
+                ]
+            }
+        },
+        "next": [
+            "RoomStuckBack",
+            "EnterHome"
+        ]
+    },
+    "Loading": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    25,
+                    617,
+                    324,
+                    273
+                ],
+                "template": [
+                    "EnterGame/LoadingA.png", 
+                    "EnterGame/LoadingB.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "post_wait_freezes": {
+            "param": {
+                "time": 900,
+                "target": [
+                    1043,
+                    501,
+                    165,
+                    219
+                ]
+            }
+        }
+    },
+    "SkipSkip": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    0,
+                    0,
+                    1900,
+                    200
+                ],
+                "expected": [
+                    "跳过",
+                    "记录",
+                    "自动",
+                    "隐藏"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1191,
+                    0,
+                    88,
+                    34
+                ]
+            }
+        }
+    }
+}

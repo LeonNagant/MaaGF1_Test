@@ -1,0 +1,108 @@
+{
+    "EnterRoomDorm": {
+        "next": [
+            "DormEnterTeam",
+            "DormOpenTeamMenu",
+            "ButtonRoomDorm",
+            "DormLove"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "DormEnterTeam": {
+        "post_wait_freezes": 1000,
+        "doc":"组合任务",
+        "recognition": {
+        "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    1000,
+                    318,
+                    900,
+                    167
+                ],
+                "template": [
+                    "Button/ButtonTeamA.png",
+                    "Button/ButtonTeamB.png",
+                    "Button/ButtonTeamC.png",
+                    "Button/ButtonTeamD.png"
+                ],
+                "threshold": 0.8
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "DormEnterTeam",
+            "DormOpenTeamMenu",
+            "ButtonRoomDorm",
+            "DormLove"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "DormOpenTeamMenu": {
+        "doc":"尚未点击的Home",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    122,
+                    10,
+                    161,
+                    158
+                ],
+                "template": [
+                    "Button/ButtonHomeAtoB1.png",
+                    "Button/ButtonHomeAtoB2.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    0,
+                    -30,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "DormEnterTeam",
+            "ButtonRoomDorm",
+            "DormLove"
+        ]
+    },
+    "ButtonRoomDorm": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    16,
+                    297,
+                    1183,
+                    163
+                ],
+                "expected": [
+                    "宿舍"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "ButtonRoomDorm",
+            "DormLove",
+            "DormBattery",
+            "DormFriend"
+        ]
+    }
+}

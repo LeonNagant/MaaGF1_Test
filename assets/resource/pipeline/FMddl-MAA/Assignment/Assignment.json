@@ -1,0 +1,111 @@
+{
+    "AssignmentAgain": {
+        "doc": "全体出征",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    800,
+                    600,
+                    480,
+                    120
+                ],
+                "expected": [
+                    "全体出征"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_wait_freezes": 500,
+        "next": [
+            "AssignmentButtonYes",
+            "AssignmentAgain"
+        ]
+    },
+    "AssignmentButtonYes": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    193,
+                    300,
+                    855,
+                    420
+                ],
+                "expected": [
+                    "确定"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    4,
+                    -30,
+                    -4
+                ]
+            }
+        }
+    },
+    "Reward": {
+        "rate_limit": 200,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    900,
+                    100,
+                    380,
+                    350
+                ],
+                "expected": [
+                    "REW",
+                    "REV",
+                    "ARD"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    231,
+                    102,
+                    218,
+                    109
+                ]
+            }
+        }
+    },
+    "GetGirl": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    0,
+                    400,
+                    400
+                ],
+                "expected": [
+                    "枪种"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    231,
+                    102,
+                    218,
+                    109
+                ]
+            }
+        }
+    }
+}

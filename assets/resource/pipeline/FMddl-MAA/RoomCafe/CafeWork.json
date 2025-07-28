@@ -1,0 +1,193 @@
+{
+    "Coffee": {
+        "doc": "点击咖啡机",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    200,
+                    600,
+                    400
+                ],
+                "expected": [
+                    "咖啡机"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "CafeNewStory",
+            "CafeNewStorySign",
+            "CafeButtonCancel"
+        ]
+    },
+    "CafeNewStorySign": {
+        "post_wait_freezes": {
+            "time": 2000,
+            "param": {
+                "target" : [
+                    810,
+                    0,
+                    200,
+                    720
+                ]
+            }
+        },
+        "post_delay": 4000,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    73,
+                    43,
+                    806,
+                    664
+                ],
+                "template": [
+                    "Room/RoomCafeSign.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    20,
+                    20,
+                    10,
+                    10
+                ]
+            }
+        },
+        "next": [
+            "CafeNewStory",
+            "CafeNewStorySign",
+            "CafeButtonCancel"
+        ]
+    },
+    "CafeNewStory": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    600,
+                    0,
+                    625,
+                    720
+                ],
+                "template": [
+                    "Room/RoomCafeNewStory.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "CafeNewStory",
+            "CafeNewStorySkip",
+            "CafeNewStoryReward"
+        ]
+    },
+    "CafeNewStorySkip": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    0,
+                    0,
+                    1900,
+                    200
+                ],
+                "expected": [
+                    "跳过",
+                    "记录",
+                    "自动",
+                    "隐藏"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1191,
+                    0,
+                    88,
+                    34
+                ]
+            }
+        },
+        "next": [
+            "CafeNewStorySkip",
+            "CafeNewStoryReward",
+            "Coffee"
+        ]
+    },
+    "CafeNewStoryReward": {
+        "rate_limit": 200,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    900,
+                    100,
+                    380,
+                    350
+                ],
+                "expected": [
+                    "REW",
+                    "REV",
+                    "ARD"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    231,
+                    102,
+                    218,
+                    109
+                ]
+            }
+        },
+        "next": [
+            "CafeNewStoryReward",
+            "Coffee"
+        ]
+    },
+    "CafeButtonCancel": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    60,
+                    45,
+                    340,
+                    370
+                ],
+                "template": [
+                    "Room/RoomButtonCancelA.png",
+                    "Room/RoomButtonCancelB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Key",
+            "param": {
+                "key": 27
+            }
+        },
+        "next": [
+            "CafeButtonCancel",
+            "EnterHome"
+        ]
+    }
+}

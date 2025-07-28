@@ -1,0 +1,535 @@
+{
+    "DailyTask": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    444,
+                    172,
+                    127,
+                    130
+                ]
+            }
+        },
+        "next": [
+            "DailyTaskMenuBtoA",
+            "KalinaLove",
+            "Send1Report"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "DailyTaskMenuBtoA": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    325,
+                    576,
+                    826,
+                    143
+                ],
+                "expected": [
+                    "设置"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    1102,
+                    633,
+                    23,
+                    18
+                ]
+            }
+        },
+        "next": [
+            "DailyTask"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "KalinaLove": {
+        "recognition": {
+        "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    1000,
+                    318,
+                    900,
+                    167
+                ],
+                "template": [
+                    "Button/ButtonTeamA.png",
+                    "Button/ButtonTeamB.png",
+                    "Button/ButtonTeamC.png",
+                    "Button/ButtonTeamD.png"
+                ],
+                "threshold": 0.8
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    464,
+                    257,
+                    146,
+                    120
+                ]
+            }
+        },
+        "next": [
+            "KalinaLove_ButtonShop",
+            "KalinaLove_ClickLove1",
+            "KalinaLove_ClickLove2",
+            "KalinaLove_ClickLove3"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "KalinaLove_ButtonShop": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    325,
+                    576,
+                    826,
+                    143
+                ],
+                "expected": [
+                    "商城"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "KalinaLove_ButtonShop",
+            "KalinaLove_ClickLove1",
+            "KalinaLove_ClickLove2",
+            "KalinaLove_ClickLove3",
+            "KalinaLove_ClickKalina"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "KalinaLove_ClickLove1": {
+        "pre_wait_freezes": 500,
+        "post_wait_freezes": 500,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    788,
+                    81,
+                    363,
+                    328
+                ],
+                "template": [
+                    "Dorm/DormLoveA.png",
+                    "Dorm/DormLoveB.png"
+                ],
+                "threshold": 0.5,
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "KalinaLove_ClickLove1",
+            "KalinaLove_ClickLove2",
+            "KalinaLove_ClickLove3",
+            "KalinaLove_ClickKalina",
+            "KalinaLove_ButtonBack"
+        ]
+    },
+    "KalinaLove_ClickLove2": {
+        "pre_wait_freezes": 500,
+        "post_wait_freezes": 500,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    788,
+                    81,
+                    363,
+                    328
+                ],
+                "template": [
+                    "Dorm/DormLoveA.png",
+                    "Dorm/DormLoveB.png"
+                ],
+                "threshold": 0.5,
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "KalinaLove_ClickLove1",
+            "KalinaLove_ClickLove2",
+            "KalinaLove_ClickLove3",
+            "KalinaLove_ClickKalina",
+            "KalinaLove_ButtonBack"
+        ]
+    },
+    "KalinaLove_ClickLove3": {
+        "pre_wait_freezes": 500,
+        "post_wait_freezes": 500,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    788,
+                    81,
+                    363,
+                    328
+                ],
+                "template": [
+                    "Dorm/DormLoveA.png",
+                    "Dorm/DormLoveB.png"
+                ],
+                "threshold": 0.5,
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "KalinaLove_ClickLove1",
+            "KalinaLove_ClickLove2",
+            "KalinaLove_ClickLove3",
+            "KalinaLove_ClickKalina",
+            "KalinaLove_ButtonBack"
+        ]
+    },
+    "KalinaLove_ClickKalina": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    981,
+                    0,
+                    298,
+                    296
+                ],
+                "expected": [
+                    "换装"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    1150,
+                    460,
+                    56,
+                    182
+                ]
+            }
+        },
+        "next": [
+            "KalinaLove_ClickLove1",
+            "KalinaLove_ClickLove2",
+            "KalinaLove_ClickLove3",
+            "KalinaLove_ButtonBack"
+        ]
+    },
+    "KalinaLove_ButtonBack": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    0,
+                    0,
+                    200,
+                    100
+                ],
+                "template": [
+                    "Button/ButtonBackA.png"
+                ],
+                "threshold": 0.5
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "KalinaLove_ButtonBack",
+            "Send1Report"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "Send1Report": {
+        "recognition": {
+        "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    1000,
+                    318,
+                    900,
+                    167
+                ],
+                "template": [
+                    "Button/ButtonTeamA.png",
+                    "Button/ButtonTeamB.png",
+                    "Button/ButtonTeamC.png",
+                    "Button/ButtonTeamD.png"
+                ],
+                "threshold": 0.8
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    464,
+                    257,
+                    146,
+                    120
+                ]
+            }
+        },
+        "next": [
+            "Send1Report_ButtonWarehouse",
+            "Send1Report_DownAndUp"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "Send1Report_ButtonWarehouse": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    325,
+                    576,
+                    826,
+                    143
+                ],
+                "expected": [
+                    "仓库"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "Send1Report",
+            "Send1Report_ButtonWarehouse",
+            "Send1Report_DownAndUp",
+            "Send1Report_ClickTheFirst"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "Send1Report_DownAndUp": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    1062,
+                    344,
+                    217,
+                    239
+                ],
+                "expected": [
+                    "升序"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "Send1Report_DownAndUp",
+            "Send1Report_ClickTheFirst",
+            "Send1Report_ChooseGift"
+        ]
+    },
+    "Send1Report_ClickTheFirst": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    0,
+                    40,
+                    216,
+                    168
+                ],
+                "template": [
+                    "Girls/StarExtra.png",
+                    "Girls/Star2.png",
+                    "Girls/Star3.png",
+                    "Girls/Star4.png",
+                    "Girls/Star5.png",
+                    "Girls/Star6.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "Send1Report_ClickTheFirst",
+            "Send1Report_Exp",
+            "Send1Report_ChooseGift"
+        ]
+    },
+    "Send1Report_Exp": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    761,
+                    2,
+                    518,
+                    475
+                ],
+                "expected": [
+                    "等级"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    200,
+                    -5,
+                    -3,
+                    -3
+                ]
+            }
+        },
+        "next": [
+            "Send1Report_Exp",
+            "Send1Report_ChooseGift"
+        ]
+    },
+    "Send1Report_ChooseGift": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    20,
+                    1900,
+                    500
+                ],
+                "expected": [
+                    "作战报告书",
+                    "突击成长存储"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    11,
+                    54,
+                    3,
+                    3
+                ]
+            }
+        },
+        "next": [
+            "Send1Report_ButtonYes",
+            "Send1Report_ChooseGift"
+        ]
+    },
+    "Send1Report_ButtonYes": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    193,
+                    300,
+                    855,
+                    420
+                ],
+                "template": [
+                    "Button/ButtonYesA.png",
+                    "Button/ButtonYesB.png",
+                    "Button/ButtonYesC.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    4,
+                    -30,
+                    -4
+                ]
+            }
+        },
+        "next": [
+            "Send1Report_SendThenBack"
+        ]
+    },
+    "Send1Report_SendThenBack": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    0,
+                    289,
+                    511
+                ],
+                "expected": [
+                    "编号"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -13,
+                    111,
+                    -2,
+                    -2
+                ]
+            }
+        },
+        "next": [
+            "Send1Report_SendThenBack",
+            "EnterHome",
+            "HomeAlready"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    }
+}

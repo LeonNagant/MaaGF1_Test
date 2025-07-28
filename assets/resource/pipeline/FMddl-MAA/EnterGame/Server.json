@@ -1,0 +1,395 @@
+{
+    "Server":{
+        "doc":"组合任务：顺序执行ServerChange、ServerSelection、ServerEnter、ServerWait",
+        "post_wait_freezes": 100,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    163,
+                    2,
+                    163,
+                    159
+                ],
+                "expected": [
+                    "变更"
+                ]
+            }
+        },
+        "next": [
+            "ServerChange",
+            "ServerSelection",
+            "ServerEnter",
+            "ServerWait",
+            "GameStart"
+        ],
+        "interrupt": [
+            "ServerLagging",
+            "ServerNeedDownload",
+            "ServerClose",
+            "ServerEmpty"
+        ],
+        "post_delay":1000
+    },
+    "ServerChange": {
+        "doc": "服务器列表未展开，点击“更变”",
+        "pre_wait_freezes": 1000,
+        "post_wait_freezes": 2000,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    163,
+                    2,
+                    163,
+                    159
+                ],
+                "expected": [
+                    "变更"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "ServerSelection",
+            "ServerEnter",
+            "ServerWait",
+            "GameStart",
+            "Reward",
+            "AssignmentAgain",
+            "HomeAlready"
+        ],
+        "interrupt": [
+            "ServerLagging",
+            "ServerNeedDownload",
+            "ServerClose",
+            "ServerEmpty"
+        ]
+    },
+    "ServerSelection": {
+        "doc": "服务器列表已展开，选择服务器",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    0,
+                    389,
+                    579
+                ],
+                "expected": [
+                    "M4A1",
+                    "安卓"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "ServerEnter",
+            "ServerSelection",
+            "Reward",
+            "AssignmentAgain",
+            "HomeAlready"
+        ],
+        "interrupt": [
+            "ServerLagging",
+            "ServerNeedDownload",
+            "ServerClose",
+            "ServerEmpty"
+        ]
+    },
+    "ServerEnter": {
+        "pre_wait_freezes": 1000,
+        "post_wait_freezes": 3000,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    420,
+                    492,
+                    309,
+                    165
+                ],
+                "expected": [
+                    "点击屏幕开始"
+                ]
+            }
+        },
+        "action": {
+                "type": "Click"
+        },
+        "next": [
+            "ServerEnter",
+            "ServerWait",
+            "GameStart",
+            "Reward",
+            "AssignmentAgain",
+            "HomeAlready"
+        ],
+        "interrupt": [
+            "ServerLagging",
+            "ServerNeedDownload",
+            "ServerClose",
+            "ServerEmpty"
+        ]
+    },
+    "ServerWait": {
+        "pre_wait_freezes": 1000,
+        "post_wait_freezes": 3000,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    763,
+                    0,
+                    262,
+                    156
+                ],
+                "expected": [
+                    "资源校验"
+                ]
+            }
+        },
+        "timeout": 2000000,
+        "next": [
+            "GameStart",
+            "HomeAlready"
+        ]
+    },
+    "Account": {
+        "doc": "Token失效，重新登录”",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    0,
+                    83,
+                    998,
+                    569
+                ],
+                "template": [
+                    "EnterGame/AccountA.png",
+                    "EnterGame/AccountB.png"
+                ]
+            }
+        },
+        "next": [
+            "AccountLogin"
+        ]
+    },
+    "AccountLogin": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    0,
+                    83,
+                    998,
+                    569
+                ],
+                "template": [
+                    "EnterGame/AccountLoginB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "AccountLogin",
+            "ServerChange"
+        ]
+    },
+    "ServerLagging": {
+        "doc": "服务器列表加载中，等待",
+        "pre_wait_freezes": 1000,
+        "post_wait_freezes":1000,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    996,
+                    636,
+                    212,
+                    84
+                ],
+                "expected": [
+                    "正在获取服务器列表"
+                ]
+            }
+        }
+    },
+    "ServerEmpty": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    187,
+                    127,
+                    857,
+                    405
+                ],
+                "expected": [
+                    "不能注册",
+                    "新号啦",
+                    "请选择其他",
+                    "其他服",
+                    "token失效",
+                    "请重新登录",
+                    "您的姓名"
+                ]
+            },
+        "next": [
+            "ServerButtonNo",
+            "Server",
+            "GameStart"
+        ],
+        "timeout": 20000
+        }
+    },
+    "ServerClose": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    279,
+                    190,
+                    680,
+                    252
+                ],
+                "expected": [
+                    "预计开服时间",
+                    "获取服务器列表失败",
+                    "请检查网络"
+                ]
+            },
+        "next": [
+            "ServerButtonYes",
+            "ServerButtonNo",
+            "Server",
+            "GameStart"
+        ]
+        }
+    },
+    "ServerNeedDownload": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    169,
+                    120,
+                    870,
+                    402
+                ],
+                "expected": [
+                    "检测到有资源文件",
+                    "需要更新",
+                    "请确保本地",
+                    "的存储空间！"
+                ]
+            },
+        "next": [
+            "ServerButtonYes",
+            "ServerDownloading"
+        ]
+        }
+    },
+    "ServerDownloading": {
+        "pre_wait_freezes": {
+            "time": 3000000,
+            "param": {
+                "target" : [
+                    16,
+                    596,
+                    85,
+                    69
+                ]
+            }
+        },
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    420,
+                    492,
+                    309,
+                    165
+                ],
+                "expected": [
+                    "点击屏幕开始"
+                ]
+            }
+        },
+        "post_wait_freezes": 10000
+    },
+    "ServerButtonYes": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    193,
+                    300,
+                    855,
+                    420
+                ],
+                "template": [
+                    "Button/ButtonYesA.png",
+                    "Button/ButtonYesB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    4,
+                    -30,
+                    -4
+                ]
+            }
+        },
+        "next": [
+            "ServerButtonNo",
+            "Server",
+            "GameStart"
+        ]
+    },
+    "ServerButtonNo": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    193,
+                    300,
+                    855,
+                    420
+                ],
+                "template": [
+                    "Button/ButtonNoA.png",
+                    "Button/ButtonNoB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    4,
+                    -30,
+                    -4
+                ]
+        },
+        "next": [
+            "ServerButtonYes",
+            "Server",
+            "GameStart"
+        ]
+        }
+    }
+}

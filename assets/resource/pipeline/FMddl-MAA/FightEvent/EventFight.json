@@ -1,0 +1,670 @@
+{
+    "EventSalvagePrepare": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    263,
+                    74,
+                    963,
+                    594
+                ],
+                "template": [
+                    "EventNow/EventAirport1A.png",
+                    "EventNow/EventAirport1B.png",
+                    "EventNow/EventAirport2A.png",
+                    "EventNow/EventAirport2B.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EventSalvageChooseTeam",
+            "EventSalvagePrepare"
+        ],
+        "timeout": 60000
+    },
+    "EventSalvageChooseTeam": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    0,
+                    0,
+                    225,
+                    720
+                ],
+                "template": [
+                    "Fight/TeamCaution1A.png",
+                    "Fight/TeamCaution1B.png",
+                    "Fight/TeamEchelon1A.png",
+                    "Fight/TeamEchelon1B.png"
+                ],
+                "threshold": 0.85
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EventSalvageFixTeam",
+            "EventSalvageYesTeam",
+            "EventSalvageChooseTeam"
+        ]
+    },
+    "EventSalvageFixTeam": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    500,
+                    560,
+                    430,
+                    250
+                ],
+                "expected": [
+                    "一键",
+                    "修复"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EventSalvageYesTeam",
+            "EventSalvageFixTeam"
+        ]
+    },
+    "EventSalvageYesTeam": {
+        "pre_wait_freezes": 200,
+        "post_wait_freezes": 200,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    600,
+                    300,
+                    680,
+                    420
+                ],
+                "template": [
+                    "Button/ButtonYesA.png",
+                    "Button/ButtonYesB.png",
+                    "Fight/TeamYes.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    4,
+                    -30,
+                    -4
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageYesTeam",
+            "EventSalvageStartFight"
+        ]
+    },
+    "EventSalvageStartFight": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    600,
+                    300,
+                    680,
+                    420
+                ],
+                "expected": [
+                    "点击指挥部",
+                    "进行部署"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    4,
+                    -30,
+                    -4
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageStartFight",
+            "EventSalvageClickTeam",
+            "EventSalvageMildSwipeR"
+        ]
+    },
+    "EventSalvageMildSwipeR": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    420,
+                    300,
+                    300
+                ],
+                "expected": [
+                    "计划模式"
+                ]
+            }
+        },
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin" : [
+                    956,
+                    251,
+                    1,
+                    1
+                ],
+                "end" : [894,
+                    251,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageClickTeam",
+            "EventSalvageMildSwipeR"
+        ]
+    },
+    "EventSalvageClickTeam": {
+        "pre_wait_freezes": 300,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "template": [
+                    "Fight/TeamMarkA.png",
+                    "Fight/TeamMarkB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -125,
+                    40,
+                    -30,
+                    -4
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageSupplyTeam",
+            "EventSalvageClickTeam",
+            "EventSalvageMildSwipeR"
+        ]
+    },
+    "EventSalvageSupplyTeam": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    700,
+                    460,
+                    580,
+                    260
+                ],
+                "template": [
+                    "Fight/TeamSupply.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EventSalvageSupplyTeam",
+            "EventSalvageScheduleMode"
+        ]
+    },
+    "EventSalvageScheduleMode": {
+        "pre_wait_freezes":300,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    420,
+                    300,
+                    300
+                ],
+                "expected": [
+                    "计划模式"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    4,
+                    -30,
+                    -4
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageSwipetoTarget"
+        ]
+    },
+
+    "EventSalvageSwipetoTarget": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    20,
+                    0,
+                    480,
+                    255
+                ],
+                "expected": [
+                    "终止作战"
+                ]
+            }
+        },
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin" : [1005,503,1,1],
+                "end" : [860,370,1,1]
+            }
+        },
+        "next": [
+            "EventSalvageClickTarget",
+            "EventSalvageSwipetoTarget"
+        ]
+    },
+    "EventSalvageClickTarget": {
+        "pre_wait_freezes":300,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "expected": [
+                    "30268",
+                    "11624"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -181,
+                    -5,
+                    -12,
+                    -4
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageScheduleOK", 
+            "EventSalvageFighting1"
+        ]
+    },
+    "EventSalvageScheduleOK": {
+        "post_wait_freezes": 300,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    1000,
+                    550,
+                    280,
+                    170
+                ],
+                "expected": [
+                    "执行计划"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EventSalvageAgainstLagging",
+            "EventSalvageFighting1",
+            "EventSalvageFighting2",
+            "EventSalvageFighting3"
+        ]
+    },
+    "EventSalvageFighting1": {
+        "rate_limit": 500,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    0,
+                    784,
+                    719
+                ],
+                "expected": [
+                    "获得",
+                    "战利品",
+                    "结算",
+                    "再次",
+                    "枪种"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    336,
+                    606,
+                    32,
+                    37
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageAgainstLagging",
+            "EventSalvageFighting1",
+            "EventSalvageFighting2",
+            "EventSalvageStartFight"
+        ],
+        "interrupt": [
+            "EventSalvageButtonNo",
+            "EventRecycle"
+        ]
+    },
+    "EventSalvageFighting2": {
+        "rate_limit": 200,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    336,
+                    35,
+                    469,
+                    482
+                ],
+                "template": [
+                    "Girls/GetGirl.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    336,
+                    606,
+                    32,
+                    37
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageAgainstLagging",
+            "EventSalvageFighting2",
+            "EventSalvageFighting3",
+            "EventSalvageStartFight"
+        ],
+        "interrupt": [
+            "EventSalvageButtonNo",
+            "EventRecycle"
+        ]
+    },
+    "EventSalvageFighting3": {
+        "rate_limit": 500,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    0,
+                    784,
+                    719
+                ],
+                "expected": [
+                    "获得",
+                    "战利品",
+                    "结算",
+                    "再次",
+                    "枪种"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    336,
+                    606,
+                    32,
+                    37
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageAgainstLagging",
+            "EventSalvageFighting3",
+            "EventSalvageFighting4",
+            "EventSalvageStartFight"
+        ],
+        "interrupt": [
+            "EventSalvageButtonNo",
+            "EventRecycle"
+        ]
+    },
+    "EventSalvageFighting4": {
+        "rate_limit": 200,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    336,
+                    35,
+                    469,
+                    482
+                ],
+                "template": [
+                    "Girls/GetGirl.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    336,
+                    606,
+                    32,
+                    37
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageAgainstLagging",
+            "EventSalvageFighting4",
+            "EventSalvageFighting5",
+            "EventSalvageStartFight"
+        ],
+        "interrupt": [
+            "EventSalvageButtonNo",
+            "EventRecycle"
+        ]
+    },
+    "EventSalvageFighting5": {
+        "rate_limit": 500,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    0,
+                    0,
+                    784,
+                    719
+                ],
+                "expected": [
+                    "获得",
+                    "战利品",
+                    "结算",
+                    "再次",
+                    "枪种"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    336,
+                    606,
+                    32,
+                    37
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageAgainstLagging",
+            "EventSalvageFighting5",
+            "EventSalvageFighting6",
+            "EventSalvageStartFight"
+        ],
+        "interrupt": [
+            "EventSalvageButtonNo",
+            "EventRecycle"
+        ]
+    },
+    "EventSalvageFighting6": {
+        "rate_limit": 200,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    336,
+                    35,
+                    469,
+                    482
+                ],
+                "template": [
+                    "Girls/GetGirl.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    336,
+                    606,
+                    32,
+                    37
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageAgainstLagging",
+            "EventSalvageFighting6",
+            "EventSalvageFighting1",
+            "EventSalvageStartFight"
+        ],
+        "interrupt": [
+            "EventSalvageButtonNo",
+            "EventRecycle"
+        ]
+    },
+    "EventSalvageAgainstLagging": {
+        "doc": "防止点到人形导致冻结时间",
+        "rate_limit": 200,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    909,
+                    31,
+                    133,
+                    81
+                ],
+                "expected": [
+                    "时间"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    759,
+                    63,
+                    131,
+                    54
+                ]
+            }
+        },
+        "next": [
+            "EventSalvageAgainstLagging",
+            "EventSalvageFighting4",
+            "EventSalvageFighting1",
+            "EventSalvageStartFight"
+        ],
+        "interrupt": [
+            "EventSalvageButtonNo",
+            "EventRecycle"
+        ]
+    },
+    "EventSalvageButtonNo": {
+        "rate_limit": 200,
+        "post_wait_freezes": 2000,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    193,
+                    300,
+                    855,
+                    420
+                ],
+                "template": [
+                    "Button/ButtonNoA.png",
+                    "Button/ButtonNoB.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "LongPress",
+            "param": {
+                "target_offset": [
+                    30,
+                    4,
+                    -30,
+                    -4
+                ],
+                "duration": 60
+            }
+        }
+    }
+}

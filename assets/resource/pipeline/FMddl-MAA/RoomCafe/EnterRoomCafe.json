@@ -1,0 +1,159 @@
+{
+    "RoomCafe": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target" : [
+                    444,
+                    172,
+                    127,
+                    130
+                ]
+            }
+        },
+        "next": [
+            "CafeEnterTeam",
+            "CafeOpenTeamMenu",
+            "CafeSwipeBackTeamMenu",
+            "ButtonRoomCafe"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "CafeEnterTeam": {
+        "doc":"组合任务",
+        "recognition": {
+        "type": "TemplateMatch",
+            "param": {
+                "roi" : [
+                    1000,
+                    318,
+                    900,
+                    167
+                ],
+                "template": [
+                    "Button/ButtonTeamA.png",
+                    "Button/ButtonTeamB.png",
+                    "Button/ButtonTeamC.png",
+                    "Button/ButtonTeamD.png"
+                ],
+                "threshold": 0.8
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay":1000,
+        "next": [
+            "CafeEnterTeam",
+            "CafeOpenTeamMenu",
+            "CafeSwipeBackTeamMenu",
+            "ButtonRoomCafe"
+        ],
+        "interrupt": [
+            "AssignmentAgain",
+            "Reward"
+        ]
+    },
+    "CafeOpenTeamMenu": {
+        "doc":"尚未点击的Home",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    122,
+                    10,
+                    161,
+                    158
+                ],
+                "template": [
+                    "Button/ButtonHomeAtoB1.png",
+                    "Button/ButtonHomeAtoB2.png"
+                ],
+                "threshold": 0.8
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    30,
+                    0,
+                    -30,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "ButtonRoomCafe",
+            "CafeEnterTeam",
+            "CafeSwipeBackTeamMenu"
+        ]
+    },
+    "CafeSwipeBackTeamMenu": {
+        "doc":"拖动导航菜单至右",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi" : [
+                    5,
+                    61,
+                    427,
+                    153
+                ],
+                "expected": [
+                    "返回基地",
+                    "RETURN"
+                ]
+            }
+        },
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin": [
+                    1037,
+                    274,
+                    1,
+                    1
+                ],
+                "end": [
+                    383,
+                    271,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "ButtonRoomCafe",
+            "CafeEnterTeam",
+            "CafeOpenTeamMenu"
+        ]
+    },
+    "ButtonRoomCafe": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    20,
+                    120,
+                    1169,
+                    377
+                ],
+                "expected": [
+                    "咖啡厅"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "ButtonRoomCafe",
+            "CafeSwipeBackTeamMenu",
+            "Coffee"
+        ]
+    }
+}

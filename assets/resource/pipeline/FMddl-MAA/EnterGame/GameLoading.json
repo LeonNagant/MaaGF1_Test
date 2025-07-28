@@ -1,0 +1,83 @@
+{
+    "GameLoading": {
+        "doc":"组合任务：顺序执行LogoMica、LogoSunborn",
+        "post_wait_freezes": 300,
+        "next": [
+            "LogoMica",
+            "LogoSunborn",
+            "HomeAssignmentAgain",
+            "HomeReward",
+            "CloseAnnouncement",
+            "CloseEvent",
+            "HomeAlready",
+            "GameStart",
+            "Account",
+            "Server"
+        ],
+        "interrupt": [
+            "ServerLagging",
+            "ServerNeedDownload",
+            "ServerClose",
+            "ServerEmpty",
+            "EnterHome",
+            "GetGirl"
+        ],
+        "post_delay":1000
+        },
+    "LogoMica": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    313,
+                    213,
+                    534,
+                    303
+                ],
+                "expected": [
+                    "云母组"
+                ]
+            }
+        },
+        "next": [
+            "GameStart",
+            "LogoMica",
+            "LogoSunborn",
+            "Server"
+        ],
+        "interrupt": [
+            "HomeReward",
+            "HomeAssignmentAgain",
+            "HomeAlready",
+            "GetGirl"
+        ]
+    },
+    "LogoSunborn": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    313,
+                    213,
+                    534,
+                    303
+                ],
+                "template": [
+                    "EnterGame/LogoSunborn.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "next": [
+            "LogoMica",
+            "LogoSunborn",
+            "Server",
+            "GameStart"
+        ],
+        "interrupt": [
+            "HomeReward",
+            "HomeAssignmentAgain",
+            "HomeAlready"
+        ]
+    }
+}
