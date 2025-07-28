@@ -89,22 +89,15 @@
       "repeatable": true,
       "repeat_count": 1
     },
-    {
-      "name": "宿舍内自动点击爱心",
-      "entry": "=点击爱心",
-      "check": false,
-      "doc": "一直点爱心直到识别不到爱心",
-      "repeatable": true,
-      "repeat_count": 1
-    },
-    {
-      "name": "宿舍自动点赞",
-      "entry": "=宿舍自动点赞",
-      "check": false,
-      "doc": "一直点赞并参观下一个宿舍直到无赞可点",
-      "repeatable": true,
-      "repeat_count": 1
-    },
+        {
+            "name": "宿舍（好感、点赞、电池）",
+            "entry": "RoomDorm",
+            "doc": "请从主界面开始本任务，好友电池默认从最新消息者开始，偷电请自行设置",
+            "option": [
+                "访问好友顺序",
+                "好友点赞"
+            ]
+        },
     {
       "name": "裂变链接捡垃圾",
       "entry": "=裂变链接捡垃圾",
@@ -234,6 +227,177 @@
           }
         }
       ]
-    }
+    },
+        "访问好友顺序": {
+            "cases": [
+                {
+                    "name": "最新消息",
+                    "pipeline_override": {
+                        "ChooseFriendOrder": {
+                            "recognition": {
+                                "type": "OCR",
+                                "param": {
+                                    "roi" : [
+                                        1023,
+                                        0,
+                                        256,
+                                        590
+                                    ],
+                                    "expected": [
+                                        "最新消息"
+                                    ]
+                                }
+                            },
+                            "action": {
+                                "type": "Click"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "最近登陆",
+                    "pipeline_override": {
+                        "ChooseFriendOrder": {
+                            "recognition": {
+                                "type": "OCR",
+                                "param": {
+                                    "roi" : [
+                                        1023,
+                                        0,
+                                        256,
+                                        590
+                                    ],
+                                    "expected": [
+                                        "最近登陆"
+                                    ]
+                                }
+                            },
+                            "action": {
+                                "type": "Click"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "指挥官等级",
+                    "pipeline_override": {
+                        "ChooseFriendOrder": {
+                            "recognition": {
+                                "type": "OCR",
+                                "param": {
+                                    "roi" : [
+                                        1023,
+                                        0,
+                                        256,
+                                        590
+                                    ],
+                                    "expected": [
+                                        "指挥官等级"
+                                    ]
+                                }
+                            },
+                            "action": {
+                                "type": "Click"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "宿舍数量",
+                    "pipeline_override": {
+                        "ChooseFriendOrder": {
+                            "recognition": {
+                                "type": "OCR",
+                                "param": {
+                                    "roi" : [
+                                        1023,
+                                        0,
+                                        256,
+                                        590
+                                    ],
+                                    "expected": [
+                                        "宿舍数量"
+                                    ]
+                                }
+                            },
+                            "action": {
+                                "type": "Click"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "好友点赞": {
+            "cases": [
+                {
+                    "name": "10个人",
+                    "pipeline_override": {
+                        "DormFriendStop": {
+                            "recognition": {
+                                "type": "OCR",
+                                "param": {
+                                    "roi" : [
+                                        1036,
+                                        555,
+                                        243,
+                                        164
+                                    ],
+                                    "expected": [
+                                        "10/10",
+                                        "留言",
+                                        "MESSAGE"
+                                    ]
+                                }
+                            },
+                            "action": {
+                                "type": "Click",
+                                "param": {
+                                    "target": [
+                                        34,
+                                        56,
+                                        72,
+                                        34
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "所有人",
+                    "pipeline_override": {
+                        "DormFriendStop": {
+                            "recognition": {
+                                "type": "OCR",
+                                "param": {
+                                    "roi" : [
+                                        1036,
+                                        555,
+                                        243,
+                                        164
+                                    ],
+                                    "expected": [
+                                        "留言",
+                                        "MESSAGE"
+                                    ]
+                                }
+                            },
+                            "action": {
+                                "type": "Click",
+                                "param": {
+                                    "target": [
+                                        34,
+                                        56,
+                                        72,
+                                        34
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
   }
 }
