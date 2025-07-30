@@ -10,10 +10,10 @@
         ],
         "action": "Click",
         "next": [
-            "!人形回收总流程_public"
+            "!人形回收总流程"
         ]
     },
-    "!人形回收总流程_public": {
+    "!人形回收总流程": {
         "recognition": "OCR",
         "expected": [
             "资源回收"

@@ -92,6 +92,14 @@
         "next": []
     },
     "134部署_部署2队": {
+        "recognition": "TemplateMatch",
+        "template": "combat/levelUp/13-4/init.png",
+        "roi": [
+            448,
+            442,
+            161,
+            175
+        ],
         "target": [
             76,
             533,
@@ -129,6 +137,14 @@
         "action": "Click"
     },
     "134部署_弹药检查": {
+        "recognition": "TemplateMatch",
+        "template": "combat/levelUp/13-4/init.png",
+        "roi": [
+            448,
+            442,
+            161,
+            175
+        ],
         "target": [
             76,
             533,

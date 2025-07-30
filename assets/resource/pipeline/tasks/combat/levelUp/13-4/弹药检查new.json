@@ -16,6 +16,14 @@
         ]
     },
     "134部署_点击2队new": {
+        "recognition": "TemplateMatch",
+        "template": "combat/levelUp/13-4/init.png",
+        "roi": [
+            448,
+            442,
+            161,
+            175
+        ],
         "target": [
             76,
             533,

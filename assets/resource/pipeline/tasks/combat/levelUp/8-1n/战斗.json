@@ -254,23 +254,22 @@
         ],
         "action": "Click",
         "next": [
+            "81N战斗_剩余行动01"
+        ],
+        "interrupt": [
+            "public_不中断计划",
             "81N战斗_梯队遇敌",
             "81N战斗_加速结算",
-            "81N战斗_跳过获得装备",
-            "81N战斗_剩余行动01"
+            "81N战斗_跳过获得装备"
         ]
     },
     "81N战斗_梯队遇敌": {
         "recognition": "TemplateMatch",
         "template": "combat/levelUp/8-1N/794.png",
-        "rate_limit": 2000,
+        "action": "DoNothing",
+        "rate_limit": 100,
         "post_delay": 4000,
-        "next": [
-            "81N战斗_加速结算",
-            "81N战斗_跳过获得装备",
-            "81N战斗_梯队遇敌",
-            "81N战斗_剩余行动01"
-        ],
+        "next": [],
         "timeout": 600000,
         "interrupt": "public_不中断计划"
     },
@@ -284,17 +283,14 @@
         ],
         "template": "combat/levelUp/8-1N/eqip_get.png",
         "action": "Click",
-        "threshold": 0.58,
+        "threshold": 0.6,
         "rate_limit": 100,
         "post_delay": 1,
-        "next": [
-            "81N战斗_跳过获得装备",
-            "81N战斗_梯队遇敌",
-            "81N战斗_剩余行动01",
-            "81N战斗_加速结算"
-        ],
+        "next": [],
         "timeout": 600000,
-        "interrupt": "public_不中断计划"
+        "interrupt": [
+            "public_不中断计划"
+        ]
     },
     "81N战斗_加速结算": {
         "recognition": "OCR",
@@ -305,15 +301,11 @@
             75
         ],
         "expected": "战斗结算",
-        "rate_limit": 500,
+        "rate_limit": 100,
         "action": "Click",
-        "post_delay": 1,
-        "next": [
-            "81N战斗_梯队遇敌",
-            "81N战斗_剩余行动01",
-            "81N战斗_跳过获得装备",
-            "81N战斗_加速结算"
-        ],
+        "pre_delay": 1,
+        "post_delay": 200,
+        "next": [],
         "timeout": 600000,
         "interrupt": "public_不中断计划"
     }

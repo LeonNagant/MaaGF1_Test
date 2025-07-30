@@ -1,20 +1,172 @@
 {
     "!指挥官后勤": {
-        "next": [
-            "零电荷_选择关卡",
-            "零电荷_进入作战",
-            "零电荷_梯队部署",
+         "next": [
+            "零电荷_进入零电荷",
+            "零电荷_主界面进入零电荷",
+            "零电荷_常驻活动",
             "零电荷_开始作战"
+        ]
+    },
+    "零电荷_主界面进入零电荷": {
+        "recognition": "OCR",
+        "roi": [
+            874,
+            377,
+            162,
+            102
+        ],
+        "expected": "战斗",
+        "action": "Click",
+        "next": [
+            "零电荷_主界面进入零电荷",
+            "零电荷_进入零电荷",
+            "零电荷_常驻活动"
+        ]
+    },
+    "零电荷_常驻活动": {
+        "recognition": "OCR",
+        "roi": [
+            0,
+            310,
+            265,
+            410
+        ],
+        "expected": "常驻活动",
+        "action": "Click",
+        "post_wait_freezes": 200,
+        "next": [
+            "零电荷_点击零电荷",
+            "零电荷_常驻活动"
+        ]
+    },
+    "零电荷_点击零电荷": {
+        "recognition": "OCR",
+        "roi": [
+            182,
+            95,
+            136,
+            624
+        ],
+        "expected": "电荷",
+        "action": "Click",
+        "post_wait_freezes": 200,
+        "next": [
+            "零电荷_进入零电荷",
+            "零电荷_点击零电荷"
+        ]
+    },
+    "零电荷_进入零电荷": {
+        "recognition": "OCR",
+        "roi" : [415,249,522,331],
+        "expected" : "ZERO",
+        "action": "Click",
+        "next": [
+            "零电荷_进入打捞关",
+            "零电荷_进入零电荷"
+        ]
+    },
+    "零电荷_进入打捞关": {
+        "recognition": "OCR",
+        "recommended roi" : [238,101,173,134],
+        "expected" : "Zero",
+        "action": "Click",
+        "target": [17,546,112,42],
+        "next": [
+            "零电荷_进入零电荷关卡",
+            "零电荷_进入打捞关"
+        ]
+    },
+    "零电荷_进入零电荷关卡": {
+        "recognition": "OCR",
+        "recommended roi" : [895,139,340,157],
+        "expected" : "无来由的恐惧瞬间EX",
+        "action": "Click",
+        "target":[1120,391,92,38],
+        "next": [
+            "零电荷_初始化地图",
+            "零电荷_进入零电荷关卡"
+        ]
+    },
+    "零电荷_初始化地图": {
+        "recognition": "OCR",
+        "roi": [
+            140,
+            15,
+            132,
+            78
+        ],
+        "expected": "战场说明",
+        "action": "Swipe",
+        "begin": [
+            261,
+            696,
+            1,
+            1
+        ],
+        "end": [
+            1280,
+            0,
+            1,
+            1
+        ],
+        "next": [
+            "零电荷_部署梯队",
+            "零电荷_初始化地图"
+        ]
+    },
+    "零电荷_部署梯队": {
+        "recognition": "OCR",
+        "roi": [
+            140,
+            15,
+            132,
+            78
+        ],
+        "expected": "战场说明",
+        "action": "Click",
+        "target":[774,127,32,27],
+        "next": [
+            "零电荷_选择梯队",
+            "零电荷_部署梯队",
+            "零电荷_滑动梯队"
+        ]
+    },
+    "零电荷_选择梯队": {
+        "recognition": "OCR",
+        "roi" : [0,6,135,713],
+        "expected": "10",
+        "action": "Click",
+        "next": [
+            "零电荷_确认部署"
+        ]
+    },
+    "零电荷_滑动梯队": {
+        "recognition": "OCR",
+        "expected": "选择梯队",
+        "action": "Swipe",
+        "begin" : [75,695,1,1],
+        "end" : [79,60,1,1],
+        "next": [
+            "零电荷_选择梯队"
+        ]
+    },
+    "零电荷_确认部署": {
+        "recognition": "OCR",
+        "roi" : [1125,603,120,68],
+        "expected": "确定",
+        "action": "Click",
+        "next": [
+            "零电荷_开始作战",
+            "零电荷_确认部署"
         ]
     },
     "零电荷_开始作战": {
         "recognition": "OCR",
+        "roi" : [1002,604,277,115],
         "action": "Click",
         "expected": [
-            "点击指挥部进行"
+            "开"
         ],
-        "post_delay": 1000,
-        "rate_limit": 1500,
         "next": [
             "零电荷_结束回合",
             "零电荷_开始作战"
@@ -22,223 +174,111 @@
     },
     "零电荷_结束回合": {
         "recognition": "OCR",
+        "roi" : [1002,604,277,115],
         "action": "Click",
         "expected": [
-            "结束回合"
+            "结"
         ],
-        "post_wait_freezes": 1,
-        "rate_limit": 2000,
         "next": [
-            "零电荷_加载中",
-            "零电荷_再次作战",
-            "零电荷_结束回合"
-        ]
-    },
-    "零电荷_加载中": {
-        "recognition": "TemplateMatch",
-        "green_mask": true,
-        "template": [
-            "combat/resourceRecovery/零电荷/loading.png"
-        ],
-        "post_delay": 2000,
-        "rate_limit": 2000,
-        "next": [
-            "零电荷_加载中",
             "零电荷_再次作战",
             "零电荷_结束回合"
         ]
     },
     "零电荷_再次作战": {
         "recognition": "OCR",
+        "roi" : [396,28,94,58],
         "action": "Click",
         "expected": [
-            "再次作战"
+            "02"
         ],
         "next": [
-            "零电荷_开始作战",
-            "零电荷_人形结算",
-            "零电荷_人形拆解",
-            "零电荷_再次作战",
-            "零电荷_进入作战"
-        ],
-        "interrupt": "public_人形回收"
+            "零电荷_人形结算"
+        ]
     },
     "零电荷_人形结算": {
-        "recognition": "TemplateMatch",
-        "roi": [
-            866,
-            2,
-            413,
-            619
-        ],
-        "template": [
-            "combat/levelUp/13-4/doll_get0.png",
-            "combat/levelUp/13-4/doll_get2.png",
-            "combat/levelUp/13-4/doll_get3.png",
-            "combat/levelUp/13-4/doll_get4.png"
-        ],
+        "recognition": "DirectHit",
         "action": "Click",
-        "rate_limit": 100,
+        "target":[328,608,132,27],
         "next": [
-            "零电荷_人形结算",
-            "零电荷_再次作战"
+            "零电荷_人形回收",
+            "零电荷_人形结算"
         ],
         "timeout": 600000
     },
-    "零电荷_人形拆解": {
+    
+    "零电荷_人形回收": {
         "recognition": "OCR",
-        "expected": "人形拆解",
+        "expected": "人形回收",
+        "roi": [
+            529,
+            253,
+            248,
+            345
+        ],
         "action": "Click",
-        "next": "零电荷_选择角色"
+        "next": [
+            "零电荷_回收角色"
+        ]
     },
-    "零电荷_选择角色": {
+    "零电荷_回收角色": {
         "recognition": "OCR",
-        "expected": "角色",
+        "roi" : [300,169,112,60],
+        "expected": [
+            "角色"
+        ],
         "action": "Click",
-        "next": "零电荷_智能选择"
+        "next": [
+            "零电荷_智能选择"
+        ]
     },
     "零电荷_智能选择": {
         "recognition": "OCR",
+        "roi" : [1093,593,174,106],
         "expected": [
-            "智能",
+            "智能选择",
             "确定"
         ],
         "action": "Click",
         "next": [
             "零电荷_智能选择",
-            "零电荷_回收"
+            "零电荷_确认回收"
         ]
     },
-    "零电荷_回收": {
+    "零电荷_确认回收": {
         "recognition": "OCR",
-        "expected": "回收",
-        "action": "Click",
-        "next": "零电荷_返回零电荷"
-    },
-    "零电荷_返回零电荷": {
-        "recognition": "TemplateMatch",
-        "action": "Click",
-        "template": [
-            "combat/resourceRecovery/零电荷/导航栏.png"
+        "roi" : [1062,203,89,110],
+        "expected": [
+            "人力"
         ],
+        "action": "Click",
+        "next": [
+            "零电荷_导航栏",
+            "零电荷_确认回收"
+        ]
+    },
+    "零电荷_导航栏": {
+        "recognition": "OCR",
+        "roi" : [278,154,137,87],
+        "expected": [
+            "角色"
+        ],
+        "action": "Click",
+        "target":[174,15,82,72],
         "next": [
             "零电荷_战斗页面",
-            "零电荷_返回零电荷"
+            "零电荷_导航栏"
         ]
     },
     "零电荷_战斗页面": {
         "recognition": "OCR",
-        "action": "Click",
+        "roi" : [71,222,139,97],
         "expected": [
             "战斗"
         ],
+        "action": "Click",
         "next": [
-            "零电荷_进入作战",
+            "!指挥官后勤",
             "零电荷_战斗页面"
-        ]
-    },
-    "零电荷_进入作战": {
-        "recognition": "OCR",
-        "action": "Click",
-        "expected": [
-            "进入作战",
-            "进人作战"
-        ],
-        "next": [
-            "零电荷_选择关卡",
-            "零电荷_进入作战"
-        ]
-    },
-    "零电荷_选择关卡": {
-        "recognition": "TemplateMatch",
-        "action": "Click",
-        "template": [
-            "combat/resourceRecovery/零电荷/零电荷打捞图.png"
-        ],
-        "threshold": 0.6,
-        "next": [
-            "零电荷_确认出击",
-            "零电荷_选择关卡"
-        ]
-    },
-    "零电荷_确认出击": {
-        "recognition": "OCR",
-        "action": "Click",
-        "expected": [
-            "确认出击"
-        ],
-        "next": [
-            "零电荷_梯队部署",
-            "零电荷_确认出击"
-        ]
-    },
-    "零电荷_梯队部署": {
-        "recognition": "FeatureMatch",
-        "roi": [
-            451,
-            265,
-            403,
-            377
-        ],
-        "action": "Click",
-        "template": [
-            "combat/resourceRecovery/零电荷/指挥部.png"
-        ],
-        "next": [
-            "零电荷_滑动梯队栏",
-            "零电荷_梯队部署"
-        ]
-    },
-    "零电荷_滑动梯队栏": {
-        "recognition": "OCR",
-        "expected": [
-            "梯队"
-        ],
-        "action": "Swipe",
-        "begin": [
-            60,
-            634,
-            1,
-            1
-        ],
-        "end": [
-            60,
-            269,
-            1,
-            1
-        ],
-        "next": [
-            "零电荷_选择梯队",
-            "零电荷_滑动梯队栏"
-        ]
-    },
-    "零电荷_选择梯队": {
-        "recognition": "OCR",
-        "action": "Click",
-        "expected": [
-            "10"
-        ],
-        "next": [
-            "零电荷_确认部署",
-            "零电荷_选择梯队"
-        ]
-    },
-    "零电荷_确认部署": {
-        "recognition": "OCR",
-        "action": "Click",
-        "roi": [
-            1070,
-            582,
-            193,
-            111
-        ],
-        "expected": [
-            "确定",
-            "取消"
-        ],
-        "next": [
-            "零电荷_开始作战",
-            "零电荷_确认部署"
         ]
     }
 }
