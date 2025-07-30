@@ -223,7 +223,7 @@
             "combat/levelUp/8-1N/p03.png",
             "combat/levelUp/8-1N/Gp03.png"
         ],
-        "threshold": 0.7,
+        "threshold": 0.6,
         "green_mask": true,
         "next": [
             "81N战斗_炸狗点2"
@@ -241,7 +241,7 @@
             "combat/levelUp/8-1N/p06.png",
             "combat/levelUp/8-1N/Gp06.png"
         ],
-        "threshold": 0.7,
+        "threshold": 0.6,
         "green_mask": true,
         "next": [
             "81N战斗_执行计划"
