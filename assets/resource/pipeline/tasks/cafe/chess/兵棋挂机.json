@@ -1,0 +1,129 @@
+{
+    "=兵棋总流程": {
+        "recognition": "OCR",
+        "expected": [
+            "开始游戏",
+            "创建房间"
+        ],
+        "next": [
+            "开始游戏_兵棋进入",
+            "创建房间_兵棋进入"
+        ]
+    },
+    "创建房间_兵棋进入": {
+        "recognition": "OCR",
+        "expected": [
+            "创建房间"
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "next": [
+            "确定进入_兵棋进入"
+        ]
+    },
+    "确定进入_兵棋进入": {
+        "recognition": "OCR",
+        "expected": [
+            "确定"
+        ],
+        "action": "Click",
+        "next": [
+            "开始游戏_兵棋进入"
+        ]
+    },
+    "开始游戏_兵棋进入": {
+        "recognition": "OCR",
+        "expected": [
+            "开始游戏"
+        ],
+        "rate_limit": 5000,
+        "action": "Click",
+        "next": [
+            "挂机_兵棋挂机1"
+        ]
+    },
+    "挂机_兵棋挂机1": {
+        "recognition": "DirectHit",
+        "pre_delay": 300000,
+        "action": "Click",
+        "target":[559,472,159,46],
+        "next": [
+            "挂机_兵棋挂机2",
+            "领取奖励_兵棋结束"
+        ]
+    },
+    "挂机_兵棋挂机2": {
+        "recognition": "DirectHit",
+        "pre_delay": 300000,
+        "action": "Click",
+        "target":[559,472,159,46],
+        "next": [
+            "挂机_兵棋挂机3",
+            "领取奖励_兵棋结束"
+        ]
+    },
+    "挂机_兵棋挂机3": {
+        "recognition": "DirectHit",
+        "pre_delay": 300000,
+        "action": "Click",
+        "target":[559,472,159,46],
+        "next": [
+            "挂机_兵棋挂机4",
+            "领取奖励_兵棋结束"
+        ]
+    },
+    "挂机_兵棋挂机4": {
+        "recognition": "DirectHit",
+        "pre_delay": 300000,
+        "action": "Click",
+        "target":[559,472,159,46],
+        "next": [
+            "领取奖励_兵棋结束",
+            "兵棋_时间足够"
+        ]
+    },
+    "兵棋_时间足够": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target" : [114,22,49,37],
+        "next": [
+            "兵棋_退出比赛",
+            "兵棋_时间足够"
+            
+        ]
+    },
+    "兵棋_退出比赛": {
+        "recognition": "OCR",
+        "roi" : [1053,47,187,133],
+        "expected": "退",
+        "action": "Click",
+        "next": [
+            "兵棋_确认退出"
+        ]
+    },
+    "兵棋_确认退出": {
+        "recognition": "OCR",
+        "roi" : [720,463,104,66],
+        "expected": "确",
+        "action": "Click",
+        "next": [
+            "=兵棋总流程"
+        ]
+    },
+     "领取奖励_兵棋结束": {
+        "recognition": "TemplateMatch",
+        "template": "chess/reward.png",
+        "action": "Click",
+        "next": [
+            "返回开始游戏_兵棋结束"
+        ]
+    },
+    "返回开始游戏_兵棋结束": {
+        "recognition": "TemplateMatch",
+        "template": "chess/back2restart.png",
+        "action": "Click",
+        "next": [
+            "开始游戏_兵棋进入"
+        ]
+    }
+}
