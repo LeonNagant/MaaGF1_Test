@@ -755,7 +755,10 @@
                 543,
                 323
               ],
-              "template": "Activity/机场2.png",
+              "template": [
+                "Activity/机场2.png",
+                "Activity/机场21.png"
+              ],
               "action": "Click",
               "threshold": 0.5,
               "pre_delay": 800,
@@ -765,7 +768,10 @@
             },
             "VP_打捞线终点": {
               "recognition": "TemplateMatch",
-              "template": "Activity/终点2.png",
+              "template": [
+                "Activity/终点2.png",
+                "Activity/终点21.png"
+              ],
               "roi": [
                 838,
                 482,

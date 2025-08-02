@@ -193,7 +193,7 @@
     },
     "VP加速结算": {
         "action": "DoNothing",
-        "post_delay": 450,
+        "post_delay": 400,
         "next": [
             "VP_再次作战"
         ],
@@ -245,7 +245,14 @@
         ],
         "action": "Click",
         "pre_delay": 50,
-        "post_delay": 50
+        "post_delay": 50,
+        "next": [
+            "VP_防止中断计划"
+        ]
+    },
+    "VP_防止中断计划": {
+        "action": "DoNothing",
+        "post_delay": 8500
     },
     "VP_再次作战": {
         "recognition": "OCR",
