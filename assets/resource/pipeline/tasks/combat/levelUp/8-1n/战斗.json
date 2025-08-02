@@ -55,6 +55,9 @@
         "next": [
             "81N战斗_点击补给",
             "81N战斗_点击2队单zas准备补给"
+        ],
+        "interrupt": [
+            "81N地图初始化_长按修正"
         ]
     },
     "81N战斗_点击补给": {
@@ -88,6 +91,9 @@
         "next": [
             "81N战斗_点击2队撤离",
             "81N战斗_点击2队单zas"
+        ],
+        "interrupt": [
+            "81N地图初始化_长按修正"
         ]
     },
     "81N战斗_点击2队撤离": {
@@ -134,6 +140,9 @@
             "81N战斗_出现妖精技能释放",
             "81N战斗_点击1队取消",
             "81N战斗_点击1队图标"
+        ],
+        "interrupt": [
+            "81N地图初始化_长按修正"
         ]
     },
     "81N战斗_出现妖精技能释放": {
@@ -216,14 +225,13 @@
     "81N战斗_炸狗点1确认": {
         "recognition": "TemplateMatch",
         "roi": [
-            165,
-            423,
-            202,
-            204
+            961,
+            606,
+            126,
+            113
         ],
         "template": [
-            "combat/levelUp/8-1N/p03.png",
-            "combat/levelUp/8-1N/Gp03.png"
+            "combat/levelUp/8-1N/Gap4.png"
         ],
         "green_mask": true,
         "threshold": 0.7,
@@ -234,14 +242,13 @@
     "81N战斗_炸狗点2确认": {
         "recognition": "TemplateMatch",
         "roi": [
-            179,
-            78,
-            277,
-            233
+            961,
+            606,
+            126,
+            113
         ],
         "template": [
-            "combat/levelUp/8-1N/p06.png",
-            "combat/levelUp/8-1N/Gp06.png"
+            "combat/levelUp/8-1N/Gap1.png"
         ],
         "green_mask": true,
         "threshold": 0.7,
@@ -254,33 +261,19 @@
         "expected": [
             "执行计划"
         ],
-        "action": "Click",
-        "next": [
-            "81N战斗_梯队遇敌",
-            "81N战斗_剩余行动01",
-            "81N战斗_执行计划"
-        ]
+        "action": "Click"
     },
     "81N战斗_梯队遇敌": {
         "recognition": "TemplateMatch",
         "template": "combat/levelUp/8-1N/794.png",
-        "post_delay": 6000,
-        "rate_limit": 500,
+        "post_delay": 5000,
+        "rate_limit": 100,
         "next": [
-            "81N战斗_梯队遇敌",
-            "81N战斗_剩余行动01"
-        ],
-        "timeout": 600000,
-        "interrupt": [
-            "public_不中断计划",
             "81N战斗_加速结算"
-        ]
+        ],
+        "timeout": 600000
     },
     "81N战斗_加速结算": {
-        "recognition": "TemplateMatch",
-        "template": "combat/levelUp/8-1N/794.png",
-        "inverse": true,
-        "rate_limit": 100,
         "action": "Click",
         "target": [
             971,
@@ -291,12 +284,33 @@
         "pre_delay": 0,
         "post_delay": 200,
         "next": [
+            "81N战斗_等待作战",
             "81N战斗_加速结算"
         ],
-        "interrupt": [
+        "timeout": 600000
+    },
+    "81N战斗_等待作战": {
+        "recognition": "TemplateMatch",
+        "template": "combat/levelUp/8-1N/794.png",
+        "rate_limit": 100,
+        "next": [
             "81N战斗_梯队遇敌",
+            "81N战斗_剩余行动01"
+        ],
+        "post_delay": 3000,
+        "interrupt": [
             "public_不中断计划"
         ],
         "timeout": 600000
+    },
+    "81N战斗_剩余行动01": {
+        "recognition": "TemplateMatch",
+        "green_mask": true,
+        "template": "combat/levelUp/8-1N/Gap01.png",
+        "timeout": 60000,
+        "pre_delay": 1000,
+        "next": [
+            "81N重置_点击1队图标"
+        ]
     }
 }

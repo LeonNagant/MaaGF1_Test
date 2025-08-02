@@ -1,7 +1,7 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "name": "MaaGF1",
-  "version": "v1.4.8",
+  "version": "v1.4.13",
   "url": "https://github.com/LeonNagant/MaaGF1_Test",
   "mirrorchyan_rid": null,
   "mirrorchyan_multiplatform": false,
@@ -39,8 +39,8 @@
       "repeatable": false,
       "repeat_count": 1,
       "option": [
-        "弹药检查版本选择_134",
-        "是否开启结算加速_134"
+        "134_弹药检查版本选择",
+        "134_是否开启结算加速"
       ]
     },
     {
@@ -59,8 +59,9 @@
       "repeatable": false,
       "repeat_count": 1,
       "option": [
-        "弹药检查版本选择_81N",
-        "是否开启结算加速_81N"
+        "81N_弹药检查版本选择",
+        "81N_是否开启结算加速",
+        "81N_选择狗粮类型"
       ]
     },
     {
@@ -144,165 +145,118 @@
     }
   ],
   "option": {
-    "是否开启结算加速_81N": {
+    "81N_选择狗粮类型": {
       "cases": [
         {
-          "name": "启用结算加速"
+          "name": "人形小队（第三梯队）",
+          "pipeline_override": {
+            "81N部署_确认2队是否已部署": {
+              "interrupt": [
+                "81N部署_部署3队"
+              ]
+            }
+          }
+        },
+        {
+          "name": "重装小队（BGM-71）",
+          "pipeline_override": {
+            "81N部署_确认2队是否已部署": {
+              "interrupt": [
+                "81N部署_部署重装"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "81N_是否开启结算加速": {
+      "cases": [
+        {
+          "name": "启用结算加速",
+          "pipeline_override": {
+            "81N战斗_执行计划": {
+              "next": [
+                "81N战斗_梯队遇敌",
+                "81N战斗_剩余行动01",
+                "81N战斗_执行计划"
+              ]
+            }
+          }
         },
         {
           "name": "关闭结算加速",
           "pipeline_override": {
             "81N战斗_执行计划": {
-              "post_delay": 80000
-            },
-            "81N战斗_加速结算": {
-              "enable": false
-            },
-            "81N战斗_跳过获得装备": {
-              "enable": false
-            },
-            "81N战斗_梯队遇敌": {
-              "enable": false
+              "post_delay": 65000,
+              "next": [
+                "81N战斗_剩余行动01"
+              ]
             }
           }
         }
       ]
     },
-    "是否开启结算加速_134": {
+    "134_是否开启结算加速": {
       "cases": [
         {
-          "name": "启用结算加速"
+          "name": "启用结算加速",
+          "pipeline_override": {
+            "134战斗_执行计划": {
+              "next": [
+                "134战斗_梯队遇敌",
+                "134重置_再次作战"
+              ]
+            }
+          }
         },
         {
           "name": "关闭结算加速",
           "pipeline_override": {
             "134战斗_执行计划": {
-              "post_delay": 90000
-            },
-            "134战斗_加速结算": {
-              "enable": false
-            },
-            "134战斗_跳过获得角色": {
-              "enable": false
-            },
-            "134战斗_梯队遇敌": {
-              "enable": false
-            }
-          }
-        }
-      ]
-    },
-    "弹药检查版本选择_81N": {
-      "cases": [
-        {
-          "name": "启用新版弹药识别"
-        },
-        {
-          "name": "启用旧版弹药识别",
-          "pipeline_override": {
-            "狗粮队确定_8_1N部署": {
-              "recognition": "OCR",
-              "roi": [
-                933,
-                556,
-                180,
-                100
-              ],
-              "expected": [
-                "确定",
-                "取消"
-              ],
-              "action": "Click",
-              "post_delay": 1200,
+              "post_delay": 65000,
               "next": [
-                "81N部署_弹药检查"
-              ]
-            },
-            "布置完成_8_1N部署": {
-              "recognition": "TemplateMatch",
-              "roi": [
-                179,
-                78,
-                277,
-                233
-              ],
-              "template": "combat/levelUp/8-1N/map_team2.png",
-              "rate_limit": 200,
-              "next": [
-                "81N部署_弹药检查"
-              ]
-            },
-            "!81N总流程": {
-              "recognition": "OCR",
-              "expected": [
-                "巨鹰与寒鸦",
-                "开始作战"
-              ],
-              "next": [
-                "81N进入_点击8-1N",
-                "81N部署_部署梯队",
-                "81N部署_弹药检查"
-              ],
-              "interrupt": [
-                "81N地图初始化_拖到左上角"
+                "134重置_再次作战"
               ]
             }
           }
         }
       ]
     },
-    "弹药检查版本选择_134": {
+    "81N_弹药检查版本选择": {
       "cases": [
         {
-          "name": "启用新版弹药识别"
+          "name": "启用新版弹药识别",
+          "pipeline_override": {
+            "81N部署_布置完成": {
+              "next": "81N部署_弹药检查new"
+            }
+          }
         },
         {
           "name": "启用旧版弹药识别",
           "pipeline_override": {
-            "单vv队确定_134部署": {
-              "recognition": "OCR",
-              "roi": [
-                901,
-                548,
-                202,
-                115
-              ],
-              "expected": [
-                "确定",
-                "取消"
-              ],
-              "action": "Click",
-              "next": [
-                "134部署_弹药检查"
-              ]
-            },
-            "布置完成_134部署": {
-              "recognition": "TemplateMatch",
-              "roi": [
-                39,
-                377,
-                426,
-                152
-              ],
-              "template": "combat/levelUp/13-4/map_team2.png",
-              "next": [
-                "134部署_弹药检查"
-              ]
-            },
-            "!134总流程": {
-              "recognition": "OCR",
-              "expected": [
-                "故友",
-                "开始作战"
-              ],
-              "next": [
-                "134进入_点击134",
-                "134部署_部署梯队",
-                "134部署_弹药检查"
-              ],
-              "interrupt": [
-                "134地图初始化_拖到右上角"
-              ]
+            "81N部署_布置完成": {
+              "next": "81N部署_弹药检查"
+            }
+          }
+        }
+      ]
+    },
+    "134_弹药检查版本选择": {
+      "cases": [
+        {
+          "name": "启用新版弹药识别",
+          "pipeline_override": {
+            "81N部署_布置完成": {
+              "next": "134部署_弹药检查new"
+            }
+          }
+        },
+        {
+          "name": "启用旧版弹药识别",
+          "pipeline_override": {
+            "81N部署_布置完成": {
+              "next": "134部署_弹药检查"
             }
           }
         }

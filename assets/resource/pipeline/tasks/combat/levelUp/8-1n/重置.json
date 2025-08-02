@@ -1,21 +1,5 @@
 {
-    "81N战斗_剩余行动01": {
-        "recognition": "OCR",
-        "roi": [
-            966,
-            604,
-            124,
-            115
-        ],
-        "expected": [
-            "01"
-        ],
-        "timeout": 60000,
-        "pre_delay": 1000,
-        "next": [
-            "81N重置_点击1队图标"
-        ]
-    },
+
     "81N重置_点击1队图标": {
         "recognition": "TemplateMatch",
         "roi": [

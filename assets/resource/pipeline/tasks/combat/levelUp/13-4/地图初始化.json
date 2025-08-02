@@ -41,5 +41,23 @@
         ],
         "template": "combat/levelUp/13-4/init.png",
         "next": []
+    },
+    "134地图初始化_长按修正": {
+        "recognition": "OCR",
+        "expected": "梯队",
+        "roi": [
+            924,
+            31,
+            180,
+            66
+        ],
+        "action": "Click",
+        "target": [
+            556,
+            87,
+            32,
+            17
+        ],
+        "next": "134地图初始化_拖到右上角"
     }
 }

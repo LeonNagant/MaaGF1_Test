@@ -1,9 +1,12 @@
-# MaaGF1_Test - 少女前线自动化助手
+<!-- markdownlint-disable MD033 MD041 -->
 
 <p align="center">
-  <img alt="LOGO" src="https://cdn.jsdelivr.net/gh/LeonNagant/MaaGF1_Test/example_img/icon/icon.png" width="200" height="200" />
-  <h1 align="center">MaaGF1_Test</h1>
+  <img src="https://cdn.jsdelivr.net/gh/LeonNagant/MaaGF1_Test/example_img/icon/icon.png" width="200" height="200" alt="LOGO">
 </p>
+
+<div align="center">
+
+# MaaGF1_Test - 少女前线自动化助手
 
 <div align="center">
 
@@ -29,7 +32,7 @@
 
 少女前线官方曾有大量封禁脚本记录！  
 **使用风险自行承担，本项目不承担任何后果**  
-[查看完整免责声明](#免责声明与许可)
+[查看完整免责声明](#-免责声明与许可)
 
 ---
 
@@ -156,12 +159,10 @@
 
 ### 贡献者墙
 
-<a href="https://github.com/LeonNagant/MaaGF1_Test/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=LeonNagant/MaaGF1_Test" width="800"/>
-</a>
+[![Contributors](https://contrib.rocks/image?repo=LeonNagant/MaaGF1_Test&show_noncode=true)](https://github.com/LeonNagant/MaaGF1_Test/graphs/contributors)
 
-## 相关项目
+## 相关项
 
 ### 感谢 [FMddl-MAAutoGirlsFrontLine](https://github.com/Fufu-OuO/FMddl-MAAutoGirlsFrontLine) 开发组对本项目的支持与贡献
 
-> 感谢所有参与开发、测试的贡献者和用户！
+ 感谢所有参与开发、测试的贡献者和用户！

@@ -67,6 +67,9 @@
         "post_delay": 1000,
         "next": [
             "134战斗_点击1队图标"
+        ],
+        "interrupt": [
+            "134地图初始化_长按修正"
         ]
     },
     "134战斗_点击1队图标": {
@@ -84,6 +87,9 @@
             "134战斗_出现妖精技能释放",
             "134战斗_点击1队取消",
             "134战斗_点击1队图标"
+        ],
+        "interrupt": [
+            "134地图初始化_长按修正"
         ]
     },
     "134战斗_出现妖精技能释放": {
@@ -146,17 +152,17 @@
     "134战斗_巡游者_确认": {
         "recognition": "TemplateMatch",
         "roi": [
-            569,
-            495,
-            106,
-            89
+            969,
+            650,
+            94,
+            69
         ],
         "template": [
-            "combat/levelUp/13-4/gp2.png"
+            "combat/levelUp/13-4/Gap3.png"
         ],
         "threshold": 0.8,
         "green_mask": true,
-        "rate_limit": 500,
+        "rate_limit": 200,
         "next": [
             "134战斗_钢狮"
         ]
@@ -170,7 +176,7 @@
         ],
         "action": "Click",
         "post_delay": 200,
-        "rate_limit": 500,
+        "rate_limit": 200,
         "next": [
             "134战斗_钢狮_确认",
             "134战斗_钢狮"
@@ -179,16 +185,17 @@
     "134战斗_钢狮_确认": {
         "recognition": "TemplateMatch",
         "roi": [
-            673,
-            584,
-            78,
-            80
+            969,
+            650,
+            94,
+            69
         ],
         "template": [
-            "combat/levelUp/13-4/gp4.png"
+            "combat/levelUp/13-4/Gap0.png"
         ],
+        "threshold": 0.8,
         "green_mask": true,
-        "rate_limit": 500,
+        "rate_limit": 200,
         "next": [
             "134战斗_终点"
         ]
@@ -202,7 +209,9 @@
         ],
         "action": "Click",
         "post_delay": 200,
-        "rate_limit": 500,
+        "rate_limit": 200,
+        "green_mask": true,
+        "threshold": 0.8,
         "next": [
             "134战斗_终点_确认",
             "134战斗_终点"
@@ -211,14 +220,14 @@
     "134战斗_终点_确认": {
         "recognition": "TemplateMatch",
         "roi": [
-            579,
-            594,
-            80,
-            81
+            969,
+            650,
+            94,
+            69
         ],
         "threshold": 0.8,
         "template": [
-            "combat/levelUp/13-4/gp9.png"
+            "combat/levelUp/13-4/Gap-5.png"
         ],
         "green_mask": true,
         "rate_limit": 500,
@@ -232,32 +241,20 @@
             "执行计划"
         ],
         "action": "Click",
-        "next": [
-            "134战斗_梯队遇敌",
-            "134重置_再次作战"
-        ],
+
         "timeout": 600000
     },
     "134战斗_梯队遇敌": {
         "recognition": "TemplateMatch",
         "template": "combat/levelUp/13-4/794.png",
-        "post_delay": 10000,
-        "rate_limit": 500,
+        "post_delay": 9000,
+        "rate_limit": 100,
         "next": [
-            "134战斗_梯队遇敌",
-            "134重置_再次作战"
-        ],
-        "timeout": 600000,
-        "interrupt": [
-            "public_不中断计划",
             "134战斗_加速结算"
-        ]
+        ],
+        "timeout": 600000
     },
     "134战斗_加速结算": {
-        "recognition": "TemplateMatch",
-        "template": "combat/levelUp/13-4/794.png",
-        "inverse": true,
-        "rate_limit": 100,
         "action": "Click",
         "target": [
             971,
@@ -268,10 +265,21 @@
         "pre_delay": 0,
         "post_delay": 200,
         "next": [
+            "134战斗_等待作战",
             "134战斗_加速结算"
         ],
-        "interrupt": [
+        "timeout": 600000
+    },
+    "134战斗_等待作战": {
+        "recognition": "TemplateMatch",
+        "template": "combat/levelUp/13-4/794.png",
+        "rate_limit": 100,
+        "next": [
             "134战斗_梯队遇敌",
+            "134重置_再次作战"
+        ],
+        "post_delay": 3000,
+        "interrupt": [
             "public_不中断计划"
         ],
         "timeout": 600000
