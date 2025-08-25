@@ -1,0 +1,238 @@
+{
+    "!静风点-贝蒂数抽薪打捞": {
+        "next": "点击三维流形S-1"
+    },
+    "点击三维流形S-1":{
+        "recognition": "TemplateMatch",
+        "roi" : [652,297,70,71],
+        "template" : "combat/dollRescue/residentRescue/FixPointRescue/三维流形.png",
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [754,276,75,53],
+        "post_delay":400,
+        "next":[
+            "三维流形-确认出击"
+        ]
+    },
+    "三维流形-确认出击":{
+        "recognition": "OCR",
+        "roi" : [1141,401,25,25],
+        "expected":"确",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [1141,401,25,25],
+        "post_delay":2500,
+        "next":[
+            "三维流形-点击指挥部"
+        ],
+        "interrupt":[
+            "public二星人形回收_人形回收"
+        ],
+        "timeout":600000
+    },
+     "三维流形-点击指挥部":{
+        "recognition": "OCR",
+        "roi" : [1020,623,211,79],
+        "expected":"点击指挥部进行",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [745,312,10,10],
+        "post_delay":400,
+        "next":[
+            "三维流形-确认部署铁血",
+            "三维流形-点击指挥部"
+        ]
+    },
+    "三维流形-确认部署铁血":{
+        "recognition": "OCR",
+        "roi" : [1140,613,88,49],
+        "expected":"确定",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [1122,620,88,34],
+        "post_delay":400,
+         "next":[
+            "三维流形-开始作战"
+        ]
+    },
+    "三维流形-开始作战":{
+        "recognition": "OCR",
+        "roi" : [1041,624,90,45],
+        "expected":"开始",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [1041,626,178,65],
+        "post_delay":2000,
+        "next":[
+            "三维流形-退出任务简报"
+        ]
+    },
+    "三维流形-退出任务简报":{
+        "recognition": "OCR",
+        "roi" : [256,186,149,47],
+        "expected":"任务目标",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [57,99,102,42],
+        "post_delay":400,
+        "next":[
+            "三维流形-选中铁血梯队"
+        ]
+    },
+    "三维流形-选中铁血梯队":{
+        "recognition": "TemplateMatch",
+        "roi" : [982,619,99,100],
+        "template" : "combat/dollRescue/residentRescue/FixPointRescue/行动点数14.png",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [745,312,10,10],
+        "post_delay":400,
+        "next":[
+            "三维流形-补给铁血梯队",
+            "三维流形-选中铁血梯队"
+        ]
+    },
+    "三维流形-补给铁血梯队":{
+        "recognition": "OCR",
+        "roi" : [1159,533,89,56],
+        "expected":"补给",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target":[1159,533,89,56],
+        "post_delay":400,
+        "next":[
+            "三维流形-点击计划模式"
+        ]
+    },
+    "三维流形-点击计划模式":{
+        "recognition": "OCR",
+        "roi" : [1191,184,41,25],
+        "expected":"抽薪",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [37,620,64,21],
+        "post_delay":200,
+        "next":[
+            "三维流形-点击左侧机场"
+        ]
+    },
+    "三维流形-点击左侧机场":{
+        "recognition": "TemplateMatch",
+        "roi" : [980,623,108,96],
+        "template" : "combat/dollRescue/residentRescue/FixPointRescue/计划点数14.png",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [697,312,10,10],
+        "post_delay":200,
+        "next":[
+            "三维流形-点击尼梅兰右上路径点"
+        ]
+    },
+    "三维流形-点击尼梅兰右上路径点":{
+        "recognition": "OCR",
+        "roi" : [1111,529,40,42],
+        "expected":"下",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [545,310,10,10],
+        "post_delay":200,
+        "next":[
+            "三维流形-执行计划"
+        ]
+    },
+    "三维流形-执行计划":{
+        "recognition": "TemplateMatch",
+        "roi" : [986,622,102,97],
+        "template" : "combat/dollRescue/residentRescue/FixPointRescue/计划点数10.png",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [1133,644,81,41],
+        "post_delay":11000,
+        "next":[
+            "三维流形-点击抽薪"
+        ]
+    },
+    "三维流形-点击抽薪":{
+        "recognition": "OCR",
+        "roi" : [1191,184,41,25],
+        "expected":"抽薪",
+        "pre_delay":400,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [1185,277,56,28],
+        "post_delay":200,
+        "next":[
+            "三维流形-执行抽薪"
+        ]
+    },
+    "三维流形-执行抽薪":{
+        "recognition": "OCR",
+        "roi" : [1180,274,66,32],
+        "expected":"取消",
+        "pre_delay":400,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [494,404,10,10],
+        "post_delay":3000,
+        "next":[
+             "三维流形-掉落结算"
+        ]
+    },
+    "三维流形-掉落结算":{
+        "recognition": "OCR",
+        "roi" : [38,164,42,45],
+        "expected":"枪",
+        "action": "LongPress",
+        "duration": 10,
+        "target" : [287,453,58,55],
+        "post_delay":200,
+        "next":[
+            "三维流形-战役结算"
+        ]
+    },
+    "三维流形-战役结算":{
+        "recognition": "TemplateMatch",
+        "roi" : [985,621,94,98],
+        "template" : "combat/dollRescue/residentRescue/FixPointRescue/行动点数11.png",
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [278,24,67,43],
+        "post_delay":200,
+        "next":[
+            "三维流形-确认战役结算"
+        ]
+    },
+    "三维流形-确认战役结算":{
+        "recognition": "OCR",
+        "roi" : [728,470,84,53],
+        "expected":"确定",
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [728,470,84,53],
+        "post_delay":7000,
+        "next":[
+            "三维流形-积分结算"
+        ]
+    },
+    "三维流形-积分结算":{
+        "recognition": "DirectHit",
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [710,517,60,60],
+        "post_delay":3200,
+        "next":[
+            "点击三维流形S-1"
+        ]
+    }
+}
