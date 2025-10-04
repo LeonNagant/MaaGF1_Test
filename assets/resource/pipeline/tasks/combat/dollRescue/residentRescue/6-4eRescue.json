@@ -1,946 +1,1653 @@
 {
-    "!6-4e打捞总流程":{
-        "next":[
+    "!6-4e打捞总流程": {
+        "next": [
             "6-4e界面初始化",
             "6-4e点击指挥部0"
-
         ]
     },
-    "6-4e界面初始化":{
+    "6-4e界面初始化": {
         "recognition": "TemplateMatch",
-        "roi" : [420,124,72,104],
+        "roi": [
+            420,
+            124,
+            72,
+            104
+        ],
         "template": "combat/dollRescue/residentRescue/6-4eRescue/6-E.png",
         "pre_delay": 1000,
-        "action":"Swipe",
-        "begin" : [1066,679,1,1],
-        "end" : [1064,122,1,1],
+        "action": "Swipe",
+        "begin": [
+            1066,
+            679,
+            1,
+            1
+        ],
+        "end": [
+            1064,
+            122,
+            1,
+            1
+        ],
         "duration": 800,
-        "post_delay":800,
-        "next":[
+        "post_delay": 800,
+        "next": [
             "6-4e_点击6-4"
         ]
     },
-    "6-4e_点击6-4":{
+    "6-4e_点击6-4": {
         "recognition": "OCR",
-        "roi" : [632,601,83,44],
-        "expected":["最后","最"],
+        "roi": [
+            632,
+            601,
+            83,
+            44
+        ],
+        "expected": [
+            "最后",
+            "最"
+        ],
         "action": "LongPress",
-        "duration": 20,
-        "target" : [628,599,119,45],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "target": [
+            628,
+            599,
+            119,
+            45
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e_进入作战"
         ]
     },
-    "6-4e_进入作战":{
+    "6-4e_进入作战": {
         "recognition": "OCR",
-        "roi" : [955,568,133,60],
-        "expected":"普通作战",
+        "roi": [
+            955,
+            568,
+            133,
+            60
+        ],
+        "expected": "普通作战",
         "action": "LongPress",
-        "duration": 20,
-        "target" : [955,568,133,60],
-        "post_delay":4000,
-        "next":[
+        "duration": 50,
+        "target": [
+            955,
+            568,
+            133,
+            60
+        ],
+        "post_delay": 4000,
+        "next": [
             "6-4e点击指挥部0",
             "6-4e界面初始化"
         ],
-        "interrupt":[
+        "interrupt": [
             "public二星人形回收_人形回收"
         ]
-            
     },
-    "6-4e点击指挥部0":{
+    "6-4e点击指挥部0": {
         "recognition": "OCR",
-        "roi" : [1037,621,94,47],
-        "expected":"开始",
+        "roi": [
+            1037,
+            621,
+            94,
+            47
+        ],
+        "expected": "开始",
         "action": "LongPress",
-        "duration": 20,
-        "target" : [472,429,16,16],
-        "post_delay":200,
+        "duration": 50,
+        "target": [
+            472,
+            429,
+            16,
+            16
+        ],
+        "post_delay": 200,
         "next": [
             "6-4e部署开路队",
             "6-4e已部署开路队"
         ]
     },
-    "6-4e部署开路队":{
+    "6-4e部署开路队": {
         "recognition": "OCR",
-        "roi" : [1141,612,86,50],
-        "expected":"确定",
-        "action": "LongPress",
-        "duration": 20,
-        "pre_delay":200,
-        "target" : [1141,612,86,50],
-        "post_delay":400,
-        "next":[
-            "6-4e开始作战"
-        ]
-    },
-    "6-4e已部署开路队":{
-        "recognition": "OCR",
-        "roi" : [1141,612,86,50],
-        "expected":"取消",
-        "action": "LongPress",
-        "duration": 20,
-        "pre_delay":200,
-        "target" : [1141,612,86,50],
-        "post_delay":400,
-        "next":[
-            "6-4e开始作战"
-        ]
-    },
-    "6-4e开始作战":{
-        "recognition": "OCR",
-        "roi" : [1042,624,88,45],
-        "expected":"开始",
-        "action": "LongPress",
-        "duration": 20,
-        "target" : [1040,629,179,61],
-        "post_delay": 400,
-        "next":[
-            "6-4e点击开路队",
-             "6-4e界面初始化"
+        "roi": [
+            1141,
+            612,
+            86,
+            50
         ],
-        "interrupt":[
-            "public二星人形回收_人形回收"
-        ] 
-    },
-    "6-4e点击开路队":{
-        "recognition": "TemplateMatch",
-        "roi" : [986,620,91,99],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/行动点数02.png",
+        "expected": "确定",
         "action": "LongPress",
-        "duration": 20,
-        "target" : [472,429,16,16],
+        "duration": 50,
+        "pre_delay": 200,
+        "target": [
+            1141,
+            612,
+            86,
+            50
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
+            "6-4e开始作战"
+        ]
+    },
+    "6-4e已部署开路队": {
+        "recognition": "OCR",
+        "roi": [
+            1141,
+            612,
+            86,
+            50
+        ],
+        "expected": "取消",
+        "action": "LongPress",
+        "duration": 50,
+        "pre_delay": 200,
+        "target": [
+            1141,
+            612,
+            86,
+            50
+        ],
+        "post_delay": 400,
+        "next": [
+            "6-4e开始作战"
+        ]
+    },
+    "6-4e开始作战": {
+        "recognition": "OCR",
+        "roi": [
+            1042,
+            624,
+            88,
+            45
+        ],
+        "expected": "开始",
+        "action": "LongPress",
+        "duration": 50,
+        "target": [
+            1040,
+            629,
+            179,
+            61
+        ],
+        "post_delay": 400,
+        "next": [
+            "6-4e点击开路队",
+            "6-4e界面初始化"
+        ],
+        "interrupt": [
+            "public二星人形回收_人形回收"
+        ]
+    },
+    "6-4e点击开路队": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            986,
+            620,
+            91,
+            99
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/行动点数02.png",
+        "action": "LongPress",
+        "duration": 50,
+        "target": [
+            472,
+            429,
+            16,
+            16
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e点击开路队",
             "6-4e补给开路队"
         ]
     },
-    "6-4e补给开路队":{
+    "6-4e补给开路队": {
         "recognition": "OCR",
-        "roi" : [1160,534,88,53],
-        "expected":"补给",
+        "roi": [
+            1160,
+            534,
+            88,
+            53
+        ],
+        "expected": "补给",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [1160,534,88,53],
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            1160,
+            534,
+            88,
+            53
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e开路队向前一步"
         ]
     },
-    "6-4e开路队向前一步":{
+    "6-4e开路队向前一步": {
         "recognition": "OCR",
-        "roi" : [1161,118,46,24],
-        "expected":"妖精",
-        "pre_delay":400,
+        "roi": [
+            1161,
+            118,
+            46,
+            24
+        ],
+        "expected": "妖精",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [490,360,12,12],
+        "duration": 50,
+        "target": [
+            490,
+            360,
+            12,
+            12
+        ],
         "post_delay": 2000,
-        "next":[
+        "next": [
             "6-4e点击指挥部1"
         ]
     },
-    "6-4e点击指挥部1":{
+    "6-4e点击指挥部1": {
         "recognition": "TemplateMatch",
-        "roi" : [986,620,92,99],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/行动点数01.png",
-        "pre_delay":600,
+        "roi": [
+            986,
+            620,
+            92,
+            99
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/行动点数01.png",
+        "pre_delay": 600,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [474,430,14,14],
+        "duration": 50,
+        "target": [
+            474,
+            430,
+            14,
+            14
+        ],
         "post_delay": 200,
-        "next":[
+        "next": [
             "6-4e部署狗粮队"
         ]
     },
-    "6-4e部署狗粮队":{
+    "6-4e部署狗粮队": {
         "recognition": "OCR",
-        "roi" : [559,417,86,43],
-        "expected":"部署",
-        "pre_delay":400,
+        "roi": [
+            559,
+            417,
+            86,
+            43
+        ],
+        "expected": "部署",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [559,417,86,43],
+        "duration": 50,
+        "target": [
+            559,
+            417,
+            86,
+            43
+        ],
         "post_delay": 200,
-        "next":[
+        "next": [
             "6-4e确认部署狗粮队"
         ]
     },
-    "6-4e确认部署狗粮队":{
+    "6-4e确认部署狗粮队": {
         "recognition": "OCR",
-        "roi" : [1141,612,86,50],
-        "expected":"确定",
+        "roi": [
+            1141,
+            612,
+            86,
+            50
+        ],
+        "expected": "确定",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":300,
-        "target" : [1141,612,86,50],
+        "duration": 50,
+        "pre_delay": 300,
+        "target": [
+            1141,
+            612,
+            86,
+            50
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e结束第一回合"
         ]
     },
-    "6-4e结束第一回合":{
+    "6-4e结束第一回合": {
         "recognition": "TemplateMatch",
-        "roi" : [981,618,99,101],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/行动点数00.png",
-        "pre_delay":400,
+        "roi": [
+            981,
+            618,
+            99,
+            101
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/行动点数00.png",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [1118,640,120,45],
-        "post_delay":10000,
-        "timeout":200000,
-        "next":[
+        "duration": 50,
+        "target": [
+            1118,
+            640,
+            120,
+            45
+        ],
+        "post_delay": 14000,
+        "timeout": 200000,
+        "next": [
             "6-4e-Round2-选中开路队"
         ]
     },
-    "6-4e-Round2-选中开路队":{
+    "6-4e-Round2-选中开路队": {
         "recognition": "TemplateMatch",
-        "roi" : [415,3,61,80],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/回合02.png",
-        "pre_delay":400,
+        "roi": [
+            415,
+            3,
+            61,
+            80
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/回合02.png",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [490,360,12,12],
+        "duration": 50,
+        "target": [
+            490,
+            360,
+            12,
+            12
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round2-确认选中开路队",
             "6-4e-Round2-点击计划模式",
             "6-4e-Round2-选中开路队"
         ]
     },
-    "6-4e-Round2-确认选中开路队":{
+    "6-4e-Round2-确认选中开路队": {
         "recognition": "OCR",
-        "roi" : [1141,614,88,48],
-        "expected":"取消",
+        "roi": [
+            1141,
+            614,
+            88,
+            48
+        ],
+        "expected": "取消",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [1141,614,88,48],
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            1141,
+            614,
+            88,
+            48
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round2-点击计划模式"
         ]
     },
-    "6-4e-Round2-点击计划模式":{
+    "6-4e-Round2-点击计划模式": {
         "recognition": "OCR",
-        "roi" : [1161,118,46,24],
-        "expected":"妖精",
+        "roi": [
+            1161,
+            118,
+            46,
+            24
+        ],
+        "expected": "妖精",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [31,616,73,28],
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            31,
+            616,
+            73,
+            28
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round2-开路队-计划1步"
         ]
     },
-    "6-4e-Round2-开路队-计划1步":{
+    "6-4e-Round2-开路队-计划1步": {
         "recognition": "TemplateMatch",
-        "roi" : [987,617,100,102],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/计划点数3.png",
+        "roi": [
+            987,
+            617,
+            100,
+            102
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/计划点数3.png",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [535,278,18,15],
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            535,
+            278,
+            18,
+            15
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round2-点击狗粮队"
         ]
     },
-    "6-4e-Round2-点击狗粮队":{
+    "6-4e-Round2-点击狗粮队": {
         "recognition": "OCR",
-        "roi" : [1112,532,72,37],
-        "expected" : "下一",
-        "pre_delay":200,
+        "roi": [
+            1112,
+            532,
+            72,
+            37
+        ],
+        "expected": "下一",
+        "pre_delay": 200,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [472,427,16,16],
+        "duration": 50,
+        "target": [
+            472,
+            427,
+            16,
+            16
+        ],
         "post_delay": 500,
-        "next":[
+        "next": [
             "6-4e-Round2-选择狗粮队"
         ]
     },
-    "6-4e-Round2-选择狗粮队":{
+    "6-4e-Round2-选择狗粮队": {
         "recognition": "OCR",
-        "roi" : [563,418,81,40],
-        "expected" : "选择",
-        "pre_delay":200,
+        "roi": [
+            563,
+            418,
+            81,
+            40
+        ],
+        "expected": "选择",
+        "pre_delay": 200,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [563,418,81,40],
+        "duration": 50,
+        "target": [
+            563,
+            418,
+            81,
+            40
+        ],
         "post_delay": 500,
-        "next":[
-           "6-4e-Round2-计划移动狗粮"
+        "next": [
+            "6-4e-Round2-计划移动狗粮"
         ]
     },
-    "6-4e-Round2-计划移动狗粮":{
+    "6-4e-Round2-计划移动狗粮": {
         "recognition": "TemplateMatch",
-        "roi" : [983,620,106,99],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/计划点数2.png",
+        "roi": [
+            983,
+            620,
+            106,
+            99
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/计划点数2.png",
         "action": "LongPress",
-        "duration": 20,
-        "target" : [488,358,15,14],
+        "duration": 50,
+        "target": [
+            488,
+            358,
+            15,
+            14
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round2-狗粮点击移动按钮"
         ]
     },
-    "6-4e-Round2-狗粮点击移动按钮":{
+    "6-4e-Round2-狗粮点击移动按钮": {
         "recognition": "OCR",
-        "roi" : [332,346,80,42],
-        "expected":"移动",
-        "pre_delay":400,
+        "roi": [
+            332,
+            346,
+            80,
+            42
+        ],
+        "expected": "移动",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [332,346,80,42],
+        "duration": 50,
+        "target": [
+            332,
+            346,
+            80,
+            42
+        ],
         "post_delay": 800,
-        "next":[
-           "6-4e-Round2-执行计划1"
+        "next": [
+            "6-4e-Round2-执行计划1"
         ]
     },
-    "6-4e-Round2-执行计划1":{
+    "6-4e-Round2-执行计划1": {
         "recognition": "TemplateMatch",
-        "roi" : [984,620,105,99],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/计划点数1.png",
-        "pre_delay":500,
+        "roi": [
+            984,
+            620,
+            105,
+            99
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/计划点数1.png",
+        "pre_delay": 500,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [1116,642,101,42],
+        "duration": 50,
+        "target": [
+            1116,
+            642,
+            101,
+            42
+        ],
         "post_delay": 25000,
-        "timeout":200000,
-        "next":[
-           "6-4e-Round2-点击指挥部"
+        "timeout": 200000,
+        "next": [
+            "6-4e-Round2-点击指挥部"
         ]
     },
-    "6-4e-Round2-点击指挥部":{
+    "6-4e-Round2-点击指挥部": {
         "recognition": "OCR",
-        "roi" : [1161,118,46,24],
-        "expected":"妖精",
-        "pre_delay":500,
+        "roi": [
+            1161,
+            118,
+            46,
+            24
+        ],
+        "expected": "妖精",
+        "pre_delay": 500,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [472,429,16,16],
+        "duration": 50,
+        "target": [
+            472,
+            429,
+            16,
+            16
+        ],
         "post_delay": 1000,
-        "next":[
+        "next": [
             "6-4e-Round2-部署打捞队"
         ]
     },
-    "6-4e-Round2-部署打捞队":{
+    "6-4e-Round2-部署打捞队": {
         "recognition": "OCR",
-        "roi" : [559,417,86,43],
-        "expected":"部署",
-        "pre_delay":400,
+        "roi": [
+            559,
+            417,
+            86,
+            43
+        ],
+        "expected": "部署",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [559,417,86,43],
+        "duration": 50,
+        "target": [
+            559,
+            417,
+            86,
+            43
+        ],
         "post_delay": 200,
-        "next":[
+        "next": [
             "6-4e-Round2-确认部署打捞队"
         ]
     },
-    "6-4e-Round2-确认部署打捞队":{
+    "6-4e-Round2-确认部署打捞队": {
         "recognition": "OCR",
-        "roi" : [1141,612,86,50],
-        "expected":"确定",
+        "roi": [
+            1141,
+            612,
+            86,
+            50
+        ],
+        "expected": "确定",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":300,
-        "target" : [1141,612,86,50],
+        "duration": 50,
+        "pre_delay": 300,
+        "target": [
+            1141,
+            612,
+            86,
+            50
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round2-点击打捞队"
         ]
     },
-    "6-4e-Round2-点击打捞队":{
+    "6-4e-Round2-点击打捞队": {
         "recognition": "TemplateMatch",
-        "roi" : [981,618,99,101],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/行动点数00.png",
+        "roi": [
+            981,
+            618,
+            99,
+            101
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/行动点数00.png",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [472,425,16,16],
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            472,
+            425,
+            16,
+            16
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round2-补给打捞队",
             "6-4e-Round2-点击打捞队"
         ]
     },
-    "6-4e-Round2-补给打捞队":{
+    "6-4e-Round2-补给打捞队": {
         "recognition": "OCR",
-        "roi" : [1160,534,88,53],
-        "expected":"补给",
+        "roi": [
+            1160,
+            534,
+            88,
+            53
+        ],
+        "expected": "补给",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [1160,534,88,53],
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            1160,
+            534,
+            88,
+            53
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round2-点击计划模式1"
         ]
     },
-    "6-4e-Round2-点击计划模式1":{
+    "6-4e-Round2-点击计划模式1": {
         "recognition": "OCR",
-        "roi" : [1161,118,46,24],
-        "expected":"妖精",
+        "roi": [
+            1161,
+            118,
+            46,
+            24
+        ],
+        "expected": "妖精",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [31,616,73,28],
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            31,
+            616,
+            73,
+            28
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round2-点击开路队"
         ]
-
     },
-    "6-4e-Round2-点击开路队":{
+    "6-4e-Round2-点击开路队": {
         "recognition": "TemplateMatch",
-        "roi" : [986,616,101,103],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/计划点数0.png",
-        "pre_delay":400,
+        "roi": [
+            986,
+            616,
+            101,
+            103
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/计划点数0.png",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [540,277,12,17],
-        "next":[
+        "duration": 50,
+        "target": [
+            540,
+            277,
+            12,
+            17
+        ],
+        "next": [
             "6-4e-Round2-选择开路队"
         ]
     },
-    "6-4e-Round2-选择开路队":{
+    "6-4e-Round2-选择开路队": {
         "recognition": "OCR",
-        "roi" : [630,268,81,42],
-        "expected":"选择",
-        "pre_delay":200,
+        "roi": [
+            630,
+            268,
+            81,
+            42
+        ],
+        "expected": "选择",
+        "pre_delay": 200,
         "action": "LongPress",
-        "duration": 20,
-        "post_delay":500,
-        "target" : [630,268,81,42],
-        "next":[
+        "duration": 50,
+        "post_delay": 500,
+        "target": [
+            630,
+            268,
+            81,
+            42
+        ],
+        "next": [
             "6-4e-Round2-开路队-计划2步"
         ]
     },
-    "6-4e-Round2-开路队-计划2步":{
+    "6-4e-Round2-开路队-计划2步": {
         "recognition": "TemplateMatch",
-        "roi" : [986,616,101,103],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/计划点数0.png",
-        "pre_delay":400,
+        "roi": [
+            986,
+            616,
+            101,
+            103
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/计划点数0.png",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [613,148,16,16],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "target": [
+            613,
+            148,
+            16,
+            16
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round2-点击打捞队1"
         ]
     },
-    "6-4e-Round2-点击打捞队1":{
+    "6-4e-Round2-点击打捞队1": {
         "recognition": "TemplateMatch",
-        "roi" : [980,622,108,97],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/计划点数-2.png",
-        "pre_delay":400,
+        "roi": [
+            980,
+            622,
+            108,
+            97
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/计划点数-2.png",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [475,427,14,14],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "target": [
+            475,
+            427,
+            14,
+            14
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round2-选择打捞队1"
         ]
     },
-     "6-4e-Round2-选择打捞队1":{
+    "6-4e-Round2-选择打捞队1": {
         "recognition": "OCR",
-        "roi" : [564,417,80,42],
-        "expected":"选择",
-        "pre_delay":400,
+        "roi": [
+            564,
+            417,
+            80,
+            42
+        ],
+        "expected": "选择",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [564,417,80,42],
+        "duration": 50,
+        "target": [
+            564,
+            417,
+            80,
+            42
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round2-打捞队-计划4步"
         ]
     },
-    "6-4e-Round2-打捞队-计划4步":{
+    "6-4e-Round2-打捞队-计划4步": {
         "recognition": "TemplateMatch",
-        "roi" : [980,622,108,97],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/计划点数-2.png",
-        "pre_delay":400,
+        "roi": [
+            980,
+            622,
+            108,
+            97
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/计划点数-2.png",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [612,149,16,15],
+        "duration": 50,
+        "target": [
+            612,
+            149,
+            16,
+            15
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round2-点击下一回合"
         ]
     },
-    "6-4e-Round2-点击下一回合":{
+    "6-4e-Round2-点击下一回合": {
         "recognition": "TemplateMatch",
-        "roi" : [980,622,107,97],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/计划点数-6.png",
-        "pre_delay":400,
+        "roi": [
+            980,
+            622,
+            107,
+            97
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/计划点数-6.png",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [1116,533,67,34],
+        "duration": 50,
+        "target": [
+            1116,
+            533,
+            67,
+            34
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round2-执行计划2"
         ]
     },
-    "6-4e-Round2-执行计划2":{
+    "6-4e-Round2-执行计划2": {
         "recognition": "OCR",
-        "roi" : [988,532,74,37],
-        "expected":"取消",
-        "pre_delay":400,
+        "roi": [
+            988,
+            532,
+            74,
+            37
+        ],
+        "expected": "取消",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [1119,640,95,48],
-        "post_delay":100000,
-        "timeout":200000,
-        "next":[
+        "duration": 50,
+        "target": [
+            1119,
+            640,
+            95,
+            48
+        ],
+        "post_delay": 100000,
+        "timeout": 200000,
+        "next": [
             "6-4e-Round4-点击打捞队"
         ]
     },
-    "6-4e-Round4-点击打捞队":{
+    "6-4e-Round4-点击打捞队": {
         "recognition": "TemplateMatch",
-        "roi" : [413,0,66,85],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/回合04.png",
+        "roi": [
+            413,
+            0,
+            66,
+            85
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/回合04.png",
         "action": "LongPress",
-        "pre_delay":1000,
-        "threshold":[0.9],
-        "duration": 20,
-        "target" : [614,352,14,14],
-        "post_delay":400,
-        "next":[
+        "pre_delay": 1000,
+        "threshold": [
+            0.9
+        ],
+        "duration": 50,
+        "target": [
+            614,
+            352,
+            14,
+            14
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round4-确认选中打捞队",
             "6-4e-Round4-点击打捞队"
         ]
     },
-    "6-4e-Round4-确认选中打捞队":{
+    "6-4e-Round4-确认选中打捞队": {
         "recognition": "OCR",
-        "roi" : [1141,614,88,48],
-        "expected":"取消",
+        "roi": [
+            1141,
+            614,
+            88,
+            48
+        ],
+        "expected": "取消",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [1141,614,88,48],
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            1141,
+            614,
+            88,
+            48
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round4-点击计划模式"
         ]
     },
-     "6-4e-Round4-点击计划模式":{
+    "6-4e-Round4-点击计划模式": {
         "recognition": "OCR",
-        "roi" : [1161,118,46,24],
-        "expected":"妖精",
+        "roi": [
+            1161,
+            118,
+            46,
+            24
+        ],
+        "expected": "妖精",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [32,618,62,25],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            32,
+            618,
+            62,
+            25
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round4-打捞队-计划2步"
         ]
     },
-    "6-4e-Round4-打捞队-计划2步":{
+    "6-4e-Round4-打捞队-计划2步": {
         "recognition": "TemplateMatch",
-        "roi" : [990,622,97,97],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R4计划点数4.png",
-        "pre_delay":400,
+        "roi": [
+            990,
+            622,
+            97,
+            97
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R4计划点数4.png",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [543,166,16,16],
-        "post_delay":400,
-         "next":[
+        "duration": 50,
+        "target": [
+            543,
+            166,
+            16,
+            16
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round4-点击开路队"
         ]
     },
-    
-    "6-4e-Round4-点击开路队":{
+    "6-4e-Round4-点击开路队": {
         "recognition": "TemplateMatch",
-        "roi" : [990,623,96,96],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R4计划点数2.png",
-        "pre_delay":400,
+        "roi": [
+            990,
+            623,
+            96,
+            96
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R4计划点数2.png",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [613,422,14,14],
+        "duration": 50,
+        "target": [
+            613,
+            422,
+            14,
+            14
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round4-选择开路队"
         ]
     },
-     "6-4e-Round4-选择开路队":{
+    "6-4e-Round4-选择开路队": {
         "recognition": "OCR",
-        "roi" : [703,412,82,43],
-        "expected":"选择",
+        "roi": [
+            703,
+            412,
+            82,
+            43
+        ],
+        "expected": "选择",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":800,
-        "target" : [703,412,82,43],
+        "duration": 50,
+        "pre_delay": 800,
+        "target": [
+            703,
+            412,
+            82,
+            43
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round4-开路队-计划2步"
         ]
     },
-    "6-4e-Round4-开路队-计划2步":{
+    "6-4e-Round4-开路队-计划2步": {
         "recognition": "TemplateMatch",
-        "roi" : [990,623,96,96],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R4计划点数2.png",
-        "pre_delay":400,
+        "roi": [
+            990,
+            623,
+            96,
+            96
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R4计划点数2.png",
+        "pre_delay": 400,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [614,262,14,14],
+        "duration": 50,
+        "target": [
+            614,
+            262,
+            14,
+            14
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round4-点击下一回合"
         ]
     },
-    "6-4e-Round4-点击下一回合":{
-        "pre_delay":800,
+    "6-4e-Round4-点击下一回合": {
+        "pre_delay": 800,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [1124,536,74,29],
+        "duration": 50,
+        "target": [
+            1124,
+            536,
+            74,
+            29
+        ],
         "post_delay": 400,
-        "next":[
-             "6-4e-Round4-开路队-计划再进1步"
+        "next": [
+            "6-4e-Round4-开路队-计划再进1步"
         ]
     },
-    "6-4e-Round4-开路队-计划再进1步":{
+    "6-4e-Round4-开路队-计划再进1步": {
         "recognition": "OCR",
-        "roi" : [976,529,87,44],
-        "expected":"取消",
-        "pre_delay":800,
+        "roi": [
+            976,
+            529,
+            87,
+            44
+        ],
+        "expected": "取消",
+        "pre_delay": 800,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [543,166,13,15],
+        "duration": 50,
+        "target": [
+            543,
+            166,
+            13,
+            15
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round4-开路队-计划回退1步"
         ]
-     },
-    "6-4e-Round4-开路队-计划回退1步":{
+    },
+    "6-4e-Round4-开路队-计划回退1步": {
         "recognition": "TemplateMatch",
-        "roi" : [990,625,96,77],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R4计划点数-1.png",
-        "pre_delay":800,
+        "roi": [
+            990,
+            625,
+            96,
+            77
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R4计划点数-1.png",
+        "pre_delay": 800,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [613,260,15,14],
+        "duration": 50,
+        "target": [
+            613,
+            260,
+            15,
+            14
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round4-执行计划"
         ]
     },
-    "6-4e-Round4-执行计划":{
+    "6-4e-Round4-执行计划": {
         "recognition": "TemplateMatch",
-        "roi" : [988,625,98,78],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R4计划点数-2.png",
-        "pre_delay":800,
+        "roi": [
+            988,
+            625,
+            98,
+            78
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R4计划点数-2.png",
+        "pre_delay": 800,
         "action": "LongPress",
-        "duration": 20,
-        "target" : [1112,641,108,43],
+        "duration": 50,
+        "target": [
+            1112,
+            641,
+            108,
+            43
+        ],
         "post_delay": 100000,
-        "timeout":200000,
-        "next":[
+        "timeout": 200000,
+        "next": [
             "6-4e-Round5-点击打捞队"
         ]
     },
-    "6-4e-Round5-点击打捞队":{
+    "6-4e-Round5-点击打捞队": {
         "recognition": "OCR",
-        "roi" : [1161,118,46,24],
-        "expected":"妖精",
+        "roi": [
+            1161,
+            118,
+            46,
+            24
+        ],
+        "expected": "妖精",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [543,259,15,15],
-        "post_delay":400,
-         "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            543,
+            259,
+            15,
+            15
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-选择打捞队"
         ]
     },
-    "6-4e-Round5-选择打捞队":{
+    "6-4e-Round5-选择打捞队": {
         "recognition": "OCR",
-        "roi" : [633,246,82,44],
-        "expected":"选择",
+        "roi": [
+            633,
+            246,
+            82,
+            44
+        ],
+        "expected": "选择",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [633,246,82,44],
-        "post_delay":400,
-         "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            633,
+            246,
+            82,
+            44
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-点击打捞队1"
         ]
     },
-    "6-4e-Round5-点击打捞队1":{
+    "6-4e-Round5-点击打捞队1": {
         "recognition": "OCR",
-        "roi" : [1161,118,46,24],
-        "expected":"妖精",
+        "roi": [
+            1161,
+            118,
+            46,
+            24
+        ],
+        "expected": "妖精",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [543,259,15,15],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            543,
+            259,
+            15,
+            15
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-补给打捞队",
             "6-4e-Round5-点击打捞队1"
         ]
     },
-    "6-4e-Round5-补给打捞队":{
+    "6-4e-Round5-补给打捞队": {
         "recognition": "OCR",
-        "roi" : [1161,535,88,53],
-        "expected":"补给",
+        "roi": [
+            1161,
+            535,
+            88,
+            53
+        ],
+        "expected": "补给",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [1161,535,88,53],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            1161,
+            535,
+            88,
+            53
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-点击计划模式"
         ]
     },
-    "6-4e-Round5-点击计划模式":{
+    "6-4e-Round5-点击计划模式": {
         "recognition": "OCR",
-        "roi" : [1161,118,46,24],
-        "expected":"妖精",
+        "roi": [
+            1161,
+            118,
+            46,
+            24
+        ],
+        "expected": "妖精",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [31,618,93,23],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            31,
+            618,
+            93,
+            23
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-打捞队-左1机场"
         ]
     },
-    "6-4e-Round5-打捞队-左1机场":{
+    "6-4e-Round5-打捞队-左1机场": {
         "recognition": "TemplateMatch",
-        "roi" : [990,624,100,80],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数6.png",
+        "roi": [
+            990,
+            624,
+            100,
+            80
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数6.png",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [424,160,15,15],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            424,
+            160,
+            15,
+            15
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-打捞队-左4机场"
         ]
     },
-    "6-4e-Round5-打捞队-左4机场":{
+    "6-4e-Round5-打捞队-左4机场": {
         "recognition": "TemplateMatch",
-        "roi" : [990,625,97,77],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数5.png",
+        "roi": [
+            990,
+            625,
+            97,
+            77
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数5.png",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [717,199,16,14],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            717,
+            199,
+            16,
+            14
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-点击开路队"
         ]
     },
-    "6-4e-Round5-点击开路队":{
+    "6-4e-Round5-点击开路队": {
         "recognition": "TemplateMatch",
-        "roi" : [990,625,97,78],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数2.png",
+        "roi": [
+            990,
+            625,
+            97,
+            78
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数2.png",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [615,351,14,14],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            615,
+            351,
+            14,
+            14
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-选择开路队"
         ]
     },
-    "6-4e-Round5-选择开路队":{
+    "6-4e-Round5-选择开路队": {
         "recognition": "OCR",
-        "roi" : [706,337,82,45],
-        "expected" : "选择",
+        "roi": [
+            706,
+            337,
+            82,
+            45
+        ],
+        "expected": "选择",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [706,337,82,45],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            706,
+            337,
+            82,
+            45
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-开路队-左3机场"
         ]
     },
-    "6-4e-Round5-开路队-左3机场":{
+    "6-4e-Round5-开路队-左3机场": {
         "recognition": "TemplateMatch",
-        "roi" : [990,625,97,78],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数2.png",
+        "roi": [
+            990,
+            625,
+            97,
+            78
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数2.png",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [581,192,14,16],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            581,
+            192,
+            14,
+            16
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-点击打捞队2"
         ]
     },
-    "6-4e-Round5-点击打捞队2":{
+    "6-4e-Round5-点击打捞队2": {
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":800,
-        "target" : [546,256,14,14],
-        "post_delay":800,
-        "next":[
+        "duration": 50,
+        "pre_delay": 800,
+        "target": [
+            546,
+            256,
+            14,
+            14
+        ],
+        "post_delay": 800,
+        "next": [
             "6-4e-Round5-选择打捞队1"
         ]
     },
-    "6-4e-Round5-选择打捞队1":{
-        "recognition":"OCR",
-        "roi" : [634,246,83,44],
-        "expected":"选择",
-        "action":"LongPress",
-        "duration":20,
-        "pre_delay":200,
-        "target":[634,246,83,44],
-        "post_delay":400,
-        "next":[
+    "6-4e-Round5-选择打捞队1": {
+        "recognition": "OCR",
+        "roi": [
+            634,
+            246,
+            83,
+            44
+        ],
+        "expected": "选择",
+        "action": "LongPress",
+        "duration": 50,
+        "pre_delay": 200,
+        "target": [
+            634,
+            246,
+            83,
+            44
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-点击下一回合"
         ]
     },
-    "6-4e-Round5-点击下一回合":{
+    "6-4e-Round5-点击下一回合": {
         "recognition": "TemplateMatch",
-        "roi" : [990,625,97,79],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数0.png",
+        "roi": [
+            990,
+            625,
+            97,
+            79
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数0.png",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [1120,533,85,31],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            1120,
+            533,
+            85,
+            31
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-打捞队-右1机场"
         ]
     },
-    "6-4e-Round5-打捞队-右1机场":{
+    "6-4e-Round5-打捞队-右1机场": {
         "recognition": "OCR",
-        "roi" : [976,529,87,44],
-        "expected":"取消",
-        "action":"LongPress",
-        "duration":20,
-        "pre_delay":200,
-        "target" : [1109,148,14,15],
-        "post_delay":400,
-        "next":[
+        "roi": [
+            976,
+            529,
+            87,
+            44
+        ],
+        "expected": "取消",
+        "action": "LongPress",
+        "duration": 50,
+        "pre_delay": 200,
+        "target": [
+            1109,
+            148,
+            14,
+            15
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-打捞队-随机点右侧普通点"
         ]
     },
-    "6-4e-Round5-打捞队-随机点右侧普通点":{
+    "6-4e-Round5-打捞队-随机点右侧普通点": {
         "recognition": "TemplateMatch",
-        "roi" : [988,624,99,79],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数-3.png",
+        "roi": [
+            988,
+            624,
+            99,
+            79
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数-3.png",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [1007,511,12,13],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            1007,
+            511,
+            12,
+            13
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-点击下一回合1"
         ]
     },
-    "6-4e-Round5-点击下一回合1":{
+    "6-4e-Round5-点击下一回合1": {
         "recognition": "TemplateMatch",
-        "roi" : [989,625,97,77],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数-8.png",
+        "roi": [
+            989,
+            625,
+            97,
+            77
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R5计划点数-8.png",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [1120,533,85,31],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            1120,
+            533,
+            85,
+            31
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round5-执行计划"
         ]
     },
-    "6-4e-Round5-执行计划":{
+    "6-4e-Round5-执行计划": {
         "recognition": "OCR",
-        "roi" : [976,529,87,44],
-        "expected":"取消",
-        "action":"LongPress",
-        "duration":20,
-        "pre_delay":200,
-        "target" : [1128,642,96,42],
-        "post_delay":170000,
-        "timeout":200000,
-        "next":[
+        "roi": [
+            976,
+            529,
+            87,
+            44
+        ],
+        "expected": "取消",
+        "action": "LongPress",
+        "duration": 50,
+        "pre_delay": 200,
+        "target": [
+            1128,
+            642,
+            96,
+            42
+        ],
+        "post_delay": 170000,
+        "timeout": 200000,
+        "next": [
             "6-4e-Round7-点击打捞队"
         ]
-
     },
-    "6-4e-Round7-点击打捞队":{
+    "6-4e-Round7-点击打捞队": {
         "recognition": "TemplateMatch",
-        "roi" : [982,620,98,99],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R7行动点数07.png",
-        "threshold":[0.9],
+        "roi": [
+            403,
+            28,
+            99,
+            67
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R7行动点数07.png",
+        "threshold": [
+            0.9
+        ],
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [739,351,12,15],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            739,
+            351,
+            12,
+            15
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round7-确认选中打捞队",
             "6-4e-Round7-点击打捞队"
         ]
     },
-    "6-4e-Round7-确认选中打捞队":{
+    "6-4e-Round7-确认选中打捞队": {
         "recognition": "OCR",
-        "roi" : [1141,614,88,48],
-        "expected":"取消",
+        "roi": [
+            1141,
+            614,
+            88,
+            48
+        ],
+        "expected": "取消",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [1141,614,88,48],
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            1141,
+            614,
+            88,
+            48
+        ],
         "post_delay": 400,
-        "next":[
+        "next": [
             "6-4e-Round7-点击计划模式"
         ]
     },
-    "6-4e-Round7-点击计划模式":{
+    "6-4e-Round7-点击计划模式": {
         "recognition": "OCR",
-        "roi" : [1161,118,46,24],
-        "expected":"妖精",
+        "roi": [
+            1161,
+            118,
+            46,
+            24
+        ],
+        "expected": "妖精",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [31,618,93,23],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            31,
+            618,
+            93,
+            23
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round7-打捞队-敌方指挥部"
         ]
     },
-    "6-4e-Round7-打捞队-敌方指挥部":{
+    "6-4e-Round7-打捞队-敌方指挥部": {
         "recognition": "TemplateMatch",
-        "roi" : [987,625,100,80],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R7计划点数7.png",
+        "roi": [
+            987,
+            625,
+            100,
+            80
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R7计划点数7.png",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [421,565,16,16],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            421,
+            565,
+            16,
+            16
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round7-点击下一回合"
         ]
     },
-    "6-4e-Round7-点击下一回合":{
+    "6-4e-Round7-点击下一回合": {
         "recognition": "TemplateMatch",
-        "roi" : [983,622,104,81],
-        "template" : "combat/dollRescue/residentRescue/6-4eRescue/R7计划点数0.png",
+        "roi": [
+            983,
+            622,
+            104,
+            81
+        ],
+        "template": "combat/dollRescue/residentRescue/6-4eRescue/R7计划点数0.png",
         "action": "LongPress",
-        "duration": 20,
-        "pre_delay":400,
-        "target" : [1117,534,91,29],
-        "post_delay":400,
-        "next":[
+        "duration": 50,
+        "pre_delay": 400,
+        "target": [
+            1117,
+            534,
+            91,
+            29
+        ],
+        "post_delay": 400,
+        "next": [
             "6-4e-Round7-执行计划"
         ]
     },
-    "6-4e-Round7-执行计划":{
+    "6-4e-Round7-执行计划": {
         "recognition": "OCR",
-        "roi" : [976,529,87,44],
-        "expected":"取消",
-        "action":"LongPress",
-        "duration":20,
-        "pre_delay":200,
-        "target" : [1128,642,96,42],
-        "post_delay":21000,
-        "next":[
+        "roi": [
+            976,
+            529,
+            87,
+            44
+        ],
+        "expected": "取消",
+        "action": "LongPress",
+        "duration": 50,
+        "pre_delay": 200,
+        "target": [
+            1128,
+            642,
+            96,
+            42
+        ],
+        "post_delay": 21000,
+        "next": [
             "6-4e-点击获得角色"
         ]
     },
@@ -954,13 +1661,15 @@
         ],
         "expected": "再次作战",
         "action": "LongPress",
-        "duration": 20,
+        "duration": 50,
         "target": [
             332,
             591,
             1,
             1
         ],
+        "rate_limit": 1200,
+        "post_delay": 1000,
         "pre_delay": 100,
         "next": [
             "6-4e开始作战",
@@ -972,4 +1681,3 @@
         ]
     }
 }
-      

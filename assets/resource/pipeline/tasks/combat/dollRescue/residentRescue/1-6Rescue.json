@@ -285,8 +285,8 @@
     "1_6_战斗加速": {
         "rate_limit": 2000,
         "next": [
-            "1_6_round3",
-            "1_6_再次作战"
+            "1_6_再次作战",
+            "1_6_round3"
         ],
         "interrupt": [
             "public_加速结算进入",
@@ -296,12 +296,28 @@
     "1_6_round3": {
         "recognition": "OCR",
         "roi": [
-            591,
-            328,
-            19,
-            31
+            29,
+            612,
+            111,
+            37
         ],
-        "expected": "1",
+        "expected": "划",
+        "post_delay": 800,
+        "next": [
+            "1_6_round3_1",
+            "1_6_战斗加速"
+        ],
+        "timeout": 600000
+    },
+    "1_6_round3_1": {
+        "recognition": "OCR",
+        "roi": [
+            988,
+            645,
+            94,
+            62
+        ],
+        "expected": "03",
         "action": "LongPress",
         "target": [
             562,
@@ -310,11 +326,10 @@
             15
         ],
         "duration": 50,
-        "pre_delay": 1000,
         "post_delay": 500,
         "next": [
             "1_6_补给打手",
-            "1_6_round3"
+            "1_6_round3_1"
         ]
     },
     "1_6_wait": {
