@@ -1,20 +1,6 @@
 {
     "!Watchdog_Normal_Test": {
         "next": [
-            "Start_Watchdog"
-        ]
-    },
-    "Start_Watchdog": {
-        "recognition": "DirectHit",
-        "action": "Custom",
-        "custom_action": "watchdog_start",
-        "custom_action_param": {
-            "timeout_ms": 10000,
-            "info": "正常测试看门狗 - 10秒超时"
-        },
-        "pre_delay": 100,
-        "post_delay": 500,
-        "next": [
             "Feed_Watchdog_1"
         ]
     },
@@ -22,7 +8,11 @@
         "recognition": "DirectHit",
         "action": "Custom",
         "custom_action": "watchdog_feed",
-        "pre_delay": 2000,
+        "custom_action_param": {
+            "timeout_ms": 10000,
+            "info": "正常测试看门狗 - 10秒超时 - 第1次喂狗"
+        },
+        "pre_delay": 100,
         "post_delay": 500,
         "next": [
             "Notify_Status_1"
@@ -33,7 +23,7 @@
         "action": "Custom",
         "custom_action": "parametric_extnotify",
         "custom_action_param": {
-            "message": "看门狗测试进度：第1次喂狗完成，状态：{status}，当前次数：{count}",
+            "message": "看门狗测试进度：第1次喂狗完成（自动启动），状态：{status}，当前次数：{count}",
             "parameters": {
                 "status": "正常",
                 "count": "{increment_Task_Counter}"
@@ -49,6 +39,9 @@
         "recognition": "DirectHit",
         "action": "Custom",
         "custom_action": "watchdog_feed",
+        "custom_action_param": {
+            "info": "第2次喂狗"
+        },
         "pre_delay": 2000,
         "post_delay": 500,
         "next": [
@@ -69,6 +62,19 @@
         "pre_delay": 100,
         "post_delay": 2000,
         "next": [
+            "Feed_Watchdog_3"
+        ]
+    },
+    "Feed_Watchdog_3": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "watchdog_feed",
+        "custom_action_param": {
+            "info": "第3次喂狗"
+        },
+        "pre_delay": 2000,
+        "post_delay": 500,
+        "next": [
             "Stop_Watchdog"
         ]
     },
@@ -77,7 +83,7 @@
         "action": "Custom",
         "custom_action": "watchdog_stop",
         "custom_action_param": {
-            "info": "正常测试完成，看门狗停止"
+            "info": "正常测试完成，手动停止看门狗"
         },
         "pre_delay": 100,
         "post_delay": 500,

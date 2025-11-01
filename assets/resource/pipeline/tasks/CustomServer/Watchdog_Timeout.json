@@ -1,28 +1,18 @@
 {
     "!Watchdog_Timeout_Test": {
         "next": [
-            "Start_Watchdog_Short"
+            "Feed_Watchdog_Initial"
         ]
     },
-    "Start_Watchdog_Short": {
+    "Feed_Watchdog_Initial": {
         "recognition": "DirectHit",
         "action": "Custom",
-        "custom_action": "watchdog_start",
+        "custom_action": "watchdog_feed",
         "custom_action_param": {
             "timeout_ms": 3000,
             "info": "超时测试看门狗 - 3秒超时"
         },
         "pre_delay": 100,
-        "post_delay": 500,
-        "next": [
-            "Feed_Watchdog_Once"
-        ]
-    },
-    "Feed_Watchdog_Once": {
-        "recognition": "DirectHit",
-        "action": "Custom",
-        "custom_action": "watchdog_feed",
-        "pre_delay": 1000,
         "post_delay": 500,
         "next": [
             "Notify_Initial_Feed"
@@ -33,7 +23,7 @@
         "action": "Custom",
         "custom_action": "parametric_extnotify",
         "custom_action_param": {
-            "message": "看门狗超时测试：初始喂狗完成，将等待{wait_time}秒触发超时（超时阈值：3秒）",
+            "message": "看门狗超时测试：初始喂狗完成（自动启动），将等待{wait_time}秒触发超时（超时阈值：3秒）",
             "parameters": {
                 "wait_time": "10"
             }
@@ -49,7 +39,7 @@
         "action": "Custom",
         "custom_action": "parametric_extnotify",
         "custom_action_param": {
-            "message": "等待结束！看门狗应该已经触发超时警告。测试步骤：{count}",
+            "message": "等待结束！看门狗应该已经触发超时警告并自动停止。测试步骤：{count}",
             "parameters": {
                 "count": "{increment_Task_Counter}"
             }
@@ -64,6 +54,10 @@
         "recognition": "DirectHit",
         "action": "Custom",
         "custom_action": "watchdog_feed",
+        "custom_action_param": {
+            "timeout_ms": 5000,
+            "info": "超时后重新启动看门狗 - 5秒超时"
+        },
         "pre_delay": 1000,
         "post_delay": 500,
         "next": [
@@ -75,23 +69,23 @@
         "action": "Custom",
         "custom_action": "parametric_extnotify",
         "custom_action_param": {
-            "message": "超时后恢复喂狗，看门狗应该重新开始计时",
+            "message": "超时后重新喂狗，看门狗已自动重启并开始新的计时周期",
             "parameters": {}
         },
         "pre_delay": 100,
         "post_delay": 2000,
         "next": [
-            "Stop_Watchdog_Final"
+            "Final_Feed"
         ]
     },
-    "Stop_Watchdog_Final": {
+    "Final_Feed": {
         "recognition": "DirectHit",
         "action": "Custom",
-        "custom_action": "watchdog_stop",
+        "custom_action": "watchdog_feed",
         "custom_action_param": {
-            "info": "超时测试完成，看门狗停止"
+            "info": "最后一次喂狗"
         },
-        "pre_delay": 100,
+        "pre_delay": 1000,
         "post_delay": 500,
         "next": [
             "Final_Summary"
@@ -102,7 +96,7 @@
         "action": "Custom",
         "custom_action": "parametric_extnotify",
         "custom_action_param": {
-            "message": "看门狗超时测试完成，总执行步骤：{count}",
+            "message": "看门狗超时测试完成，总执行步骤：{count}。看门狗仍在运行中，将在5秒后自动超时停止。",
             "parameters": {
                 "count": "{increment_Task_Counter}"
             }

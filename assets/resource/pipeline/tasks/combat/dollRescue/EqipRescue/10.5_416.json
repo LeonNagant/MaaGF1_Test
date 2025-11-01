@@ -1,0 +1,181 @@
+{
+    "!底线升变IV_416专属打捞":{
+        "next":"底线升变IV_416专属打捞_开始作战"
+    },
+    "底线升变IV_416专属打捞_开始作战":{
+        "recognition": "OCR",
+        "roi" : [1020,623,211,79],
+        "expected": "点击指挥部进行",
+        "action": "LongPress",
+        "duration": 10,
+        "next": [
+            "底线升变IV_416专属打捞_点击梯队",
+            "底线升变IV_416专属打捞_开始作战"
+        ]
+    },
+    "底线升变IV_416专属打捞_点击梯队":{
+        "recognition": "OCR",
+        "roi" : [1020,623,211,79],
+        "expected": "结束",
+        "action": "LongPress",
+        "duration": 10,
+        "target" :[730, 455, 0, 0],
+        "next": [
+            "底线升变IV_416专属打捞_补给",
+            "底线升变IV_416专属打捞_点击梯队"
+        ]
+    },
+    "底线升变IV_416专属打捞_补给":{
+        "recognition": "OCR",
+        "roi" : [1156,524,98,67],
+        "expected": "补给",
+        "action": "LongPress",
+        "duration": 10,
+        "next": [
+            "底线升变IV_416专属打捞_计划模式",
+            "底线升变IV_416专属打捞_补给"
+        ]
+    },
+    "底线升变IV_416专属打捞_计划模式":{
+        "recognition": "OCR",
+        "roi" : [1020,623,211,79],
+        "expected": "结束",
+        "action": "LongPress",
+        "duration": 10,
+        "target" :[51,619,21,9],
+        "next": [
+            "底线升变IV_416专属打捞_计划点1",
+            "底线升变IV_416专属打捞_计划模式"
+        ]
+    },
+    "底线升变IV_416专属打捞_计划点1":{
+        "recognition": "OCR",
+        "roi" : [1020,623,211,79],
+        "expected": "执行",
+        "action": "LongPress",
+        "duration": 10,
+        "target" :[676, 237, 0, 0],
+        "post_delay":200,
+        "next": [
+            "底线升变IV_416专属打捞_计划点2",
+            "底线升变IV_416专属打捞_计划点1"
+        ]
+    },
+    "底线升变IV_416专属打捞_计划点2":{
+        "recognition": "OCR",
+        "roi" : [1082,502,180,86],
+        "expected": "下一",
+        "action": "LongPress",
+        "duration": 10,
+        "target" :[715, 333, 0, 0],
+        "post_delay":200,
+        "next": [
+            "底线升变IV_416专属打捞_计划点3",
+            "底线升变IV_416专属打捞_计划点2"
+        ]
+    },
+    "底线升变IV_416专属打捞_计划点3":{
+        "recognition": "OCR",
+        "roi" : [1000, 660, 50, 50],
+        // 行动点数 0
+        "expected" : "0",
+        "action": "LongPress",
+        "duration": 10,
+        "target" :[593, 259, 0, 0],
+        "post_delay":200,
+        "replace": ["C", "0"],
+        "next": [
+            "底线升变IV_416专属打捞_计划点4",
+            "底线升变IV_416专属打捞_计划点3"
+        ]
+    },
+    "底线升变IV_416专属打捞_计划点4":{
+        "recognition": "OCR",
+        // 行动点数 -2
+        "roi" : [990, 660, 50, 50],
+        "expected": "-2",
+        "action": "LongPress",
+        "duration": 10,
+        "target" :[629, 408, 0, 0],
+        "post_delay":200,
+        "next": [
+            "底线升变IV_416专属打捞_执行计划",
+            "底线升变IV_416专属打捞_计划点4"
+        ]
+    },
+    "底线升变IV_416专属打捞_执行计划":{
+        "recognition": "OCR",
+        // 行动点数 -5
+        "roi" : [990, 660, 50, 50],
+        "expected": "-5",
+        "action": "LongPress",
+        "duration": 10,
+        "target" :[1109,637,123,43],
+        "timeout":150000,
+        "next": [
+            "底线升变IV_416专属打捞_撤离_点击梯队"
+        ]
+    },
+    "底线升变IV_416专属打捞_撤离_点击梯队": {
+        "recognition": "OCR",
+        "roi": [1161, 118, 46, 24],
+        "expected": "妖精",
+        "pre_delay": 400,
+        "action": "LongPress",
+        "duration": 10,
+        "target": [638, 404, 0, 0],
+        "post_delay": 1000,
+        "next": [
+            "底线升变IV_416专属打捞_撤离_点击撤离",
+            "底线升变IV_416专属打捞_撤离_点击梯队"
+        ]
+    },
+    "底线升变IV_416专属打捞_撤离_点击撤离":{
+        "recognition": "OCR",
+        "roi" : [956,609,95,57],
+        "expected":"撤离",
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [959,622,73,29],
+        "post_delay":200,
+        "next":[
+            "底线升变IV_416专属打捞_撤离_确认撤离",
+            "底线升变IV_416专属打捞_撤离_点击撤离"
+        ]
+    },
+    "底线升变IV_416专属打捞_撤离_确认撤离":{
+        "recognition": "OCR",
+        "roi" : [719,467,99,57],
+        "expected":"确定",
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [719,467,99,57],
+        "post_delay":200,
+        "next":[
+            "底线升变IV_416专属打捞_终止作战"
+        ]
+    },
+    "底线升变IV_416专属打捞_终止作战":{
+        "recognition": "OCR",
+        "roi" : [425, 5, 45, 30],
+        "expected" : "回合",
+        "action": "LongPress",
+        "duration": 10,
+        "target" :[271,16,72,54],
+        "next": [
+            "底线升变IV_416专属打捞_重新作战",
+            "底线升变IV_416专属打捞_终止作战"
+        ]
+    },
+    "底线升变IV_416专属打捞_重新作战":{
+        "recognition": "OCR",
+        "roi" : [395,453,185,74],
+        "expected" : "重新",
+        "action": "LongPress",
+        "duration": 10,
+        "next": [
+            "底线升变IV_416专属打捞_开始作战",
+            "底线升变IV_416专属打捞_重新作战"
+        ]
+    }
+}

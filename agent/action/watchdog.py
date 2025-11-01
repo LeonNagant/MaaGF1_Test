@@ -23,6 +23,7 @@ class Watchdog:
     def __init__(self):
         self._lock = threading.Lock()
         self._is_running = False
+        self._is_timeout_occurred = False
         self._timeout_ms = 0
         self._last_feed_time = None
         self._start_info = ""
@@ -102,62 +103,55 @@ class Watchdog:
         MaaLog_Debug("Watchdog notification failed: all platforms unable to send message")
         return False
     
-    def start(self, timeout_ms, string_info=""):
+    def _internal_start(self, timeout_ms, string_info=""):
         """
-        Start watchdog with specified timeout and info
+        Internal start method (called automatically on first feed)
         """
-        with self._lock:
-            if self._is_running:
-                MaaLog_Debug("Watchdog is already running")
-                return False
-            
-            self._timeout_ms = timeout_ms
-            self._start_info = string_info
-            self._last_feed_time = datetime.now()
-            self._is_running = True
-            
-            start_message = f"[WATCHDOG] Started\nTimeout: {timeout_ms}ms\nInfo: {string_info}\nTime: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-            
-            MaaLog_Info(f"Watchdog started - timeout: {timeout_ms}ms, info: {string_info}")
-            
-            # Send notification
-            self._send_notification(start_message)
-            
-            return True
+        self._timeout_ms = timeout_ms
+        self._start_info = string_info
+        self._last_feed_time = datetime.now()
+        self._is_running = True
+        self._is_timeout_occurred = False
+        
+        start_message = f"[WATCHDOG] Auto-Started\n\nTimeout: {timeout_ms}ms\n\nInfo: {string_info}\n\nTime: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        
+        MaaLog_Info(f"Watchdog auto-started - timeout: {timeout_ms}ms, info: {string_info}")
+        
+        # Send notification
+        self._send_notification(start_message)
+        
+        return True
     
-    def stop(self, string_info=""):
+    def _internal_stop(self, string_info=""):
         """
-        Stop watchdog with specified info
+        Internal stop method (called automatically on timeout)
+        """
+        self._is_running = False
+        
+        stop_message = f"[WATCHDOG] Auto-Stopped\n\nReason: {string_info}\n\nTime: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        
+        MaaLog_Info(f"Watchdog auto-stopped - reason: {string_info}")
+        
+        # Send notification
+        self._send_notification(stop_message)
+        
+        return True
+    
+    def feed(self, timeout_ms=30000, string_info=""):
+        """
+        Feed the watchdog (auto-start if not running, reset timeout if running)
         """
         with self._lock:
             if not self._is_running:
-                MaaLog_Debug("Watchdog is not running")
-                return False
-            
-            self._is_running = False
-            
-            stop_message = f"[WATCHDOG] Stopped\nInfo: {string_info}\nTime: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-            
-            MaaLog_Info(f"Watchdog stopped - info: {string_info}")
-            
-            # Send notification
-            self._send_notification(stop_message)
-            
-            return True
-    
-    def feed(self):
-        """
-        Feed the watchdog (reset timeout)
-        """
-        with self._lock:
-            if not self._is_running:
-                MaaLog_Debug("Cannot feed watchdog: not running")
-                return False
-            
-            self._last_feed_time = datetime.now()
-            MaaLog_Debug(f"Watchdog fed at {self._last_feed_time.strftime('%Y-%m-%d %H:%M:%S')}")
-            
-            return True
+                # First feed - auto start
+                MaaLog_Debug(f"Watchdog not running, auto-starting with timeout: {timeout_ms}ms, info: {string_info}")
+                return self._internal_start(timeout_ms, string_info)
+            else:
+                # Subsequent feeds - reset timer
+                self._last_feed_time = datetime.now()
+                self._is_timeout_occurred = False  # Reset timeout flag
+                MaaLog_Debug(f"Watchdog fed at {self._last_feed_time.strftime('%Y-%m-%d %H:%M:%S')}")
+                return True
     
     def poll(self):
         """
@@ -174,13 +168,19 @@ class Watchdog:
             elapsed_ms = (datetime.now() - self._last_feed_time).total_seconds() * 1000
             is_timeout = elapsed_ms > self._timeout_ms
             
-            MaaLog_Debug(f"Watchdog poll - elapsed: {elapsed_ms:.1f}ms, timeout: {self._timeout_ms}ms, is_timeout: {is_timeout}")
+            # If timeout occurred and we haven't processed it yet
+            if is_timeout and not self._is_timeout_occurred:
+                self._is_timeout_occurred = True
+                MaaLog_Debug(f"Watchdog timeout detected - elapsed: {elapsed_ms:.1f}ms, timeout: {self._timeout_ms}ms")
+                return True
             
-            return is_timeout
+            MaaLog_Debug(f"Watchdog poll - elapsed: {elapsed_ms:.1f}ms, timeout: {self._timeout_ms}ms, is_timeout: {is_timeout}, already_processed: {self._is_timeout_occurred}")
+            
+            return False  # Return False if already processed or no timeout
     
     def notify(self):
         """
-        Send timeout notification
+        Send timeout notification and auto-stop watchdog
         """
         with self._lock:
             if not self._is_running:
@@ -188,18 +188,41 @@ class Watchdog:
             
             elapsed_ms = (datetime.now() - self._last_feed_time).total_seconds() * 1000 if self._last_feed_time else float('inf')
             
-            timeout_message = f"[WATCHDOG] Watchdog Timeout Alert!\nStart Info: {self._start_info}\nTimeout Threshold: {self._timeout_ms}ms\nElapsed Time: {elapsed_ms:.1f}ms\nLast Feed: {self._last_feed_time.strftime('%Y-%m-%d %H:%M:%S') if self._last_feed_time else 'Never'}\nAlert Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+            timeout_message = f"[WATCHDOG] Timeout Alert!\n\nStart Info: {self._start_info}\n\nTimeout Threshold: {self._timeout_ms}ms\n\nElapsed Time: {elapsed_ms:.1f}ms\n\nLast Feed: {self._last_feed_time.strftime('%Y-%m-%d %H:%M:%S') if self._last_feed_time else 'Never'}\n\nAlert Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n\n\n[WARNING] Watchdog will auto-stop to prevent spam notifications."
             
-            MaaLog_Info(f"Watchdog timeout alert - elapsed: {elapsed_ms:.1f}ms, threshold: {self._timeout_ms}ms")
+            MaaLog_Info(f"Watchdog timeout alert - elapsed: {elapsed_ms:.1f}ms, threshold: {self._timeout_ms}ms, auto-stopping")
             
-            # Send notification
-            return self._send_notification(timeout_message)
+            # Send timeout notification
+            notification_sent = self._send_notification(timeout_message)
+            
+            # Auto-stop to prevent further notifications
+            self._internal_stop("Timeout occurred - auto-stopped to prevent spam")
+            
+            return notification_sent
+    
+    def manual_stop(self, string_info=""):
+        """
+        Manually stop watchdog (for backward compatibility or emergency stop)
+        """
+        with self._lock:
+            if not self._is_running:
+                MaaLog_Debug("Watchdog is not running")
+                return False
+            
+            self._internal_stop(f"Manual stop - {string_info}")
+            return True
     
     @property
     def is_running(self):
         """Check if watchdog is running"""
         with self._lock:
             return self._is_running
+    
+    @property
+    def timeout_occurred(self):
+        """Check if timeout has occurred"""
+        with self._lock:
+            return self._is_timeout_occurred
 
 # Global watchdog instance
 _global_watchdog = Watchdog()
@@ -208,39 +231,39 @@ def get_global_watchdog():
     """Get global watchdog instance"""
     return _global_watchdog
 
-@AgentServer.custom_action("watchdog_start")
-class WatchdogStartAction(CustomAction):
+@AgentServer.custom_action("watchdog_feed")
+class WatchdogFeedAction(CustomAction):
     """
-    Start watchdog action
+    Feed watchdog action (auto-start if not running)
     """
     
     def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
         try:
             param = argv.custom_action_param
-            MaaLog_Debug(f"WatchdogStartAction param: {param} (type: {type(param)})")
+            MaaLog_Debug(f"WatchdogFeedAction param: {param} (type: {type(param)})")
             
             # Parse parameters
+            timeout_ms = 30000  # Default 30 seconds
+            string_info = ""
+            
             if isinstance(param, str):
                 try:
                     param = json.loads(param)
                 except json.JSONDecodeError:
-                    MaaLog_Debug("Failed to parse param as JSON, treating as string")
-                    return CustomAction.RunResult(success=False)
+                    # If not JSON, treat as simple string info
+                    string_info = param
             
-            if not isinstance(param, dict):
-                MaaLog_Debug("Invalid param format, expected dict")
-                return CustomAction.RunResult(success=False)
-            
-            timeout_ms = param.get('timeout_ms', 30000)  # Default 30 seconds
-            string_info = param.get('info', '')
+            if isinstance(param, dict):
+                timeout_ms = param.get('timeout_ms', 30000)
+                string_info = param.get('info', '')
             
             watchdog = get_global_watchdog()
-            success = watchdog.start(timeout_ms, string_info)
+            success = watchdog.feed(timeout_ms, string_info)
             
             return CustomAction.RunResult(success=success)
             
         except Exception as e:
-            MaaLog_Debug(f"WatchdogStartAction exception: {e}")
+            MaaLog_Debug(f"WatchdogFeedAction exception: {e}")
             import traceback
             MaaLog_Debug(f"Exception stack: {traceback.format_exc()}")
             return CustomAction.RunResult(success=False)
@@ -248,7 +271,7 @@ class WatchdogStartAction(CustomAction):
 @AgentServer.custom_action("watchdog_stop")
 class WatchdogStopAction(CustomAction):
     """
-    Stop watchdog action
+    Stop watchdog action (for backward compatibility or emergency stop)
     """
     
     def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
@@ -271,31 +294,12 @@ class WatchdogStopAction(CustomAction):
                 string_info = ''
             
             watchdog = get_global_watchdog()
-            success = watchdog.stop(string_info)
+            success = watchdog.manual_stop(string_info)
             
             return CustomAction.RunResult(success=success)
             
         except Exception as e:
             MaaLog_Debug(f"WatchdogStopAction exception: {e}")
-            import traceback
-            MaaLog_Debug(f"Exception stack: {traceback.format_exc()}")
-            return CustomAction.RunResult(success=False)
-
-@AgentServer.custom_action("watchdog_feed")
-class WatchdogFeedAction(CustomAction):
-    """
-    Feed watchdog action
-    """
-    
-    def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
-        try:
-            watchdog = get_global_watchdog()
-            success = watchdog.feed()
-            
-            return CustomAction.RunResult(success=success)
-            
-        except Exception as e:
-            MaaLog_Debug(f"WatchdogFeedAction exception: {e}")
             import traceback
             MaaLog_Debug(f"Exception stack: {traceback.format_exc()}")
             return CustomAction.RunResult(success=False)
