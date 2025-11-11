@@ -1,0 +1,377 @@
+{
+    "!异构体-混沌落幕p打捞":{
+        "next":["混沌落幕进入作战0",
+                "混沌落幕确认出击",
+                "混沌落幕开始作战"
+               ]
+    },
+    "混沌落幕进入作战0":{
+        "recognition": "OCR",
+        "roi" : [474,313,23,28],
+        "expected":"当",
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [1046,290,117,29],
+        "post_delay":800,
+        "next":[
+            "混沌落幕缩小地图0",
+            "混沌落幕进入作战0"
+            
+        ]
+    },
+    "混沌落幕缩小地图0":{
+        "recognition": "DirectHit",
+        "action": "Command",
+        "exec": "powershell",
+        "args": [
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            "{RESOURCE_DIR}/../tools/scroll.ps1",
+            "-ScrollCount",
+            "100",
+            "-Direction",
+            "down"
+        ],
+        "post_delay": 200,
+        "next":[
+            "混沌落幕进入作战1"
+        ]
+    },
+    "混沌落幕进入作战1":{
+        "recognition": "OCR",
+        "expected":"混沌落幕",
+        "action": "LongPress",
+        "duration": 20,
+        "post_delay":600,
+        "next":[
+            "混沌落幕确认出击"
+
+        ]
+    },
+    "混沌落幕确认出击":{
+        "recognition": "OCR",
+        "roi" : [1141,401,25,25],
+        "expected":"确",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [1141,401,25,25],
+        "post_delay":2500,
+        "next":[
+            "混沌落幕缩小地图1",
+            "混沌落幕进入作战0"
+        ],
+         "interrupt":[
+            "public二星人形回收_人形回收"
+        ]
+    },
+    "混沌落幕缩小地图1":{
+        "recognition": "TemplateMatch",
+        "template": "combat/dollRescue/residentRescue/ReignofChaosRescue/Round00.png",
+        "roi" : [408,0,73,83],
+        "threshold":0.7,
+        "action": "Command",
+        "exec": "powershell",
+        "args": [
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            "{RESOURCE_DIR}/../tools/scroll.ps1",
+            "-ScrollCount",
+            "100",
+            "-Direction",
+            "down"
+        ],
+        "post_delay": 1000,
+        "next":[
+            "混沌落幕拖动地图0"
+        ]
+    },
+    "混沌落幕拖动地图0":{
+        "recognition": "DirectHit",
+        "action": "Swipe",
+        "begin" : [1158,549,1,1],
+        "end" : [791,170,1,1],
+        "duration":200,
+        "post_delay": 200,
+        "next":[
+            "混沌落幕点击右1机场",
+            "混沌落幕缩小地图1",
+            "混沌落幕拖动地图0"
+        ]
+    },
+    "混沌落幕点击右1机场":{
+        "recognition": "TemplateMatch",
+        "template": "combat/dollRescue/residentRescue/ReignofChaosRescue/Ready.png",
+        "roi" : [164,206,75,65],
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [691,263,5,5],
+        "post_delay": 200,
+        "next":[
+            "混沌落幕部署打捞队",
+            "混沌落幕点击右1机场"
+        ]
+    },
+    "混沌落幕部署打捞队":{
+        "recognition": "OCR",
+        "roi" : [1141,612,86,50],
+        "expected":"确定",
+        "action": "LongPress",
+        "duration": 20,
+        "pre_delay":200,
+        "target" : [1141,612,86,50],
+        "post_delay":200,
+        "next":[
+            "混沌落幕点击重型机场"
+        ]
+    },
+    "混沌落幕点击重型机场":{
+        "recognition": "TemplateMatch",
+        "template": "combat/dollRescue/residentRescue/ReignofChaosRescue/GriffinRescueReady.png",
+        "roi" : [793,216,33,42],
+        "action": "LongPress",
+        "duration": 20,
+        "pre_delay":200,
+        "target" : [625,232,5,5],
+        "post_delay":200,
+        "next":[
+            "混沌落幕点击重装狗粮",
+            "混沌落幕点击重型机场"
+        ]
+    },
+    "混沌落幕点击重装狗粮":{
+        "recognition": "OCR",
+        "expected": [
+            "BGM",
+            "AGS",
+            "G",
+            "等级"
+        ],
+        "roi": [
+            673,
+            138,
+            165,
+            443
+        ],
+        "action": "LongPress",
+        "duration": 20,
+        "pre_delay":400,
+        "next":[
+            "混沌落幕部署重装狗粮"
+        ]
+    },
+    "混沌落幕部署重装狗粮":{
+        "recognition": "OCR",
+        "roi" : [1116,618,95,62],
+        "expected":"部署",
+        "action": "LongPress",
+        "duration": 20,
+        "pre_delay":200,
+        "target" : [1116,618,95,62],
+        "post_delay":400,
+        "next":[
+            "混沌落幕点击指挥部"
+        ]
+    },
+    "混沌落幕点击指挥部":{
+        "recognition": "TemplateMatch",
+        "template": "combat/dollRescue/residentRescue/ReignofChaosRescue/FireSupportUnitReady.png",
+        "roi" : [640,209,28,29],
+        "action": "LongPress",
+        "duration": 20,
+        "pre_delay":200,
+        "target" : [627,170,5,5],
+        "post_delay":400,
+        "next":[
+            "混沌落幕部署狗粮队",
+            "混沌落幕点击指挥部"
+        ]
+    },
+    "混沌落幕部署狗粮队":{
+        "recognition": "OCR",
+        "roi" : [1141,612,86,50],
+        "expected":"确定",
+        "action": "LongPress",
+        "duration": 20,
+        "pre_delay":200,
+        "target" : [1141,612,86,50],
+        "post_delay":200,
+        "next":[
+            "混沌落幕开始作战"
+        ]
+    },
+    "混沌落幕开始作战":{
+        "recognition": "OCR",
+        "roi" : [1041,624,90,45],
+        "expected":"开始",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [1041,626,178,65],
+        "post_delay":16000,
+        "next":[
+            "混沌落幕退出任务简报"
+        ]
+    },
+    "混沌落幕退出任务简报":{
+        "recognition": "OCR",
+        "roi" : [256,186,149,47],
+        "expected":"任务目标",
+        "pre_delay":600,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [79,108,29,26],
+        "post_delay":400,
+        "next":[
+            "混沌落幕点击打捞队",
+            "混沌落幕退出任务简报"
+        ]
+    },
+    "混沌落幕点击打捞队":{
+        "recognition": "DirectHit",
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [797,401,5,5],
+        "post_delay":400,
+        "next":[
+            "混沌落幕补给打捞队",
+            "混沌落幕点击打捞队"
+        ]
+    },
+    "混沌落幕补给打捞队":{
+        "recognition": "OCR",
+        "roi" : [1159,533,89,56],
+        "expected":"补给",
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target":[1159,533,89,56],
+        "post_delay":400,
+        "next":[
+            "混沌落幕点击计划模式"
+        ]
+    },
+    "混沌落幕点击计划模式":{
+        "recognition": "OCR",
+        "roi": [1161,118,46,24],
+        "expected": "妖精",
+        "pre_delay": 200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [37,620,64,21],
+        "post_delay":400,
+        "next":[
+            "混沌落幕计划点1"
+        ]
+    },
+    "混沌落幕计划点1":{
+        "recognition": "TemplateMatch",
+        "template": "combat/dollRescue/residentRescue/ReignofChaosRescue/PlanningPoint10.png",
+        "roi" : [988,625,100,94],
+        "pre_delay": 200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [861,311,5,5],
+        "post_delay":400,
+        "next":[
+            "混沌落幕计划点2"
+        ]
+    },
+    "混沌落幕计划点2":{
+        "recognition": "TemplateMatch",
+        "template": "combat/dollRescue/residentRescue/ReignofChaosRescue/PlanningPoint8.png",
+        "roi" : [990,626,96,93],
+        "pre_delay": 200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [987,372,5,5],
+        "post_delay":400,
+        "next":[
+            "混沌落幕计划点3"
+        ]
+    },
+    "混沌落幕计划点3":{
+        "recognition": "TemplateMatch",
+        "template": "combat/dollRescue/residentRescue/ReignofChaosRescue/PlanningPoint6.png",
+        "roi" : [990,624,96,95],
+        "pre_delay": 200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [988,495,5,5],
+        "post_delay":400,
+        "next":[
+            "混沌落幕计划点4"
+        ]
+    },
+    "混沌落幕计划点4":{
+        "recognition": "TemplateMatch",
+        "template": "combat/dollRescue/residentRescue/ReignofChaosRescue/PlanningPoint4.png",
+        "roi" : [991,625,96,94],
+        "pre_delay": 200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [476,494,5,5],
+        "post_delay":400,
+        "next":[
+            "混沌落幕执行计划"
+        ]
+    },
+    "混沌落幕执行计划":{
+        "recognition": "TemplateMatch",
+        "template": "combat/dollRescue/residentRescue/ReignofChaosRescue/PlanningPoint-2.png",
+        "roi" : [988,624,98,95],
+        "pre_delay":200,
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [1134,640,83,46],
+        "post_delay":180000,
+        "timeout":600000,
+        "next":[
+            "混沌落幕战役结算"
+        ]
+    },
+    "混沌落幕战役结算":{
+        "recognition": "TemplateMatch",
+        "roi" : [985,624,92,95],
+        "template": "combat/dollRescue/residentRescue/ReignofChaosRescue/ActionPoint00.png",
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [290,22,47,41],
+        "post_delay":600,
+        "next":[
+            "混沌落幕确认战役结算"
+        ]
+    },
+    "混沌落幕确认战役结算":{
+        "recognition": "OCR",
+        "roi" : [728,470,84,53],
+        "expected":"确定",
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [728,470,84,53],
+        "post_delay":6000,
+        "next":[
+            "混沌落幕点击再战"
+        ]
+    },
+    "混沌落幕点击再战":{
+        "recognition": "OCR",
+        "roi" : [369,609,48,29],
+        "expected":"再次",
+        "action": "LongPress",
+        "duration": 20,
+        "target" : [373,612,81,23],
+        "post_delay":600,
+        "next":[
+            "混沌落幕开始作战",
+            "混沌落幕进入作战0"
+        ],
+        "interrupt":[
+            "public二星人形回收_人形回收"
+        ],
+        "timeout":600000
+    }
+
+}
