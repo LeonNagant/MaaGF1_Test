@@ -230,7 +230,9 @@
         ]
     },
     "混沌落幕点击打捞队":{
-        "recognition": "DirectHit",
+        "recognition": "TemplateMatch",
+        "template": "combat/dollRescue/residentRescue/ReignofChaosRescue/ActionPoint10.png",
+        "roi" : [985,619,94,100],
         "action": "LongPress",
         "duration": 20,
         "target" : [797,401,5,5],
