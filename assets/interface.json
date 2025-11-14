@@ -95,25 +95,6 @@
             "repeat_count": 1
         },
         {
-            "name": "常驻人形打捞",
-            "entry": "!常驻人形打捞",
-            "check": false,
-            "doc": "[点击这里浏览器打开操作手册](https://github.com/LeonNagant/MaaGF1_Test/blob/main/manual/%E6%89%93%E6%8D%9E%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C.md)",
-            "option": [
-                "选择常驻人形打捞目标"
-            ],
-            "repeatable": false,
-            "repeat_count": 1
-        },
-        {
-            "name": "兵棋挂机循环",
-            "entry": "=兵棋总流程",
-            "check": false,
-            "doc": "请在咖啡馆点击兵棋桌后或兵棋房间内运行，[点击这里浏览器打开操作手册](https://github.com/LeonNagant/MaaGF1_Test/blob/main/manual/%E5%85%B5%E6%A3%8B%E8%87%AA%E5%8A%A8%E6%8C%82%E6%9C%BA%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C.md)",
-            "repeatable": true,
-            "repeat_count": 1
-        },
-        {
             "name": "灰域探查",
             "entry": "!开始打灰",
             "check": false,
@@ -128,18 +109,21 @@
             "repeat_count": 9999
         },
         {
-            "name": "宿舍内自动点击爱心",
-            "entry": "!点击爱心",
+            "name": "基地-兵棋挂机",
+            "entry": "=兵棋总流程",
             "check": false,
-            "doc": "一直点爱心直到识别不到爱心",
-            "repeatable": false,
+            "doc": "请在咖啡馆点击兵棋桌后或兵棋房间内运行，[点击这里浏览器打开操作手册](https://github.com/LeonNagant/MaaGF1_Test/blob/main/manual/%E5%85%B5%E6%A3%8B%E8%87%AA%E5%8A%A8%E6%8C%82%E6%9C%BA%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C.md)",
+            "repeatable": true,
             "repeat_count": 1
         },
         {
-            "name": "宿舍自动点赞",
-            "entry": "!宿舍自动点赞",
+            "name": "基地-宿舍任务",
+            "entry": "!Dormitory_Entry",
             "check": false,
-            "doc": "从主界面开始运行，偷电，点赞并参观下一个宿舍直到无赞可点",
+            "doc": "偷电池: 从主界面开始运行，偷电，点赞并参观下一个宿舍直到无赞可点\n点爱心: 一直点爱心直到识别不到爱心",
+            "option": [
+                "Dormitory_Task_List"
+            ],
             "repeatable": false,
             "repeat_count": 1
         },
@@ -183,7 +167,27 @@
             "repeat_count": 9999
         },
         {
-            "name": "虚粒子对打捞",
+            "name": "打捞-人形",
+            "entry": "!常驻人形打捞",
+            "check": false,
+            "doc": "[点击这里浏览器打开操作手册](https://github.com/LeonNagant/MaaGF1_Test/blob/main/manual/%E6%89%93%E6%8D%9E%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C.md)",
+            "option": [
+                "选择常驻人形打捞目标"
+            ],
+            "repeatable": false,
+            "repeat_count": 1
+        },
+        {
+            "name": "打捞-装备",
+            "entry": "!夜战打捞",
+            "check": false,
+            "doc": "在夜战地图运行，[点击这里浏览器打开操作手册](https://github.com/LeonNagant/MaaGF1_Test/blob/main/manual/%E5%A4%9C%E6%88%98%E6%89%93%E6%8D%9E%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C.md)",
+            "option": [
+                "选择夜战打捞地图"
+            ]
+        },
+        {
+            "name": "打捞-虚粒子对",
             "entry": "!虚粒子对打捞",
             "check": false,
             "doc": "进入关卡将地图缩放至最小并拉至左下边缘后部署梯队开始运行",
@@ -195,7 +199,7 @@
             "repeat_count": 1
         },
         {
-            "name": "蝴蝶星云打捞",
+            "name": "打捞-蝴蝶星云",
             "entry": "!蝴蝶星云打捞",
             "check": false,
             "doc": "进入关卡将地图缩放至最小并拉至左下边缘后部署梯队开始运行",
@@ -207,7 +211,7 @@
             "repeat_count": 4
         },
         {
-            "name": "零态潮汐打捞",
+            "name": "打捞-零态潮汐",
             "entry": "!零态潮汐打捞",
             "check": false,
             "doc": "进入关卡将地图缩放至最小并拉至左下边缘后部署梯队开始运行",
@@ -223,25 +227,15 @@
             "repeat_count": 4
         },
         {
-            "name": "向你微笑炼金(仙贝版)",
-            "entry": "!向你微笑_炼金",
+            "name": "Farm-炼金",
+            "entry": "!Alchemy_Entry",
             "check": false,
-            "doc": "通关任意难度向你微笑，将地图缩放至最小即可开启运行，自动部署的梯队须为铁血梯队。[点击这里浏览器打开操作手册](https://github.com/LeonNagant/MaaGF1_Test/blob/main/manual/%E9%9D%99%E9%BB%98%E6%B2%99%E7%9B%98%E5%88%B7%E8%B5%84%E6%BA%90.md)"
-        },
-        {
-            "name": "向你微笑炼金(DLzcccc版)",
-            "entry": "!活动炼金总流程",
-            "check": false,
-            "doc": "通关任意难度向你微笑，地图缩放到最小，拖动到右下角边缘开始"
-        },
-        {
-            "name": "夜战打捞",
-            "entry": "!夜战打捞",
-            "check": false,
-            "doc": "在夜战地图运行，[点击这里浏览器打开操作手册](https://github.com/LeonNagant/MaaGF1_Test/blob/main/manual/%E5%A4%9C%E6%88%98%E6%89%93%E6%8D%9E%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C.md)",
+            "doc": "静默沙盘：[点击这里浏览器打开操作手册](https://github.com/LeonNagant/MaaGF1_Test/blob/main/manual/%E9%9D%99%E9%BB%98%E6%B2%99%E7%9B%98%E5%88%B7%E8%B5%84%E6%BA%90.md)\n向你微笑(先辈)通关任意难度向你微笑，将地图缩放至最小即可开启运行，自动部署的梯队须为铁血梯队。\n向你微笑(DLZC)通关任意难度向你微笑，地图缩放到最小，拖动到右下角边缘开始",
             "option": [
-                "选择夜战打捞地图"
-            ]
+                "Alchemy_Task_List"
+            ],
+            "repeatable": false,
+            "repeat_count": 1
         },
         {
             "name": "返回主界面",
@@ -1235,6 +1229,54 @@
                                 "跑步机_切换待机",
                                 "跑步机_跳过战斗"
                             ]
+                        }
+                    }
+                }
+            ]
+        },
+        "Dormitory_Task_List": {
+            "cases": [
+                {
+                    "name": "好友点赞偷电",
+                    "pipeline_override": {
+                        "!Dormitory_Entry": {
+                            "next": "!宿舍自动点赞"
+                        }
+                    }
+                },
+                {
+                    "name": "宿舍点击爱心",
+                    "pipeline_override": {
+                        "!Dormitory_Entry": {
+                            "next": "!点击爱心"
+                        }
+                    }
+                }
+            ]
+        },
+        "Alchemy_Task_List": {
+            "cases": [
+                {
+                    "name": "静默沙盘",
+                    "pipeline_override": {
+                        "!Alchemy_Entry": {
+                            "next": "!静默沙盘炼金_Entry"
+                        }
+                    }
+                },
+                {
+                    "name": "向你微笑炼金(仙贝版)",
+                    "pipeline_override": {
+                        "!Alchemy_Entry": {
+                            "next": "!向你微笑_炼金"
+                        }
+                    }
+                },
+                {
+                    "name": "向你微笑炼金(DLzcccc版)",
+                    "pipeline_override": {
+                        "!Alchemy_Entry": {
+                            "next": "!活动炼金总流程"
                         }
                     }
                 }
