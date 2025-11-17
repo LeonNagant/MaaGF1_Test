@@ -1195,6 +1195,46 @@
                             "next": "!异构体-混沌落幕p打捞"
                         }
                     }
+                },
+                {
+                    "name": "沙维奇99打捞",
+                    "pipeline_override": {
+                        "!常驻人形打捞": {
+                            "next": "!沙维奇99打捞"
+                        }
+                    }
+                },
+                {
+                    "name": "LAMG打捞",
+                    "pipeline_override": {
+                        "!常驻人形打捞": {
+                            "next": "!LAMG打捞"
+                        }
+                    }
+                },
+                {
+                    "name": "VRB打捞",
+                    "pipeline_override": {
+                        "!常驻人形打捞": {
+                            "next": "!VRB打捞"
+                        }
+                    }
+                },
+                {
+                    "name": "蟒蛇打捞",
+                    "pipeline_override": {
+                        "!常驻人形打捞": {
+                            "next": "!蟒蛇打捞"
+                        }
+                    }
+                },
+                {
+                    "name": "刘氏步枪打捞",
+                    "pipeline_override": {
+                        "!常驻人形打捞": {
+                            "next": "!刘氏步枪打捞"
+                        }
+                    }
                 }
             ]
         },
