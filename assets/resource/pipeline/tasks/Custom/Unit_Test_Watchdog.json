@@ -4,7 +4,7 @@
 			"Unit_Test_Watchdog_Node_Begin"
 		]
 	},
-    "Unit_Test_Watchdog_Node_Begin": {
+	"Unit_Test_Watchdog_Node_Begin": {
 		"recognition": "DirectHit",
 		"action": "Custom",
 		"custom_action": "watchdog_feed",
