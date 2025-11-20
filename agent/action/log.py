@@ -1,6 +1,10 @@
 from .include import *
 import json
 import requests
+import threading
+import weakref
+from typing import Optional, Dict, Any
+import gc
 
 # Load config.py
 import sys
@@ -11,479 +15,7 @@ from utils import (get_telegram_config, is_telegram_configured,
                    get_wechat_config, is_wechat_configured,
                    get_default_ext_notify, get_available_notifiers)
 
-#######################################################################################################################################################################################
-################################################################################ Part I : Registration ################################################################################
-#######################################################################################################################################################################################
-
-class TelegramNotifier:
-    """
-    Telegram notifier
-    """
-    def __init__(self, bot_token, chat_id):
-        self.bot_token = bot_token
-        self.chat_id = chat_id
-        self.base_url = f"https://api.telegram.org/bot{bot_token}"
-    
-    def send_message(self, message):
-        """Send message to Telegram"""
-        url = f"{self.base_url}/sendMessage"
-        data = {
-            'chat_id': self.chat_id,
-            'text': message
-        }
-        
-        try:
-            response = requests.post(url, data=data, timeout=10)
-            if response.status_code == 200:
-                MaaLog_Debug(f"Telegram message sent successfully: {message}")
-                return True
-            else:
-                MaaLog_Debug(f"Telegram message sending failed: {response.text}")
-                return False
-        except Exception as e:
-            MaaLog_Debug(f"Error occurred while sending Telegram message: {e}")
-            return False
-
-class WeChatWorkNotifier:
-    """
-    Enterprise WeChat notifier
-    """
-    def __init__(self, webhook_key):
-        self.webhook_key = webhook_key
-        self.webhook_url = f"https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={webhook_key}"
-    
-    def send_message(self, message, msgtype="text"):
-        """Send message to Enterprise WeChat"""
-        # Construct message body
-        if msgtype == "text":
-            data = {
-                "msgtype": "text",
-                "text": {
-                    "content": message
-                }
-            }
-        elif msgtype == "markdown":
-            data = {
-                "msgtype": "markdown",
-                "markdown": {
-                    "content": message
-                }
-            }
-        else:
-            MaaLog_Debug(f"Unsupported message type: {msgtype}")
-            return False
-        
-        try:
-            # Send POST request
-            headers = {'Content-Type': 'application/json'}
-            response = requests.post(
-                self.webhook_url, 
-                data=json.dumps(data, ensure_ascii=False).encode('utf-8'),
-                headers=headers,
-                timeout=10
-            )
-            
-            if response.status_code == 200:
-                result = response.json()
-                if result.get('errcode') == 0:
-                    MaaLog_Debug(f"Enterprise WeChat message sent successfully: {message}")
-                    return True
-                else:
-                    MaaLog_Debug(f"Enterprise WeChat message sending failed: {result.get('errmsg', 'Unknown error')}")
-                    return False
-            else:
-                MaaLog_Debug(f"Enterprise WeChat HTTP request failed: {response.status_code} - {response.text}")
-                return False
-                
-        except Exception as e:
-            MaaLog_Debug(f"Error occurred while sending Enterprise WeChat message: {e}")
-            return False
-
-class ParametricBaseAction(CustomAction):
-    """
-    Parametric action base class
-    Provides common parameter parsing, processing and formatting functions
-    """
-    
-    def __init__(self):
-        super().__init__()
-        self.action_name = self.__class__.__name__
-    
-    def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
-        """
-        Base class run method, handles common logic
-        """
-        try:
-            # Get parameters from custom_action_param
-            param = argv.custom_action_param
-            
-            # Parse parameters
-            parsed_param = self._parse_param(param)
-            
-            # Handle parametric message
-            result = self._handle_parametric_message(parsed_param)
-            
-            return CustomAction.RunResult(success=result)
-            
-        except Exception as e:
-            MaaLog_Debug(f"{self.action_name} execution exception: {e}")
-            import traceback
-            MaaLog_Debug(f"Exception stack: {traceback.format_exc()}")
-            return CustomAction.RunResult(success=False)
-    
-    def _parse_param(self, param):
-        """
-        Parse parameters, support string, JSON and dictionary formats
-        """
-        # No param: return None
-        if not param:
-            MaaLog_Debug(f"{self.action_name}: No parameters, using default processing")
-            return None
-        
-        # Debug: output param type and content
-        MaaLog_Debug(f"{self.action_name} param type: {type(param)}, content: {param}")
-        
-        # Try to parse JSON string
-        if isinstance(param, str):
-            try:
-                # Try to parse string as JSON
-                parsed_param = json.loads(param)
-                MaaLog_Debug(f"{self.action_name}: Successfully parsed JSON, type: {type(parsed_param)}")
-                return parsed_param
-            except json.JSONDecodeError:
-                # If not JSON, return string directly
-                MaaLog_Debug(f"{self.action_name}: Non-JSON string, using directly")
-                return param
-        
-        # Return dictionary or other types directly
-        return param
-    
-    def _process_parameters(self, parameters: dict) -> dict:
-        """
-        Process special parameters, support dynamic values
-        """
-        global Task_Counter
-        
-        processed = {}
-        
-        for key, value in parameters.items():
-            MaaLog_Debug(f"{self.action_name} processing parameter {key}: {value} (type: {type(value)})")
-            
-            if isinstance(value, str):
-                # Handle special placeholders
-                if value == "{Task_Counter}":
-                    processed[key] = Task_Counter
-                    MaaLog_Debug(f"{self.action_name} replace {key} = {Task_Counter}")
-                elif value == "{increment_Task_Counter}":
-                    Task_Counter += 1
-                    processed[key] = Task_Counter
-                    MaaLog_Debug(f"{self.action_name} increment and replace {key} = {Task_Counter}")
-                else:
-                    processed[key] = value
-            else:
-                processed[key] = value
-        
-        return processed
-    
-    def _format_message(self, message_template: str, parameters: dict) -> str:
-        """
-        Format message template
-        """
-        try:
-            # Process special parameters
-            processed_params = self._process_parameters(parameters)
-            MaaLog_Debug(f"{self.action_name} processed parameters: {processed_params}")
-            
-            # Format message
-            formatted_message = message_template.format(**processed_params)
-            MaaLog_Debug(f"{self.action_name} formatted message: {formatted_message}")
-            return formatted_message
-        except KeyError as e:
-            MaaLog_Debug(f"{self.action_name} message template formatting failed, missing parameter: {e}")
-            return message_template
-        except Exception as e:
-            MaaLog_Debug(f"{self.action_name} message formatting exception: {e}")
-            return message_template
-    
-    def _handle_parametric_message(self, parsed_param):
-        """
-        Common logic for handling parametric messages
-        Subclasses can override this method to customize processing logic
-        """
-        # No parameter case
-        if parsed_param is None:
-            return self._handle_default_message()
-        
-        # String case: process directly
-        if isinstance(parsed_param, str):
-            return self._handle_string_message(parsed_param)
-        
-        # Dictionary case: parametric processing
-        if isinstance(parsed_param, dict):
-            return self._handle_dict_message(parsed_param)
-        
-        # Other types: convert to string and process
-        return self._handle_string_message(str(parsed_param))
-    
-    # Abstract methods, subclasses must implement
-    def _handle_default_message(self):
-        """Handle default message, subclasses must implement"""
-        raise NotImplementedError("Subclasses must implement _handle_default_message method")
-    
-    def _handle_string_message(self, message: str):
-        """Handle string message, subclasses must implement"""
-        raise NotImplementedError("Subclasses must implement _handle_string_message method")
-    
-    def _handle_dict_message(self, param_dict: dict):
-        """Handle dictionary parameter message, subclasses must implement"""
-        raise NotImplementedError("Subclasses must implement _handle_dict_message method")
-
-@AgentServer.custom_action("parametric_log")
-class ParametricLogAction(ParametricBaseAction):
-    """
-    Support reading log message template and parameters from custom_action_param
-    """
-    
-    def _handle_default_message(self):
-        """Handle default message"""
-        MaaLog_Info("Default log message")
-        return True
-    
-    def _handle_string_message(self, message: str):
-        """Handle string message"""
-        MaaLog_Info(message)
-        return True
-    
-    def _handle_dict_message(self, param_dict: dict):
-        """Handle dictionary parameter message"""
-        log_type = param_dict.get('type', 'info')
-        message_template = param_dict.get('message', 'Default log message')
-        parameters = param_dict.get('parameters', {})
-        
-        MaaLog_Debug(f"Start processing parametric log - type: {log_type}, template: {message_template}, parameters: {parameters}")
-        
-        # Format message
-        formatted_message = self._format_message(message_template, parameters)
-        
-        # Output log
-        if log_type.lower() == 'debug':
-            MaaLog_Debug(formatted_message)
-        else:
-            MaaLog_Info(formatted_message)
-        
-        return True
-
-@AgentServer.custom_action("parametric_telegram")
-class ParametricTelegramAction(ParametricBaseAction):
-    """
-    Support reading message template and parameters from custom_action_param and send to Telegram
-    """
-    
-    def __init__(self):
-        super().__init__()
-        self.notifier = None
-    
-    def _get_notifier(self):
-        """Get Telegram notifier"""
-        if self.notifier is None:
-            bot_token, chat_id = get_telegram_config()
-            if not bot_token or not chat_id:
-                MaaLog_Debug("Telegram configuration not set, cannot send message")
-                return None
-            self.notifier = TelegramNotifier(bot_token, chat_id)
-        return self.notifier
-    
-    def _handle_default_message(self):
-        """Handle default message"""
-        notifier = self._get_notifier()
-        if not notifier:
-            return False
-        return notifier.send_message("Default Telegram message")
-    
-    def _handle_string_message(self, message: str):
-        """Handle string message"""
-        notifier = self._get_notifier()
-        if not notifier:
-            return False
-        return notifier.send_message(message)
-    
-    def _handle_dict_message(self, param_dict: dict):
-        """Handle dictionary parameter message"""
-        notifier = self._get_notifier()
-        if not notifier:
-            return False
-        
-        message_template = param_dict.get('message', 'Default Telegram message')
-        parameters = param_dict.get('parameters', {})
-        
-        MaaLog_Debug(f"Start processing parametric Telegram message - template: {message_template}, parameters: {parameters}")
-        
-        # Format message
-        formatted_message = self._format_message(message_template, parameters)
-        
-        # Send to Telegram
-        return notifier.send_message(formatted_message)
-
-@AgentServer.custom_action("parametric_wechat")
-class ParametricWeChatAction(ParametricBaseAction):
-    """
-    Support reading message template and parameters from custom_action_param and send to Enterprise WeChat
-    """
-    
-    def __init__(self):
-        super().__init__()
-        self.notifier = None
-    
-    def _get_notifier(self):
-        """Get Enterprise WeChat notifier"""
-        if self.notifier is None:
-            webhook_key = get_wechat_config()
-            if not webhook_key:
-                MaaLog_Debug("Enterprise WeChat configuration not set, cannot send message")
-                return None
-            self.notifier = WeChatWorkNotifier(webhook_key)
-        return self.notifier
-    
-    def _handle_default_message(self):
-        """Handle default message"""
-        notifier = self._get_notifier()
-        if not notifier:
-            return False
-        return notifier.send_message("Default Enterprise WeChat message")
-    
-    def _handle_string_message(self, message: str):
-        """Handle string message"""
-        notifier = self._get_notifier()
-        if not notifier:
-            return False
-        return notifier.send_message(message)
-    
-    def _handle_dict_message(self, param_dict: dict):
-        """Handle dictionary parameter message"""
-        notifier = self._get_notifier()
-        if not notifier:
-            return False
-        
-        message_template = param_dict.get('message', 'Default Enterprise WeChat message')
-        parameters = param_dict.get('parameters', {})
-        msgtype = param_dict.get('msgtype', 'text')  # Support message type setting
-        
-        MaaLog_Debug(f"Start processing parametric Enterprise WeChat message - template: {message_template}, parameters: {parameters}, type: {msgtype}")
-        
-        # Format message
-        formatted_message = self._format_message(message_template, parameters)
-        
-        # Send to Enterprise WeChat
-        return notifier.send_message(formatted_message, msgtype)
-
-@AgentServer.custom_action("parametric_extnotify")
-class ParametricExtNotifyAction(ParametricBaseAction):
-    """
-    Smart external notification action
-    Automatically choose Telegram or Enterprise WeChat to send message based on configuration
-    """
-    
-    def __init__(self):
-        super().__init__()
-        self.telegram_notifier = None
-        self.wechat_notifier = None
-    
-    def _get_telegram_notifier(self):
-        """Get Telegram notifier"""
-        if self.telegram_notifier is None:
-            bot_token, chat_id = get_telegram_config()
-            if bot_token and chat_id:
-                self.telegram_notifier = TelegramNotifier(bot_token, chat_id)
-        return self.telegram_notifier
-    
-    def _get_wechat_notifier(self):
-        """Get Enterprise WeChat notifier"""
-        if self.wechat_notifier is None:
-            webhook_key = get_wechat_config()
-            if webhook_key:
-                self.wechat_notifier = WeChatWorkNotifier(webhook_key)
-        return self.wechat_notifier
-    
-    def _send_message_with_fallback(self, message, msgtype="text", preferred_platform=None):
-        """
-        Send message with automatic fallback support
-        """
-        # Get default platform and available platforms
-        default_platform = preferred_platform or get_default_ext_notify()
-        available_platforms = get_available_notifiers()
-        
-        MaaLog_Debug(f"Smart notification - default platform: {default_platform}, available platforms: {available_platforms}")
-        
-        if not available_platforms:
-            MaaLog_Debug("Smart notification failed: no available notification platforms")
-            return False
-        
-        # Build try order
-        try_order = []
-        if default_platform and default_platform in available_platforms:
-            try_order.append(default_platform)
-        
-        # Add other available platforms as alternatives
-        for platform in available_platforms:
-            if platform not in try_order:
-                try_order.append(platform)
-        
-        MaaLog_Debug(f"Smart notification try order: {try_order}")
-        
-        # Try sending in order
-        for platform in try_order:
-            try:
-                if platform == 'telegram':
-                    notifier = self._get_telegram_notifier()
-                    if notifier:
-                        MaaLog_Debug(f"Trying to send message via Telegram")
-                        if notifier.send_message(message):
-                            MaaLog_Debug(f"Smart notification success: sent via Telegram")
-                            return True
-                        else:
-                            MaaLog_Debug(f"Telegram sending failed, trying next platform")
-                elif platform == 'wechat':
-                    notifier = self._get_wechat_notifier()
-                    if notifier:
-                        MaaLog_Debug(f"Trying to send message via Enterprise WeChat")
-                        if notifier.send_message(message, msgtype):
-                            MaaLog_Debug(f"Smart notification success: sent via Enterprise WeChat")
-                            return True
-                        else:
-                            MaaLog_Debug(f"Enterprise WeChat sending failed, trying next platform")
-            except Exception as e:
-                MaaLog_Debug(f"{platform} sending exception: {e}, trying next platform")
-                continue
-        
-        MaaLog_Debug("Smart notification failed: all platforms unable to send message")
-        return False
-    
-    def _handle_default_message(self):
-        """Handle default message"""
-        return self._send_message_with_fallback("Default smart notification message")
-    
-    def _handle_string_message(self, message: str):
-        """Handle string message"""
-        return self._send_message_with_fallback(message)
-    
-    def _handle_dict_message(self, param_dict: dict):
-        """Handle dictionary parameter message"""
-        message_template = param_dict.get('message', 'Default smart notification message')
-        parameters = param_dict.get('parameters', {})
-        msgtype = param_dict.get('msgtype', 'text')
-        preferred_platform = param_dict.get('platform', None)
-        
-        MaaLog_Debug(f"Start processing parametric smart notification message - template: {message_template}, parameters: {parameters}, type: {msgtype}, preferred platform: {preferred_platform}")
-        
-        # Format message
-        formatted_message = self._format_message(message_template, parameters)
-        
-        # Send message
-        return self._send_message_with_fallback(formatted_message, msgtype, preferred_platform)
-
-##########################################################################################################################################################################################
-################################################################################ Part II : Implementation ################################################################################
-##########################################################################################################################################################################################
+################################################################################ Part 0 : Logging Functions ################################################################################
 
 def MaaLog_Debug(message):
     """Debug log output"""
@@ -514,3 +46,574 @@ def reset_Task_Counter():
     """Reset task run count"""
     global Task_Counter
     Task_Counter = 0
+    MaaLog_Debug("Task_Counter has been reset to 0")
+
+################################################################################ Part I : Ultra-Lightweight Services ################################################################################
+
+class _TelegramService:
+    """Ultra-lightweight Telegram service"""
+    def __init__(self):
+        self.session = None
+        self._config_cache = None
+        self._message_count = 0
+        MaaLog_Debug("_TelegramService initialized")
+    
+    def _get_session(self):
+        """Get or create session with current config"""
+        bot_token, chat_id = get_telegram_config()
+        current_config = (bot_token, chat_id)
+        
+        if not bot_token or not chat_id:
+            return None, None, None
+        
+        if current_config != self._config_cache or self.session is None:
+            if self.session:
+                try:
+                    self.session.close()
+                except:
+                    pass
+            
+            self.session = requests.Session()
+            # More aggressive connection pool configuration
+            adapter = requests.adapters.HTTPAdapter(
+                pool_connections=1,
+                pool_maxsize=1,
+                max_retries=0
+            )
+            self.session.mount('https://', adapter)
+            self.session.mount('http://', adapter)
+            self._config_cache = current_config
+            MaaLog_Debug(f"Telegram session recreated")
+        
+        return self.session, bot_token, chat_id
+    
+    def send_message(self, message):
+        """Send message to Telegram"""
+        session, bot_token, chat_id = self._get_session()
+        
+        if not session:
+            MaaLog_Debug("Telegram not configured")
+            return False
+        
+        url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+        data = {'chat_id': chat_id, 'text': message}
+        
+        try:
+            response = session.post(url, data=data, timeout=5)
+            
+            self._message_count += 1
+            if response.status_code == 200:
+                MaaLog_Debug(f"Telegram message sent successfully")
+                return True
+            else:
+                MaaLog_Debug(f"Telegram send failed: {response.status_code}")
+                return False
+                
+        except Exception as e:
+            MaaLog_Debug(f"Telegram error: {e}")
+            return False
+    
+    def cleanup(self):
+        """Cleanup resources"""
+        if self.session:
+            try:
+                self.session.close()
+            except:
+                pass
+            self.session = None
+        self._config_cache = None
+
+class _WeChatService:
+    """Ultra-lightweight WeChat service"""
+    def __init__(self):
+        self.session = None
+        self._config_cache = None
+        self._message_count = 0
+        MaaLog_Debug("_WeChatService initialized")
+    
+    def _get_session(self):
+        """Get or create session with current config"""
+        webhook_key = get_wechat_config()
+        
+        if not webhook_key:
+            return None, None
+        
+        if webhook_key != self._config_cache or self.session is None:
+            if self.session:
+                try:
+                    self.session.close()
+                except:
+                    pass
+            
+            self.session = requests.Session()
+            adapter = requests.adapters.HTTPAdapter(
+                pool_connections=1,
+                pool_maxsize=1,
+                max_retries=0
+            )
+            self.session.mount('https://', adapter)
+            self.session.mount('http://', adapter)
+            self._config_cache = webhook_key
+            MaaLog_Debug(f"WeChat session recreated")
+        
+        return self.session, webhook_key
+    
+    def send_message(self, message, msgtype="text"):
+        """Send message to WeChat"""
+        session, webhook_key = self._get_session()
+        
+        if not session:
+            MaaLog_Debug("WeChat not configured")
+            return False
+        
+        url = f"https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={webhook_key}"
+        
+        if msgtype == "text":
+            data = {"msgtype": "text", "text": {"content": message}}
+        elif msgtype == "markdown":
+            data = {"msgtype": "markdown", "markdown": {"content": message}}
+        else:
+            MaaLog_Debug(f"Unsupported msgtype: {msgtype}")
+            return False
+        
+        try:
+            headers = {'Content-Type': 'application/json'}
+            response = session.post(
+                url, 
+                data=json.dumps(data, ensure_ascii=False).encode('utf-8'),
+                headers=headers,
+                timeout=5
+            )
+            
+            self._message_count += 1
+            if response.status_code == 200:
+                result = response.json()
+                if result.get('errcode') == 0:
+                    MaaLog_Debug(f"WeChat message sent successfully")
+                    return True
+                else:
+                    MaaLog_Debug(f"WeChat send failed: {result.get('errmsg')}")
+                    return False
+            else:
+                MaaLog_Debug(f"WeChat HTTP failed: {response.status_code}")
+                return False
+                
+        except Exception as e:
+            MaaLog_Debug(f"WeChat error: {e}")
+            return False
+    
+    def cleanup(self):
+        """Cleanup resources"""
+        if self.session:
+            try:
+                self.session.close()
+            except:
+                pass
+            self.session = None
+        self._config_cache = None
+
+# Module-level service instances
+_telegram_service = _TelegramService()
+_wechat_service = _WeChatService()
+
+################################################################################ Part II : Singleton Handler System ################################################################################
+
+class _SingletonHandler:
+    """Centralized handler for all action types"""
+    
+    def __init__(self):
+        self._call_count = 0
+        self._handlers = {
+            'log': self._handle_log,
+            'telegram': self._handle_telegram, 
+            'wechat': self._handle_wechat,
+            'extnotify': self._handle_extnotify
+        }
+        MaaLog_Debug("SingletonHandler initialized")
+    
+    def handle(self, action_type: str, param) -> bool:
+        """Main entry point for all action calls"""
+        self._call_count += 1
+        
+        try:
+            parsed_param = self._parse_param(param)
+            handler = self._handlers.get(action_type)
+            
+            if not handler:
+                MaaLog_Debug(f"Unknown action type: {action_type}")
+                return False
+            
+            result = handler(parsed_param)
+            
+            # Periodic cleanup and statistics
+            if self._call_count % 50 == 0:
+                MaaLog_Debug(f"Handler total calls: {self._call_count}")
+                self._cleanup_resources()
+            
+            return result
+            
+        except Exception as e:
+            MaaLog_Debug(f"Handler error for {action_type}: {e}")
+            return False
+    
+    def _cleanup_resources(self):
+        """Periodic resource cleanup"""
+        try:
+            # Force garbage collection (use with caution)
+            if self._call_count % 100 == 0:
+                gc.collect()
+                MaaLog_Debug(f"Performed GC after {self._call_count} calls")
+        except Exception as e:
+            MaaLog_Debug(f"Cleanup error: {e}")
+    
+    def _parse_param(self, param):
+        """Parse parameter"""
+        if not param:
+            return None
+        
+        if isinstance(param, str):
+            try:
+                return json.loads(param)
+            except json.JSONDecodeError:
+                return param
+        
+        return param
+    
+    def _process_parameters(self, parameters: dict) -> dict:
+        """Process special parameters"""
+        global Task_Counter
+        
+        processed = {}
+        for key, value in parameters.items():
+            if isinstance(value, str):
+                if value == "{Task_Counter}":
+                    processed[key] = Task_Counter
+                elif value == "{increment_Task_Counter}":
+                    Task_Counter += 1
+                    processed[key] = Task_Counter
+                else:
+                    processed[key] = value
+            else:
+                processed[key] = value
+        
+        return processed
+    
+    def _format_message(self, template: str, parameters: dict) -> str:
+        """Format message"""
+        try:
+            processed = self._process_parameters(parameters)
+            return template.format(**processed)
+        except Exception as e:
+            MaaLog_Debug(f"Message format error: {e}")
+            return template
+    
+    def _handle_message_routing(self, parsed_param, default_handler, string_handler, dict_handler):
+        """Common message routing logic"""
+        if parsed_param is None:
+            return default_handler()
+        elif isinstance(parsed_param, str):
+            return string_handler(parsed_param)
+        elif isinstance(parsed_param, dict):
+            return dict_handler(parsed_param)
+        else:
+            return string_handler(str(parsed_param))
+    
+    # Log handlers
+    def _handle_log(self, parsed_param):
+        return self._handle_message_routing(
+            parsed_param,
+            lambda: self._log_default(),
+            lambda msg: self._log_string(msg),
+            lambda d: self._log_dict(d)
+        )
+    
+    def _log_default(self):
+        MaaLog_Info("Default log message")
+        return True
+    
+    def _log_string(self, message: str):
+        MaaLog_Info(message)
+        return True
+    
+    def _log_dict(self, param_dict: dict):
+        log_type = param_dict.get('type', 'info')
+        template = param_dict.get('message', 'Default log message')
+        parameters = param_dict.get('parameters', {})
+        
+        message = self._format_message(template, parameters)
+        
+        if log_type.lower() == 'debug':
+            MaaLog_Debug(message)
+        else:
+            MaaLog_Info(message)
+        
+        return True
+    
+    # Telegram handlers
+    def _handle_telegram(self, parsed_param):
+        return self._handle_message_routing(
+            parsed_param,
+            lambda: _telegram_service.send_message("Default Telegram message"),
+            lambda msg: _telegram_service.send_message(msg),
+            lambda d: self._telegram_dict(d)
+        )
+    
+    def _telegram_dict(self, param_dict: dict):
+        template = param_dict.get('message', 'Default Telegram message')
+        parameters = param_dict.get('parameters', {})
+        
+        message = self._format_message(template, parameters)
+        return _telegram_service.send_message(message)
+    
+    # WeChat handlers
+    def _handle_wechat(self, parsed_param):
+        return self._handle_message_routing(
+            parsed_param,
+            lambda: _wechat_service.send_message("Default WeChat message"),
+            lambda msg: _wechat_service.send_message(msg),
+            lambda d: self._wechat_dict(d)
+        )
+    
+    def _wechat_dict(self, param_dict: dict):
+        template = param_dict.get('message', 'Default WeChat message')
+        parameters = param_dict.get('parameters', {})
+        msgtype = param_dict.get('msgtype', 'text')
+        
+        message = self._format_message(template, parameters)
+        return _wechat_service.send_message(message, msgtype)
+    
+    # ExtNotify handlers
+    def _handle_extnotify(self, parsed_param):
+        return self._handle_message_routing(
+            parsed_param,
+            lambda: self._extnotify_default(),
+            lambda msg: self._extnotify_string(msg),
+            lambda d: self._extnotify_dict(d)
+        )
+    
+    def _send_with_fallback(self, message, msgtype="text", preferred=None):
+        """Send with fallback"""
+        default_platform = preferred or get_default_ext_notify()
+        available = get_available_notifiers()
+        
+        if not available:
+            return False
+        
+        order = []
+        if default_platform and default_platform in available:
+            order.append(default_platform)
+        
+        for platform in available:
+            if platform not in order:
+                order.append(platform)
+        
+        for platform in order:
+            try:
+                if platform == 'telegram':
+                    if _telegram_service.send_message(message):
+                        return True
+                elif platform == 'wechat':
+                    if _wechat_service.send_message(message, msgtype):
+                        return True
+            except Exception as e:
+                MaaLog_Debug(f"{platform} error: {e}")
+                continue
+        
+        return False
+    
+    def _extnotify_default(self):
+        return self._send_with_fallback("Default smart notification")
+    
+    def _extnotify_string(self, message: str):
+        return self._send_with_fallback(message)
+    
+    def _extnotify_dict(self, param_dict: dict):
+        template = param_dict.get('message', 'Default smart notification')
+        parameters = param_dict.get('parameters', {})
+        msgtype = param_dict.get('msgtype', 'text')
+        preferred = param_dict.get('platform', None)
+        
+        message = self._format_message(template, parameters)
+        return self._send_with_fallback(message, msgtype, preferred)
+
+# Global singleton handler instance
+_global_handler = _SingletonHandler()
+
+################################################################################ Part III : True Singleton Action Classes ################################################################################
+
+class _UnifiedAction(CustomAction):
+    """True unified singleton Action"""
+    
+    def __init__(self):
+        super().__init__()
+        self._call_count = 0
+        MaaLog_Debug("_UnifiedAction singleton created")
+    
+    def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
+        """Unified handling of all action calls"""
+        try:
+            self._call_count += 1
+            
+            # Determine processing type based on action name
+            action_name = argv.custom_action_name
+            param = argv.custom_action_param
+            
+            # Map action names to processing types
+            action_type_map = {
+                'parametric_log': 'log',
+                'parametric_telegram': 'telegram',
+                'parametric_wechat': 'wechat',
+                'parametric_extnotify': 'extnotify'
+            }
+            
+            action_type = action_type_map.get(action_name)
+            if not action_type:
+                MaaLog_Debug(f"Unknown action name: {action_name}")
+                return CustomAction.RunResult(success=False)
+            
+            # Delegate to global handler
+            result = _global_handler.handle(action_type, param)
+            
+            if self._call_count % 20 == 0:
+                MaaLog_Debug(f"UnifiedAction calls: {self._call_count}")
+            
+            return CustomAction.RunResult(success=result)
+            
+        except Exception as e:
+            MaaLog_Debug(f"UnifiedAction error: {e}")
+            return CustomAction.RunResult(success=False)
+
+################################################################################ Part IV : Registration Prevention System ################################################################################
+
+# Global registration status tracking
+_registration_status = {
+    'registered_actions': set(),
+    'singleton_instance': None,
+    'registration_count': 0
+}
+
+def _get_or_create_singleton():
+    """Get or create unique Action instance"""
+    if _registration_status['singleton_instance'] is None:
+        _registration_status['singleton_instance'] = _UnifiedAction()
+        MaaLog_Debug("Created singleton action instance")
+    return _registration_status['singleton_instance']
+
+def _safe_register_action(action_name: str):
+    """Safe registration to prevent duplicates"""
+    if action_name in _registration_status['registered_actions']:
+        MaaLog_Debug(f"Action {action_name} already registered, skipping")
+        return
+    
+    singleton_instance = _get_or_create_singleton()
+    
+    # Register using unified singleton instance
+    success = AgentServer.register_custom_action(action_name, singleton_instance)
+    
+    if success:
+        _registration_status['registered_actions'].add(action_name)
+        _registration_status['registration_count'] += 1
+        MaaLog_Debug(f"Successfully registered {action_name} (total: {_registration_status['registration_count']})")
+    else:
+        MaaLog_Debug(f"Failed to register {action_name}")
+
+################################################################################ Part V : Modified Decorators ################################################################################
+
+# Rewrite decorators to use safe registration
+def custom_action_decorator(name: str):
+    """Custom decorator to prevent duplicate registration"""
+    def wrapper(action_class):
+        # Don't create new instances, use safe registration directly
+        _safe_register_action(name)
+        return action_class
+    return wrapper
+
+# Use custom decorator to replace AgentServer.custom_action
+@custom_action_decorator("parametric_log")
+class ParametricLogAction:
+    pass
+
+@custom_action_decorator("parametric_telegram") 
+class ParametricTelegramAction:
+    pass
+
+@custom_action_decorator("parametric_wechat")
+class ParametricWeChatAction:
+    pass
+
+@custom_action_decorator("parametric_extnotify")
+class ParametricExtNotifyAction:
+    pass
+
+################################################################################ Part VI : Monitoring and Debugging ################################################################################
+
+def get_registration_stats():
+    """Get registration statistics"""
+    return {
+        'registered_actions': list(_registration_status['registered_actions']),
+        'registration_count': _registration_status['registration_count'],
+        'handler_calls': getattr(_global_handler, '_call_count', 0),
+        'action_calls': getattr(_registration_status['singleton_instance'], '_call_count', 0),
+        'telegram_messages': getattr(_telegram_service, '_message_count', 0),
+        'wechat_messages': getattr(_wechat_service, '_message_count', 0)
+    }
+
+def print_registration_status():
+    """Print registration status"""
+    stats = get_registration_stats()
+    MaaLog_Info(f"Registration Status: {stats}")
+
+################################################################################ Part VII : Cleanup and Compatibility ################################################################################
+
+def cleanup_all_resources():
+    """Cleanup module-level resources"""
+    try:
+        MaaLog_Debug("Cleaning up global resources...")
+        _telegram_service.cleanup()
+        _wechat_service.cleanup()
+        
+        # Cleanup global handler
+        if hasattr(_global_handler, '_cleanup_resources'):
+            _global_handler._cleanup_resources()
+        
+        gc.collect()
+        MaaLog_Debug("Global cleanup completed")
+    except Exception as e:
+        MaaLog_Debug(f"Cleanup error: {e}")
+
+# Register cleanup
+import atexit
+atexit.register(cleanup_all_resources)
+
+def force_cleanup():
+    """Force cleanup - use carefully"""
+    cleanup_all_resources()
+
+# Legacy compatibility classes
+class TelegramNotifier:
+    def __init__(self, *args, **kwargs): pass
+    def send_message(self, msg): return _telegram_service.send_message(msg)
+    def cleanup(self): pass
+    @classmethod
+    def cleanup_all_instances(cls): pass
+
+class WeChatWorkNotifier:
+    def __init__(self, *args, **kwargs): pass
+    def send_message(self, msg, msgtype="text"): return _wechat_service.send_message(msg, msgtype)
+    def cleanup(self): pass
+    @classmethod
+    def cleanup_all_instances(cls): pass
+
+class ResourceManager:
+    def __init__(self): pass
+    def register_action(self, action): pass
+    def perform_cleanup(self): pass
+    def get_stats(self): return get_registration_stats()
+
+class ParametricBaseAction:
+    """Legacy compatibility"""
+    pass
+
+# Print status when module loads
+MaaLog_Debug("Parametric actions module loaded with singleton architecture")
+print_registration_status()

@@ -1,0 +1,25 @@
+{
+	"!Unit_Test_Notify_Wechat_Task": {
+		"next": [
+			"Unit_Test_Notify_Wechat_Node"
+		]
+	},
+	"Unit_Test_Notify_Wechat_Node": {
+		"recognition": "DirectHit",
+		"action": "Custom",
+		"custom_action": "parametric_wechat",
+		"custom_action_param": {
+			"type": "info",
+			"message": "企业微信测试消息：{status}，当前次数：{count}",
+			"parameters": {
+				"status": "正常",
+				"count": "{increment_Task_Counter}"
+			}
+		},
+		"pre_delay": 100,
+		"post_delay": 100,
+		"next": [
+			"Unit_Test_Notify_Wechat_Node"
+		]
+	}
+}

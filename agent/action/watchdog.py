@@ -262,11 +262,30 @@ def get_global_watchdog():
     """Get global watchdog instance"""
     return _global_watchdog
 
-@AgentServer.custom_action("watchdog_feed")
+# =============== Singleton Action Classes ===============
+
 class WatchdogFeedAction(CustomAction):
     """
     Feed watchdog action (auto-start if not running, update timeout if provided)
+    Singleton pattern to avoid duplicate registration
     """
+    
+    _instance = None
+    _initialized = False
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+    
+    def __init__(self):
+        if not self._initialized:
+            # Only initialize once
+            super().__init__()
+            self.__class__._initialized = True
+            MaaLog_Debug(f"WatchdogFeedAction singleton created")
+        else:
+            MaaLog_Debug(f"WatchdogFeedAction singleton reused")
     
     def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
         try:
@@ -301,11 +320,28 @@ class WatchdogFeedAction(CustomAction):
             MaaLog_Debug(f"Exception stack: {traceback.format_exc()}")
             return CustomAction.RunResult(success=False)
 
-@AgentServer.custom_action("watchdog_stop")
 class WatchdogStopAction(CustomAction):
     """
     Stop watchdog action (for backward compatibility or emergency stop)
+    Singleton pattern to avoid duplicate registration
     """
+    
+    _instance = None
+    _initialized = False
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+    
+    def __init__(self):
+        if not self._initialized:
+            # Only initialize once
+            super().__init__()
+            self.__class__._initialized = True
+            MaaLog_Debug(f"WatchdogStopAction singleton created")
+        else:
+            MaaLog_Debug(f"WatchdogStopAction singleton reused")
     
     def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
         try:
@@ -336,3 +372,69 @@ class WatchdogStopAction(CustomAction):
             import traceback
             MaaLog_Debug(f"Exception stack: {traceback.format_exc()}")
             return CustomAction.RunResult(success=False)
+
+# =============== Registration Management ===============
+
+# Global registration state tracking
+_watchdog_actions_registered = False
+
+def _register_watchdog_actions():
+    """Register watchdog actions with singleton instances"""
+    global _watchdog_actions_registered
+    
+    if _watchdog_actions_registered:
+        MaaLog_Debug("Watchdog actions already registered, skipping")
+        return
+    
+    try:
+        MaaLog_Debug("Starting to register watchdog actions...")
+        
+        # Create singleton instances and register them
+        feed_action = WatchdogFeedAction()
+        stop_action = WatchdogStopAction()
+        
+        # Register with AgentServer
+        AgentServer.custom_action("watchdog_feed")(lambda: feed_action)
+        AgentServer.custom_action("watchdog_stop")(lambda: stop_action)
+        
+        _watchdog_actions_registered = True
+        MaaLog_Debug("Watchdog actions registered successfully")
+        
+    except Exception as e:
+        MaaLog_Debug(f"Failed to register watchdog actions: {e}")
+        import traceback
+        MaaLog_Debug(f"Registration exception stack: {traceback.format_exc()}")
+
+def get_watchdog_registration_status():
+    """Get current registration status"""
+    global _watchdog_actions_registered
+    return {
+        "registered": _watchdog_actions_registered,
+        "feed_action_instance": WatchdogFeedAction._instance is not None,
+        "stop_action_instance": WatchdogStopAction._instance is not None,
+        "feed_action_initialized": WatchdogFeedAction._initialized,
+        "stop_action_initialized": WatchdogStopAction._initialized
+    }
+
+def force_reregister_watchdog_actions():
+    """Force re-registration of watchdog actions (for debugging)"""
+    global _watchdog_actions_registered
+    
+    MaaLog_Debug("Force re-registering watchdog actions...")
+    _watchdog_actions_registered = False
+    
+    # Reset singleton states
+    WatchdogFeedAction._instance = None
+    WatchdogFeedAction._initialized = False
+    WatchdogStopAction._instance = None
+    WatchdogStopAction._initialized = False
+    
+    _register_watchdog_actions()
+
+# =============== Module Initialization ===============
+
+# Ensure actions are registered when module is imported
+_register_watchdog_actions()
+
+# Debug info
+MaaLog_Debug(f"Watchdog module loaded - registration status: {get_watchdog_registration_status()}")

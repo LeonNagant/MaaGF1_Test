@@ -1,0 +1,26 @@
+{
+ // This is a Loop Unit Test
+	"!Unit_Test_Notify_Telegram_Task": {
+		"next": [
+			"Unit_Test_Notify_Telegram_Node"
+		]
+	},
+	"Unit_Test_Notify_Telegram_Node": {
+		"recognition": "DirectHit",
+		"action": "Custom",
+		"custom_action": "parametric_telegram",
+		"custom_action_param": {
+			"type": "info",
+			"message": "电报单元测试消息：{status}，当前次数：{count}",
+			"parameters": {
+				"status": "正常",
+				"count": "{increment_Task_Counter}"
+			}
+		},
+		"pre_delay": 100,
+		"post_delay": 100,
+		"next": [
+			"Unit_Test_Notify_Telegram_Node"
+		]
+	}
+}
