@@ -204,26 +204,41 @@ class LogMonitor:
         
         for rule_name, rule in self.config.rules.items():
             
-            # Check if this node starts a watchdog rule
-            if node_name == rule.start_node and not rule.is_active:
-                print(f"[WATCHDOG] Rule '{rule_name}' activated by node '{node_name}'")
-                rule.is_active = True
-                rule.last_start_time = current_time
-                
-                # Send activation notification
-                self.notifier.send_rule_activated(rule_name, rule)
+            # For same start_node and end_node rules (like yours)
+            if rule.start_node == rule.end_node and node_name == rule.start_node:
+                if rule.is_active:
+                    # Reset the timer - we heard from the node again
+                    print(f"[WATCHDOG] Rule '{rule_name}' timer reset by node '{node_name}'")
+                    rule.last_start_time = current_time
+                else:
+                    # Start the watchdog timer
+                    print(f"[WATCHDOG] Rule '{rule_name}' timer started by node '{node_name}'")
+                    rule.is_active = True
+                    rule.last_start_time = current_time
             
-            # Check if this node completes a watchdog rule
-            elif node_name == rule.end_node and rule.is_active:
-                elapsed_ms = (current_time - rule.last_start_time).total_seconds() * 1000
-                print(f"[WATCHDOG] Rule '{rule_name}' completed by node '{node_name}' in {elapsed_ms:.1f}ms")
+            # For different start_node and end_node rules (traditional watchdog)
+            elif rule.start_node != rule.end_node:
                 
-                # Send completion notification
-                self.notifier.send_rule_completed(rule_name, rule, elapsed_ms)
+                # Check if this node starts a watchdog rule
+                if node_name == rule.start_node and not rule.is_active:
+                    print(f"[WATCHDOG] Rule '{rule_name}' activated by node '{node_name}'")
+                    rule.is_active = True
+                    rule.last_start_time = current_time
+                    
+                    # Send activation notification only for different start/end nodes
+                    self.notifier.send_rule_activated(rule_name, rule)
                 
-                # Reset rule state
-                rule.is_active = False
-                rule.last_start_time = None
+                # Check if this node completes a watchdog rule
+                elif node_name == rule.end_node and rule.is_active:
+                    elapsed_ms = (current_time - rule.last_start_time).total_seconds() * 1000
+                    print(f"[WATCHDOG] Rule '{rule_name}' completed by node '{node_name}' in {elapsed_ms:.1f}ms")
+                    
+                    # Send completion notification only for different start/end nodes
+                    self.notifier.send_rule_completed(rule_name, rule, elapsed_ms)
+                    
+                    # Reset rule state
+                    rule.is_active = False
+                    rule.last_start_time = None
     
     def _check_timeouts(self):
         """Check for timeout conditions"""
@@ -238,7 +253,7 @@ class LogMonitor:
             if elapsed_ms > rule.timeout_ms:
                 print(f"[WATCHDOG] TIMEOUT: Rule '{rule_name}' exceeded {rule.timeout_ms}ms (elapsed: {elapsed_ms:.1f}ms)")
                 
-                # Send timeout alert
+                # Send timeout alert (this is the only notification for same start/end node rules)
                 self.notifier.send_timeout_alert(rule_name, rule, elapsed_ms)
                 
                 # Reset rule state
