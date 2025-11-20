@@ -1,10 +1,10 @@
 {
 	"!Unit_Test_Watchdog_Task": {
 		"next": [
-			"Unit_Test_Watchdog_Node"
+			"Unit_Test_Watchdog_Node_Begin"
 		]
 	},
-	"Unit_Test_Watchdog_Node": {
+    "Unit_Test_Watchdog_Node_Begin": {
 		"recognition": "DirectHit",
 		"action": "Custom",
 		"custom_action": "watchdog_feed",
@@ -15,7 +15,17 @@
 		"pre_delay": 100,
 		"post_delay": 100,
 		"next": [
-			"Unit_Test_Watchdog_Node"
+			"Unit_Test_Watchdog_Node_Loop"
+		]
+	},
+	"Unit_Test_Watchdog_Node_Loop": {
+		"recognition": "DirectHit",
+		"action": "Custom",
+		"custom_action": "watchdog_feed",
+		"pre_delay": 100,
+		"post_delay": 100,
+		"next": [
+			"Unit_Test_Watchdog_Node_Loop"
 		]
 	}
 }
