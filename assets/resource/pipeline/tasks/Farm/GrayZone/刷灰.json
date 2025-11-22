@@ -1,13 +1,7 @@
 {
 	"!开始打灰": {
 		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
-		"custom_action_param": {
-			"timeout_ms": 300000,
-   // Note: 如果任务执行时多次触发任务(开始打灰)，那么后续进入(开始打灰)将收到多次Update提醒，属于正常现象
-			"info": "开始打灰 - 看门狗300秒超时 (提示Update时, 打灰仍然正常运行)"
-		},
+		"action": "DoNothing",
 		"next": [
 			"灰域_选择地图",
 			"灰域_进入灰域",

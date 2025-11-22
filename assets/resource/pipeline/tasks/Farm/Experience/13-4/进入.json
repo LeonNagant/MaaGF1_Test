@@ -1,12 +1,7 @@
 {
 	"!134总流程": {
 		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
-		"custom_action_param": {
-			"timeout_ms": 300000,
-			"info": "13-4看门狗初始化 - 300秒超时"
-		},
+		"action": "DoNothing",
 		"next": [
 			"134进入_点击134",
 			"134部署_布置完成",

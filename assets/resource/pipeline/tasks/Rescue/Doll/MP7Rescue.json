@@ -1,12 +1,7 @@
 {
 	"!塌缩点-MP7打捞": {
 		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
-		"custom_action_param": {
-			"timeout_ms": 600000,
-			"info": "!塌缩点-MP7初始化 - 600秒超时"
-		},
+		"action": "DoNothing",
 		"pre_delay": 100,
 		"post_delay": 500,
 		"next": [

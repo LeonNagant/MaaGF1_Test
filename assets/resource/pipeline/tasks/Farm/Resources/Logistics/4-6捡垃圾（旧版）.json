@@ -1,12 +1,7 @@
 {
 	"!旧版_4_6捡垃圾总流程": {
 		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
-		"custom_action_param": {
-			"timeout_ms": 120000,
-			"info": "旧版4-6捡垃圾看门狗初始化 - 120秒超时"
-		},
+		"action": "DoNothing",
 		"timeout": 10000,
 		"next": [
 			"旧版_4_6捡垃圾开始作战",

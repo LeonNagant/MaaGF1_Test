@@ -1,12 +1,7 @@
 {
 	"!指挥官后勤": {
 		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
-		"custom_action_param": {
-			"timeout_ms": 120000,
-			"info": "指挥官后勤看门狗初始化 - 120秒超时"
-		},
+		"action": "DoNothing",
 		"pre_delay": 500,
 		"next": [
 			"零电荷_主界面进入零电荷",
@@ -270,17 +265,6 @@
 		"recognition": "OCR",
 		"roi": [396, 28, 94, 58],
 		"expected": ["02"],
-		"next": [
-			"零电荷_看门狗喂狗"
-		]
-	},
-	"零电荷_看门狗喂狗": {
-		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
-		"custom_action_param": {
-			"timeout_ms": 240000
-		},
 		"next": [
 			"零电荷_人形结算"
 		]

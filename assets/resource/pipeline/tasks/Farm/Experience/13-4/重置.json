@@ -15,8 +15,7 @@
 		"post_delay": 1,
 		"pre_delay": 1,
 		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
+		"action": "DoNothing",
 		"next": [
 			"134重置_再战连点2"
 		]

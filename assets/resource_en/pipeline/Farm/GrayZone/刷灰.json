@@ -1,12 +1,7 @@
 {
 	"!开始打灰": {
 		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
-		"custom_action_param": {
-			"timeout_ms": 300000,
-			"info": "灰域看门狗 - 300秒超时"
-		},
+		"action": "DoNothing",
 		"next": [
 			"灰域_选择地图",
 			"灰域_进入灰域",
@@ -90,14 +85,6 @@
 		"action": "LongPress",
 		"duration": 10,
 		"post_delay": 3000,
-		"next": [
-			"灰域_喂狗"
-		]
-	},
-	"灰域_喂狗": {
-		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
 		"next": [
 			"灰域_检测"
 		]

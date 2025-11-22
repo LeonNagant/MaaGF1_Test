@@ -1,12 +1,7 @@
 {
 	"!异构体-混沌落幕p打捞": {
 		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
-		"custom_action_param": {
-			"timeout_ms": 600000,
-			"info": "混沌落幕看门狗初始化 - 600秒超时(单次打捞循环大约240秒)"
-		},
+		"action": "DoNothing",
 		"pre_delay": 100,
 		"post_delay": 500,
 		"next": [

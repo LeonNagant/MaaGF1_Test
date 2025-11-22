@@ -25,16 +25,6 @@
 		"action": "LongPress",
 		"duration": 20,
 		"next": [
-			"81N重置_WD_Loop_Feed"
-		]
-	},
-	"81N重置_WD_Loop_Feed": {
-		"post_delay": 1,
-		"pre_delay": 1,
-		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
-		"next": [
 			"81N重置_终止作战菜单"
 		]
 	},

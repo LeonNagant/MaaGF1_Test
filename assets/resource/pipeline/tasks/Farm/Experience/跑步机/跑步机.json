@@ -1,12 +1,7 @@
 {
 	"!跑步机总流程": {
 		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
-		"custom_action_param": {
-			"timeout_ms": 120000,
-			"info": "跑步机看门狗初始化 - 120秒超时"
-		},
+		"action": "DoNothing",
 		"next": [
 			"跑步机_已进入循环",
 			"跑步机_主界面进入跑步机",
@@ -189,18 +184,8 @@
 		"action": "DoNothing",
 		"post_delay": 500,
 		"next": [
-			"跑步机_部署看门狗喂狗"
+			"跑步机_开始作战"
 		]
-	},
-	"跑步机_部署看门狗喂狗": {
-		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
-		"custom_action_param": {
-			"timeout_ms": 1200000,
-			"info": "跑步机部署中 - 看门狗喂狗 - 2分钟超时"
-		},
-		"next": "跑步机_开始作战"
 	},
 	"跑步机_部署第一梯队": {
 		"recognition": "OCR",
@@ -1234,12 +1219,7 @@
 	},
 	"跑步机_看门狗喂狗": {
 		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
-		"custom_action_param": {
-			"timeout_ms": 7200000,
-			"info": "跑步机部署完毕 - 看门狗喂狗 - 2小时超时"
-		},
+		"action": "DoNothing",
 		"next": [
 			"跑步机_计划结束7",
 			"跑步机_跳过战斗"

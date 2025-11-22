@@ -1,12 +1,7 @@
 {
 	"!裂变链接捡垃圾": {
 		"recognition": "DirectHit",
-		"action": "Custom",
-		"custom_action": "watchdog_feed",
-		"custom_action_param": {
-			"timeout_ms": 600000,
-			"info": "裂变链接捡垃圾看门狗初始化 - 600秒超时"
-		},
+		"action": "DoNothing",
 		"next": [
 			"裂变链接捡垃圾_主界面进入捡垃圾",
 			"裂变链接捡垃圾_常驻活动",
